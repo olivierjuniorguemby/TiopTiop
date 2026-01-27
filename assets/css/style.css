@@ -1,0 +1,245 @@
+:root {
+  --brand: #ff7900;
+  --brand-2: #ff9a33;
+  --dark: #1b1b1b;
+  --bg: #fff8f2;
+  --card: #ffffff;
+  --muted: #6c757d;
+  --border: rgba(0,0,0,0.08);
+}
+
+html, body {
+  height: 100%;
+}
+
+body {
+  font-family: system-ui, -apple-system, Segoe UI, Roboto, Arial, sans-serif;
+  background: var(--bg);
+  color: var(--dark);
+  background-image: url('assets/img/pattern.svg');
+  background-repeat: repeat;
+  background-size: 160px 160px;
+}
+
+a {
+  color: var(--dark);
+}
+a:hover {
+  color: var(--brand);
+}
+
+.tt-topbar {
+  position: sticky;
+  top: 0;
+  z-index: 1020;
+  background: rgba(255,255,255,0.92);
+  backdrop-filter: blur(10px);
+  border-bottom: 1px solid var(--border);
+}
+
+.tt-brand-badge {
+  background: var(--brand);
+  color: #fff;
+  border-radius: 14px;
+  padding: 6px 10px;
+  font-weight: 800;
+  letter-spacing: .2px;
+}
+
+.tt-btn {
+  border-radius: 14px;
+  font-weight: 700;
+  padding: 10px 14px;
+}
+.btn-tt {
+  background: var(--brand);
+  border-color: var(--brand);
+  color: #fff;
+}
+.btn-tt:hover {
+  background: #e66d00;
+  border-color: #e66d00;
+  color: #fff;
+}
+.btn-tt-outline {
+  border: 1px solid var(--brand);
+  color: var(--brand);
+  background: #fff;
+}
+.btn-tt-outline:hover {
+  background: var(--brand);
+  color: #fff;
+}
+
+.tt-pill {
+  border-radius: 999px;
+  padding: 6px 10px;
+  border: 1px solid var(--border);
+  background: #fff;
+}
+
+.tt-card {
+  border: 1px solid var(--border);
+  border-radius: 18px;
+  background: var(--card);
+  box-shadow: 0 6px 18px rgba(0,0,0,0.05);
+}
+
+.tt-hero {
+  border-radius: 22px;
+  background: #fff;
+  border: 1px solid var(--border);
+  overflow: hidden;
+}
+.tt-hero .tt-hero-inner {
+  padding: 22px;
+}
+.tt-hero h1 {
+  font-weight: 900;
+  letter-spacing: -0.4px;
+}
+.tt-sub {
+  color: var(--muted);
+}
+
+.tt-category-scroll {
+  display: flex;
+  gap: 10px;
+  overflow-x: auto;
+  padding-bottom: 4px;
+}
+.tt-category-scroll::-webkit-scrollbar {
+  height: 6px;
+}
+.tt-category-scroll::-webkit-scrollbar-thumb {
+  background: rgba(0,0,0,0.12);
+  border-radius: 999px;
+}
+
+.tt-menu-item {
+  display: grid;
+  grid-template-columns: 92px 1fr;
+  gap: 12px;
+  align-items: center;
+}
+.tt-thumb {
+  width: 92px;
+  height: 92px;
+  border-radius: 16px;
+  background: rgba(255,121,0,0.12);
+  display: grid;
+  place-items: center;
+  border: 1px solid rgba(255,121,0,0.18);
+}
+.tt-thumb i {
+  font-size: 28px;
+  color: var(--brand);
+}
+
+.tt-price {
+  font-weight: 900;
+}
+
+.tt-badge {
+  background: rgba(255,121,0,0.12);
+  border: 1px solid rgba(255,121,0,0.22);
+  color: #b95500;
+  font-weight: 700;
+  border-radius: 999px;
+  padding: 4px 10px;
+  font-size: 12px;
+}
+
+.tt-footer {
+  background: #fff;
+  border-top: 1px solid var(--border);
+}
+.tt-footer a {
+  text-decoration: none;
+}
+
+.tt-bottom-nav {
+  position: sticky;
+  bottom: 0;
+  z-index: 1010;
+  background: rgba(255,255,255,0.94);
+  backdrop-filter: blur(10px);
+  border-top: 1px solid var(--border);
+}
+.tt-bottom-nav .nav-link {
+  color: var(--muted);
+  font-weight: 700;
+}
+.tt-bottom-nav .nav-link.active, .tt-bottom-nav .nav-link:hover {
+  color: var(--brand);
+}
+
+.tt-notif-dot {
+  width: 8px;
+  height: 8px;
+  background: var(--brand);
+  border-radius: 999px;
+  display: inline-block;
+}
+
+.form-control, .form-select {
+  border-radius: 14px;
+  border-color: var(--border);
+}
+.form-control:focus, .form-select:focus {
+  border-color: rgba(255,121,0,0.45);
+  box-shadow: 0 0 0 .25rem rgba(255,121,0,0.15);
+}
+
+.tt-section-title {
+  display:flex;
+  justify-content: space-between;
+  align-items: center;
+}
+.tt-section-title h2 {
+  font-size: 18px;
+  margin: 0;
+  font-weight: 900;
+}
+.tt-kpi {
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0,1fr));
+  gap: 12px;
+}
+@media (max-width: 992px) {
+  .tt-kpi {
+    grid-template-columns: repeat(2, minmax(0,1fr));
+  }
+}
+@media (max-width: 576px) {
+  .tt-kpi {
+    grid-template-columns: 1fr;
+  }
+}
+
+#map, #adminMap {
+  height: 360px;
+  border-radius: 18px;
+  border: 1px solid var(--border);
+}
+
+.tt-admin-sidebar {
+  position: sticky;
+  top: 0;
+}
+.tt-admin-nav a {
+  text-decoration: none;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 10px 12px;
+  border-radius: 14px;
+  color: var(--dark);
+}
+.tt-admin-nav a.active, .tt-admin-nav a:hover {
+  background: rgba(255,121,0,0.10);
+  color: var(--brand);
+}
+.tt-table {
+  overflow: auto;
+}
