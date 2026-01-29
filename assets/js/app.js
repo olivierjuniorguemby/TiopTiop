@@ -1,5 +1,7 @@
 (function () {
   const fmtXAF = (v) => new Intl.NumberFormat('fr-FR').format(v) + " XAF";
+  const IMG_BASE = "assets/img/"; // adapte: "assets/img/menus/"
+
 
   window.TT = {
     fmtXAF,
@@ -26,6 +28,7 @@
       `).join("");
     },
     renderMenuList(targetId="ttMenuList", filter={}) {
+
       const el = document.getElementById(targetId);
       if (!el) return;
       let items = [...TT_MOCK.menus];
@@ -37,12 +40,17 @@
       if (filter.cat) items = items.filter(m => m.category === filter.cat);
       if (filter.maxPrice) items = items.filter(m => m.price <= filter.maxPrice);
 
-      el.innerHTML = items.map(m => `
+      el.innerHTML = items.map(m => {
+        
+          const firstImage = (m.images && m.images.length) ? m.images[0] : "default.png";
+    const imgSrc = IMG_BASE + firstImage;
+
+    return `
         <div class="tt-card p-3 mb-3">
           <div class="tt-menu-item">
             <div class="tt-thumb">
-              <i class="bi ${TT_MOCK.categories.find(c=>c.id===m.category)?.icon || "bi-basket2"}"></i>
-            </div>
+            <img src="${imgSrc}" alt="${m.images}" loading="lazy"
+             onerror="this.src='${IMG_BASE}default.png'">            </div>
             <div>
               <div class="d-flex justify-content-between align-items-start">
                 <div>
@@ -65,7 +73,7 @@
             </div>
           </div>
         </div>
-      `).join("");
+      `}).join("");
 
       el.querySelectorAll("[data-add]").forEach(btn => {
         btn.addEventListener("click", () => {

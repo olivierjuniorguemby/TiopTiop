@@ -13,7 +13,8 @@ window.TT_MOCK = {
       category: "dejeuner",
       price: 4500,
       rating: 4.7,
-      images: ["bi-basket2-fill","bi-emoji-smile","bi-stars"],
+      //images: ["bi-basket2-fill","bi-emoji-smile","bi-stars"],
+      images: ["saka_saka1.jpg","saka_saka2.jpg","saka_saka3.jpg"],
       ingredients: ["Feuilles de manioc", "Huile de palme", "Arachide", "Poisson fumé (option)", "Épices maison"],
       suggestions: ["Riz blanc", "Banane plantain", "Jus de bissap"],
       customizable: true
@@ -24,7 +25,8 @@ window.TT_MOCK = {
       category: "dejeuner",
       price: 3500,
       rating: 4.5,
-      images: ["bi-egg-fried","bi-emoji-heart-eyes","bi-stars"],
+      //images: ["bi-egg-fried","bi-emoji-heart-eyes","bi-stars"],
+      images: ["haricot1.jpg","haricot2.jpg","haricot3.jpg"],
       ingredients: ["Haricots", "Oignons", "Tomates", "Plantain", "Épices"],
       suggestions: ["Poulet braisé", "Frites maison", "Sauce piment"],
       customizable: true
@@ -35,7 +37,7 @@ window.TT_MOCK = {
       category: "grillades",
       price: 6500,
       rating: 4.8,
-      images: ["bi-fire","bi-emoji-sunglasses","bi-stars"],
+      images: ["grillade_mix1.jpg","grillade_mix2.jpg","grillade_mix3.jpg"],
       ingredients: ["Poulet", "Poisson", "Brochettes", "Épices", "Citron"],
       suggestions: ["Alloco", "Salade fraîche", "Gingembre"],
       customizable: true
@@ -46,7 +48,7 @@ window.TT_MOCK = {
       category: "petitdej",
       price: 1200,
       rating: 4.4,
-      images: ["bi-bag-heart","bi-emoji-smile","bi-stars"],
+      images: ["Beignets1.jpg","Beignets1.jpg","Beignets1.jpg"],
       ingredients: ["Farine", "Levure", "Sucre", "Huile", "Arachide (option)"],
       suggestions: ["Café au lait", "Bouillie maïs", "Riz au lait"],
       customizable: true

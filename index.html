@@ -12,7 +12,25 @@
 <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" integrity="sha256-p4NxAoJBhIIN+hmNHrzRCf9tD/miZyoHS5obTRR9BMY=" crossorigin=""/>
 <link rel="stylesheet" href="assets/css/style.css">
 
-  
+  <style>
+    .tt-thumb {
+  width: 72px;          /* taille du bloc */
+  height: 72px;
+  border-radius: 16px;
+  background: #fff3e8;  /* fond doux */
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  overflow: hidden;     /* 🔥 empêche le débordement */
+}
+
+.tt-thumb img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;    /* 🔥 remplit sans déformer */
+}
+
+  </style>
 </head>
 <body>
   <header class="tt-topbar">
