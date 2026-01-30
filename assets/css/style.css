@@ -243,3 +243,85 @@ a:hover {
 .tt-table {
   overflow: auto;
 }
+
+
+/* Conteneur thumbnail */
+.tt-thumb {
+  width: 72px;
+  height: 72px;
+  min-width: 72px;
+  border-radius: 16px;
+  overflow: hidden;          /* 🔥 clé anti-débordement */
+  background: #f7efe7;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+/* Image à l’intérieur */
+.tt-thumb img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;         /* 👈 remplit sans déformer */
+  display: block;
+}
+
+
+/* Carousel HERO: fixe la hauteur pour éviter que tout bouge */
+.tt-hero-carousel {
+  border-radius: 18px;
+  overflow: hidden;
+  background: #fff3e8;
+}
+
+/* Hauteur stable (évite le layout qui saute) */
+.tt-hero-carousel img {
+  width: 100%;
+  height: 220px;        /* desktop */
+  object-fit: cover;    /* image bien cadrée */
+  display: block;
+}
+
+/* Responsive mobile */
+@media (max-width: 576px) {
+  .tt-hero-carousel img {
+    height: 160px;
+  }
+}
+
+/* Slide cliquable */
+.tt-hero-slide {
+  position: relative;
+  display: block;
+  width: 100%;
+  height: 100%;
+}
+
+/* Badge promo */
+.tt-hero-badge {
+  position: absolute;
+  top: 12px;
+  left: 12px;
+  background: #ff7900;
+  color: #fff;
+  font-size: 0.75rem;
+  font-weight: 700;
+  padding: 6px 10px;
+  border-radius: 999px;
+  box-shadow: 0 6px 18px rgba(21, 16, 16, 0.15);
+}
+
+/* Effet hover discret (desktop seulement) */
+@media (hover: hover) {
+  .tt-hero-slide:hover img {
+    transform: scale(1.03);
+    transition: transform 0.4s ease;
+  }
+}
+
+/* Images des cartes promotion */
+.promo-img {
+  height: 180px;
+  object-fit: cover;
+  display: block;
+}

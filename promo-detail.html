@@ -1,0 +1,239 @@
+<!doctype html>
+<html lang="fr">
+<head>
+  <meta charset="utf-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1"/>
+  <title>Détail promotion — TchoTchop</title>
+  <meta name="theme-color" content="#ff7900">
+  <link rel="icon" href="assets/img/logo.svg" type="image/svg+xml">
+
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css" rel="stylesheet">
+  <link rel="stylesheet" href="assets/css/style.css">
+</head>
+
+<body>
+
+<!-- HEADER -->
+<header class="tt-topbar">
+    <div class="container py-2 d-flex align-items-center justify-content-between gap-2">
+      <a class="d-flex align-items-center gap-2 text-decoration-none" href="index.html">
+        <img src="assets/img/logo.svg" alt="TchoTchop" style="height:34px">
+        <span class="tt-brand-badge d-none d-sm-inline">Cuisine locale • Livraison</span>
+      </a>
+
+      <div class="d-flex align-items-center gap-2">
+        <a class="btn btn-sm btn-tt-outline tt-btn d-none d-md-inline-flex" href="ads.html">
+          <i class="bi bi-megaphone me-1"></i> Annonces
+        </a>
+        <a class="btn btn-sm btn-tt-outline tt-btn" href="tracking.html">
+          <i class="bi bi-geo-alt me-1"></i> Suivi
+        </a>
+        <a class="btn btn-sm btn-tt tt-btn position-relative" href="cart.html">
+          <i class="bi bi-bag me-1"></i> Panier
+          <span class="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-dark" data-tt-cart-count>0</span>
+        </a>
+
+        <div class="dropdown">
+          <button class="btn btn-sm btn-tt-outline tt-btn dropdown-toggle" data-bs-toggle="dropdown">
+            <i class="bi bi-bell me-1"></i>
+            <span class="tt-notif-dot"></span>
+          </button>
+          <div class="dropdown-menu dropdown-menu-end p-2" style="width:320px">
+            <div class="small fw-bold mb-2">Notifications</div>
+            <div class="small text-muted mb-2">Chaque étape commande/livraison déclenche une notification.</div>
+            <div class="tt-card p-2 mb-2">
+              <div class="small"><i class="bi bi-check2-circle me-1"></i>Commande confirmée • <span class="text-muted">à l’instant</span></div>
+            </div>
+            <div class="tt-card p-2">
+              <div class="small"><i class="bi bi-bicycle me-1"></i>Livraison en cours • <span class="text-muted">ETA mis à jour</span></div>
+            </div>
+          </div>
+        </div>
+
+        <a class="btn btn-sm btn-tt-outline tt-btn d-none d-md-inline-flex" href="auth.html">
+          <i class="bi bi-person-circle me-1"></i> Compte
+        </a>
+      </div>
+    </div>
+  </header>
+
+
+<!-- MAIN -->
+<main class="container my-4">
+
+  <!-- HERO PROMO -->
+  <div class="tt-card p-4 mb-4">
+    <span class="tt-badge mb-2 d-inline-block">
+      🔥 Promotion spéciale
+    </span>
+
+    <h1 class="fw-black mb-1">Saka-Saka Premium</h1>
+    <p class="text-muted">
+      Offre exclusive valable pour une durée limitée.
+    </p>
+  </div>
+
+  <!-- CONTENU PRINCIPAL -->
+  <div class="row g-4">
+
+    <!-- IMAGE + PRIX -->
+    <div class="col-lg-6">
+      <div class="tt-card overflow-hidden">
+        <img
+          src="assets/img/saka_saka1.jpg"
+          alt="Saka-Saka Premium"
+          class="w-100"
+          style="height:320px;object-fit:cover"
+        >
+
+        <div class="p-3">
+          <div class="d-flex justify-content-between align-items-center">
+            <div>
+              <div class="text-muted small text-decoration-line-through">
+                Ancien prix : 4 500 XAF
+              </div>
+              <div class="fw-bold fs-4 text-brand">
+                Prix promo : 3 800 XAF
+              </div>
+            </div>
+
+            <span class="tt-badge">
+              -15 %
+            </span>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- DESCRIPTION -->
+    <div class="col-lg-6">
+      <div class="tt-card p-3 mb-3">
+        <h3 class="fw-bold mb-2">Description</h3>
+        <p class="small text-muted mb-0">
+          Le saka-saka est préparé avec des feuilles de manioc finement pilées,
+          mijotées à l’huile rouge avec des arachides sélectionnées.
+          Une recette traditionnelle, riche et savoureuse.
+        </p>
+      </div>
+
+      <div class="tt-card p-3 mb-3">
+        <h3 class="fw-bold mb-2">Ce que comprend l’offre</h3>
+        <ul class="small text-muted mb-0">
+          <li>🍃 Saka-saka maison</li>
+          <li>🥜 Arachides grillées</li>
+          <li>🍚 Accompagnement au choix</li>
+          <li>🔥 Portion généreuse</li>
+        </ul>
+      </div>
+
+      <div class="tt-card p-3">
+        <h3 class="fw-bold mb-2">Conditions</h3>
+        <ul class="small text-muted mb-0">
+          <li>⏱ Offre valable aujourd’hui uniquement</li>
+          <li>📦 Dans la limite des stocks</li>
+          <li>🚚 Livraison classique</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+
+  <!-- CTA -->
+  <div class="tt-card p-3 mt-4">
+    <div class="row g-2">
+      <div class="col-md-6">
+        <a href="menu-detail.html?id=saka" class="btn btn-tt tt-btn w-100">
+          <i class="bi bi-bag-plus me-1"></i> Commander ce menu
+        </a>
+      </div>
+      <div class="col-md-6">
+        <a href="menu.html#cat=dejeuner" class="btn btn-tt-outline tt-btn w-100">
+          <i class="bi bi-grid me-1"></i> Voir menus similaires
+        </a>
+      </div>
+    </div>
+  </div>
+
+</main>
+
+<!-- FOOTER -->
+<footer class="tt-footer mt-5">
+    <div class="container py-4">
+      <div class="row g-4">
+        <div class="col-md-4">
+          <div class="d-flex align-items-center gap-2 mb-2">
+            <img src="assets/img/logo.svg" alt="TchoTchop" style="height:34px">
+          </div>
+          <div class="small text-muted">
+            TchoTchop valorise la cuisine du Congo-Brazzaville : plats locaux, grillades, petit-déj, desserts.
+            Commande sur place ou à distance, livraison, paiement sécurisé (local & international).
+          </div>
+          <div class="mt-3 d-flex gap-2 flex-wrap">
+            <span class="tt-badge"><i class="bi bi-shield-check me-1"></i>Paiement sécurisé</span>
+            <span class="tt-badge"><i class="bi bi-box-seam me-1"></i>Emballages propres</span>
+            <span class="tt-badge"><i class="bi bi-bell me-1"></i>Notifications</span>
+          </div>
+        </div>
+
+        <div class="col-6 col-md-2">
+          <div class="fw-bold mb-2">Menus</div>
+          <div class="d-grid gap-1 small">
+            <a href="menu.html#cat=petitdej">Petit-déjeuner</a>
+            <a href="menu.html#cat=dejeuner">Déjeuner</a>
+            <a href="menu.html#cat=dessert">Desserts</a>
+            <a href="menu.html#cat=grillades">Grillades</a>
+            <a href="menu.html#cat=boissons">Boissons</a>
+          </div>
+        </div>
+
+        <div class="col-6 col-md-2">
+          <div class="fw-bold mb-2">Compte</div>
+          <div class="d-grid gap-1 small">
+            <a href="profile.html">Profil</a>
+            <a href="history.html">Historique</a>
+            <a href="reductions.html">Mes réductions</a>
+            <a href="subscriptions.html">Abonnement</a>
+          </div>
+        </div>
+
+        <div class="col-6 col-md-2">
+          <div class="fw-bold mb-2">Assistance</div>
+          <div class="d-grid gap-1 small">
+            <a href="help.html">Aide / FAQ</a>
+            <a href="incidents.html">Incidents</a>
+            <a href="contact.html">Contact</a>
+            <a href="about.html">À propos</a>
+          </div>
+        </div>
+
+        <div class="col-6 col-md-2">
+          <div class="fw-bold mb-2">Admin</div>
+          <div class="d-grid gap-1 small">
+            <a href="admin/index.html">Dashboard</a>
+            <a href="admin/orders.html">Commandes</a>
+            <a href="admin/deliveries.html">Livraisons</a>
+            <a href="admin/geo.html">Géolocalisation</a>
+          </div>
+        </div>
+      </div>
+
+      <hr class="my-4"/>
+
+      <div class="d-flex flex-column flex-md-row justify-content-between align-items-start align-items-md-center gap-2 small text-muted">
+        <div>© 2026 TchoTchop • Template UI/UX (HTML)</div>
+        <div class="d-flex gap-3">
+          <span><i class="bi bi-instagram me-1"></i>Instagram</span>
+          <span><i class="bi bi-tiktok me-1"></i>TikTok</span>
+          <span><i class="bi bi-youtube me-1"></i>YouTube</span>
+        </div>
+      </div>
+    </div>
+  </footer>
+
+<!-- SCRIPTS -->
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+<script src="assets/js/mock-data.js"></script>
+<script src="assets/js/app.js"></script>
+
+</body>
+</html>
