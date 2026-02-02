@@ -12,7 +12,25 @@
 <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" integrity="sha256-p4NxAoJBhIIN+hmNHrzRCf9tD/miZyoHS5obTRR9BMY=" crossorigin=""/>
 <link rel="stylesheet" href="../assets/css/style.css">
 
-  
+   <style>
+    /* ✅ Desktop sidebar uniquement (lg+) */
+    .tt-admin-sidebar-desktop { display: none; }
+    @media (min-width: 992px) {
+      .tt-admin-sidebar-desktop { display: block; }
+      .tt-admin-toggle { display:none; }
+    }
+
+    /* ✅ Petites améliorations charts */
+    .tt-chart-wrap {
+      width: 100%;
+      height: 280px;           /* fixe une hauteur clean */
+      position: relative;
+    }
+    .tt-chart-wrap canvas{
+      width: 100% !important;
+      height: 100% !important;
+    }
+  </style>
 </head>
 <body>
   <header class="tt-topbar">
@@ -58,39 +76,80 @@
     </div>
   </header>
 
+  <!-- ✅ OFFCANVAS SIDEBAR (mobile/tablette) -->
+<div class="offcanvas offcanvas-start" tabindex="-1" id="ttAdminOffcanvas" aria-labelledby="ttAdminOffcanvasLabel">
+  <div class="offcanvas-header">
+    <h5 class="offcanvas-title" id="ttAdminOffcanvasLabel">
+      <i class="bi bi-speedometer2 me-1"></i> Admin
+    </h5>
+    <button type="button" class="btn-close" data-bs-dismiss="offcanvas" aria-label="Fermer"></button>
+  </div>
+  <div class="offcanvas-body">
+    <div class="tt-card p-3 tt-admin-sidebar">
+      <div class="small text-muted mb-3">Gestion complète de la plateforme.</div>
+      <div class="tt-admin-nav d-grid gap-1">
+        <a href="index.html" data-admin-nav="index.html"><i class="bi bi-speedometer2"></i> Dashboard</a>
+        <a href="products.html" data-admin-nav="products.html"><i class="bi bi-basket2"></i> Produits</a>
+        <a href="categories.html" data-admin-nav="categories.html"><i class="bi bi-grid"></i> Catégories</a>
+        <a href="orders.html" data-admin-nav="orders.html"><i class="bi bi-receipt"></i> Commandes</a>
+        <a href="deliveries.html" data-admin-nav="deliveries.html"><i class="bi bi-truck"></i> Livraisons</a>
+        <a href="incidents.html" data-admin-nav="incidents.html"><i class="bi bi-exclamation-triangle"></i> Incidents</a>
+        <a href="suppliers.html" data-admin-nav="suppliers.html"><i class="bi bi-box"></i> Fournisseurs</a>
+        <a href="purchases.html" data-admin-nav="purchases.html"><i class="bi bi-cart-check"></i> Achats</a>
+        <a href="sales.html" data-admin-nav="sales.html"><i class="bi bi-graph-up"></i> Ventes</a>
+        <a href="customers.html" data-admin-nav="customers.html"><i class="bi bi-people"></i> Clients</a>
+        <a href="ads.html" data-admin-nav="ads.html"><i class="bi bi-megaphone"></i> Annonces</a>
+        <a href="geo.html" data-admin-nav="geo.html"><i class="bi bi-geo-alt"></i> Géolocalisation</a>
+        <a href="settings.html" data-admin-nav="settings.html"><i class="bi bi-gear"></i> Paramètres</a>
+      </div>
+    </div>
+  </div>
+</div>
+
   <main class="container my-4">
     
 <div class="row g-4">
-  <div class="col-lg-3">
-<div class="tt-card p-3 tt-admin-sidebar">
-  <div class="fw-bold mb-2"><i class="bi bi-speedometer2 me-1"></i>Admin</div>
-  <div class="small text-muted mb-3">Gestion complète de la plateforme.</div>
-  <div class="tt-admin-nav d-grid gap-1">
-    <a href="index.html" data-admin-nav="index.html"><i class="bi bi-speedometer2"></i> Dashboard</a>
-    <a href="products.html" data-admin-nav="products.html"><i class="bi bi-basket2"></i> Produits</a>
-    <a href="categories.html" data-admin-nav="categories.html"><i class="bi bi-grid"></i> Catégories</a>
-    <a href="orders.html" data-admin-nav="orders.html"><i class="bi bi-receipt"></i> Commandes</a>
-    <a href="deliveries.html" data-admin-nav="deliveries.html"><i class="bi bi-truck"></i> Livraisons</a>
-    <a href="incidents.html" data-admin-nav="incidents.html"><i class="bi bi-exclamation-triangle"></i> Incidents</a>
-    <a href="suppliers.html" data-admin-nav="suppliers.html"><i class="bi bi-box"></i> Fournisseurs</a>
-    <a href="purchases.html" data-admin-nav="purchases.html"><i class="bi bi-cart-check"></i> Achats</a>
-    <a href="sales.html" data-admin-nav="sales.html"><i class="bi bi-graph-up"></i> Ventes</a>
-    <a href="customers.html" data-admin-nav="customers.html"><i class="bi bi-people"></i> Clients</a>
-    <a href="ads.html" data-admin-nav="ads.html"><i class="bi bi-megaphone"></i> Annonces</a>
-    <a href="geo.html" data-admin-nav="geo.html"><i class="bi bi-geo-alt"></i> Géolocalisation</a>
-    <a href="settings.html" data-admin-nav="settings.html"><i class="bi bi-gear"></i> Paramètres</a>
-  </div>
-</div>
-<script>
-document.addEventListener("DOMContentLoaded", () => {
-  const path = location.pathname.split("/").pop() || "index.html";
-  document.querySelectorAll("[data-admin-nav]").forEach(a => {
-    a.classList.toggle("active", a.getAttribute("data-admin-nav") === path);
-  });
-});
-</script>
-</div>
+  <!-- ✅ SIDEBAR DESKTOP -->
+    <div class="col-lg-3 tt-admin-sidebar-desktop">
+      <div class="tt-card p-3 tt-admin-sidebar">
+        <div class="fw-bold mb-2"><i class="bi bi-speedometer2 me-1"></i>Admin</div>
+        <div class="small text-muted mb-3">Gestion complète de la plateforme.</div>
+        <div class="tt-admin-nav d-grid gap-1">
+          <a href="index.html" data-admin-nav="index.html"><i class="bi bi-speedometer2"></i> Dashboard</a>
+          <a href="products.html" data-admin-nav="products.html"><i class="bi bi-basket2"></i> Produits</a>
+          <a href="categories.html" data-admin-nav="categories.html"><i class="bi bi-grid"></i> Catégories</a>
+          <a href="orders.html" data-admin-nav="orders.html"><i class="bi bi-receipt"></i> Commandes</a>
+          <a href="deliveries.html" data-admin-nav="deliveries.html"><i class="bi bi-truck"></i> Livraisons</a>
+          <a href="incidents.html" data-admin-nav="incidents.html"><i class="bi bi-exclamation-triangle"></i> Incidents</a>
+          <a href="suppliers.html" data-admin-nav="suppliers.html"><i class="bi bi-box"></i> Fournisseurs</a>
+          <a href="purchases.html" data-admin-nav="purchases.html"><i class="bi bi-cart-check"></i> Achats</a>
+          <a href="sales.html" data-admin-nav="sales.html"><i class="bi bi-graph-up"></i> Ventes</a>
+          <a href="customers.html" data-admin-nav="customers.html"><i class="bi bi-people"></i> Clients</a>
+          <a href="ads.html" data-admin-nav="ads.html"><i class="bi bi-megaphone"></i> Annonces</a>
+          <a href="geo.html" data-admin-nav="geo.html"><i class="bi bi-geo-alt"></i> Géolocalisation</a>
+          <a href="settings.html" data-admin-nav="settings.html"><i class="bi bi-gear"></i> Paramètres</a>
+        </div>
+      </div>
+    </div>
+
+    <!-- ✅ CONTENT -->
+
   <div class="col-lg-9">
+
+    <!-- Titre + bouton mobile -->
+      <div class="d-flex align-items-start justify-content-between gap-2">
+        <!-- Content -->
+
+        <!-- ✅ Bouton sidebar mobile -->
+        <button class="btn btn-sm btn-tt-outline tt-btn tt-admin-toggle"
+                type="button"
+                data-bs-toggle="offcanvas"
+                data-bs-target="#ttAdminOffcanvas"
+                aria-controls="ttAdminOffcanvas">
+          <i class="bi bi-list me-1"></i> Menu Admin
+        </button>
+      </div>
+      
 <h1 class="h4" style="font-weight:900">Ventes</h1>
 <div class="small text-muted mb-3">Suivi ventes (par période, par catégorie, par canal).</div>
 
@@ -101,7 +160,13 @@ document.addEventListener("DOMContentLoaded", () => {
       <input class="form-control" placeholder="Rechercher… (UI)">
     </div>
     <div class="d-flex gap-2 flex-wrap">
-      <button class="btn btn-tt-outline tt-btn" onclick="TT.toast('Exporter (UI)','bi-download')"><i class="bi bi-download me-1"></i>Exporter</button>
+<button class="btn btn-tt tt-btn"
+        type="button"
+        data-bs-toggle="modal"
+        data-bs-target="#ttSaleFormModal"
+        data-mode="create">
+  <i class="bi bi-plus-circle me-1"></i>Nouvelle vente
+</button>
     </div>
   </div>
 </div>
@@ -111,11 +176,97 @@ document.addEventListener("DOMContentLoaded", () => {
     <table class="table align-middle mb-0">
       <thead><tr><th>Période</th><th>Commandes</th><th>CA (XAF)</th><th>Top catégorie</th><th></th></tr></thead>
       <tbody>
-        
-    <tr><td>Cette semaine</td><td>210</td><td>1 420 000</td><td>Grillades</td><td class="text-end"><button class="btn btn-sm btn-tt-outline tt-btn" onclick="TT.toast('Rapport (UI)','bi-file-earmark-text')">Rapport</button></td></tr>
-    <tr><td>Ce mois</td><td>890</td><td>6 080 000</td><td>Déjeuner</td><td class="text-end"><button class="btn btn-sm btn-tt-outline tt-btn" onclick="TT.toast('Rapport (UI)','bi-file-earmark-text')">Rapport</button></td></tr>
-    
-      </tbody>
+
+<tr>
+  <td>Cette semaine</td>
+  <td>210</td>
+  <td>1 420 000</td>
+  <td>Grillades</td>
+  <td class="text-end">
+    <div class="d-inline-flex gap-1 flex-wrap justify-content-end">
+
+      <!-- DÉTAILS -->
+      <button class="btn btn-sm btn-tt-outline tt-btn"
+              data-bs-toggle="modal"
+              data-bs-target="#ttSaleDetailModal"
+              data-sale='{
+                "period":"Cette semaine",
+                "orders":210,
+                "revenue":1420000,
+                "topCategory":"Grillades",
+                "channels":{"Sur place":120,"Livraison":70,"À emporter":20},
+                "payments":{"Espèces":600000,"Mobile Money":820000},
+                "notes":"Très forte demande sur les grillades le week-end."
+              }'>
+        <i class="bi bi-eye me-1"></i>Détails
+      </button>
+
+      <!-- MODIFIER -->
+      <button class="btn btn-sm btn-tt tt-btn"
+              data-bs-toggle="modal"
+              data-bs-target="#ttSaleFormModal"
+              data-mode="edit"
+              data-sale='{
+                "period":"Cette semaine",
+                "orders":210,
+                "revenue":1420000,
+                "topCategory":"Grillades",
+                "channel":"Sur place",
+                "payment":"Mobile Money",
+                "notes":"Très forte demande sur les grillades le week-end."
+              }'>
+        <i class="bi bi-pencil me-1"></i>Modifier
+      </button>
+
+    </div>
+  </td>
+</tr>
+
+<tr>
+  <td>Ce mois</td>
+  <td>890</td>
+  <td>6 080 000</td>
+  <td>Déjeuner</td>
+  <td class="text-end">
+    <div class="d-inline-flex gap-1 flex-wrap justify-content-end">
+
+      <button class="btn btn-sm btn-tt-outline tt-btn"
+              data-bs-toggle="modal"
+              data-bs-target="#ttSaleDetailModal"
+              data-sale='{
+                "period":"Ce mois",
+                "orders":890,
+                "revenue":6080000,
+                "topCategory":"Déjeuner",
+                "channels":{"Sur place":430,"Livraison":360,"À emporter":100},
+                "payments":{"Espèces":2400000,"Mobile Money":3680000},
+                "notes":"Bon équilibre entre livraison et sur place."
+              }'>
+        <i class="bi bi-eye me-1"></i>Détails
+      </button>
+
+      <button class="btn btn-sm btn-tt tt-btn"
+              data-bs-toggle="modal"
+              data-bs-target="#ttSaleFormModal"
+              data-mode="edit"
+              data-sale='{
+                "period":"Ce mois",
+                "orders":890,
+                "revenue":6080000,
+                "topCategory":"Déjeuner",
+                "channel":"Livraison",
+                "payment":"Espèces",
+                "notes":"Bon équilibre entre livraison et sur place."
+              }'>
+        <i class="bi bi-pencil me-1"></i>Modifier
+      </button>
+
+    </div>
+  </td>
+</tr>
+
+</tbody>
+
     </table>
   </div>
 </div>
@@ -197,7 +348,144 @@ document.addEventListener("DOMContentLoaded", () => {
     </div>
   </footer>
 
-  
+  <!-- MODAL : FORM VENTE -->
+<div class="modal fade" id="ttSaleFormModal" tabindex="-1">
+  <div class="modal-dialog modal-lg modal-dialog-centered">
+    <div class="modal-content tt-card" style="border-radius:20px">
+
+      <div class="modal-header">
+        <h5 class="fw-black mb-0" id="saleFormTitle">
+          <i class="bi bi-graph-up me-1"></i> Vente
+        </h5>
+        <button class="btn-close" data-bs-dismiss="modal"></button>
+      </div>
+
+      <div class="modal-body">
+
+        <div class="tt-card p-3 mb-3">
+          <div class="fw-bold mb-2">📅 Informations générales</div>
+          <div class="row g-2">
+            <div class="col-md-4">
+              <label class="form-label">Période</label>
+              <input id="sf_period" class="form-control" placeholder="Ex: Cette semaine">
+            </div>
+            <div class="col-md-4">
+              <label class="form-label">Nombre de commandes</label>
+              <input id="sf_orders" type="number" class="form-control">
+            </div>
+            <div class="col-md-4">
+              <label class="form-label">Chiffre d’affaires (XAF)</label>
+              <input id="sf_revenue" type="number" class="form-control">
+            </div>
+          </div>
+        </div>
+
+        <div class="tt-card p-3 mb-3">
+          <div class="fw-bold mb-2">📊 Détails vente</div>
+          <div class="row g-2">
+            <div class="col-md-6">
+              <label class="form-label">Canal principal</label>
+              <select id="sf_channel" class="form-select">
+                <option>Sur place</option>
+                <option>Livraison</option>
+                <option>À emporter</option>
+              </select>
+            </div>
+            <div class="col-md-6">
+              <label class="form-label">Moyen de paiement dominant</label>
+              <select id="sf_payment" class="form-select">
+                <option>Espèces</option>
+                <option>Mobile Money</option>
+                <option>Carte</option>
+              </select>
+            </div>
+            <div class="col-md-6">
+              <label class="form-label">Catégorie la plus vendue</label>
+              <select id="sf_category" class="form-select">
+                <option>Grillades</option>
+                <option>Déjeuner</option>
+                <option>Petit-déjeuner</option>
+                <option>Desserts</option>
+                <option>Boissons</option>
+              </select>
+            </div>
+          </div>
+        </div>
+
+        <div class="tt-card p-3">
+          <div class="fw-bold mb-2">📝 Notes</div>
+          <textarea id="sf_notes" class="form-control" rows="3"
+            placeholder="Ex: période forte, promo, évènement spécial…"></textarea>
+        </div>
+
+      </div>
+
+      <div class="modal-footer">
+        <button class="btn btn-tt-outline tt-btn" data-bs-dismiss="modal">Annuler</button>
+        <button class="btn btn-tt tt-btn"
+                onclick="TT.toast('Vente enregistrée (UI)','bi-check2-circle')">
+          <i class="bi bi-save me-1"></i>Enregistrer
+        </button>
+      </div>
+
+    </div>
+  </div>
+</div>
+
+
+<!-- MODAL : DETAILS VENTE -->
+<div class="modal fade" id="ttSaleDetailModal" tabindex="-1">
+  <div class="modal-dialog modal-lg modal-dialog-centered">
+    <div class="modal-content tt-card" style="border-radius:20px">
+
+      <div class="modal-header">
+        <h5 class="fw-black mb-0">
+          <i class="bi bi-eye me-1"></i>Détails vente
+        </h5>
+        <button class="btn-close" data-bs-dismiss="modal"></button>
+      </div>
+
+      <div class="modal-body">
+
+        <div class="tt-card p-3 mb-3">
+          <div class="fw-bold" id="sd_period">—</div>
+          <div class="small text-muted">
+            <span id="sd_orders">—</span> commandes •
+            CA <span id="sd_revenue">—</span> XAF
+          </div>
+          <span class="tt-badge mt-2" id="sd_category">—</span>
+        </div>
+
+        <div class="row g-3 mb-3">
+          <div class="col-md-6">
+            <div class="tt-card p-3 h-100">
+              <div class="fw-bold mb-2">📦 Canaux</div>
+              <ul class="small mb-0" id="sd_channels"></ul>
+            </div>
+          </div>
+          <div class="col-md-6">
+            <div class="tt-card p-3 h-100">
+              <div class="fw-bold mb-2">💳 Paiements</div>
+              <ul class="small mb-0" id="sd_payments"></ul>
+            </div>
+          </div>
+        </div>
+
+        <div class="tt-card p-3">
+          <div class="fw-bold mb-2">📝 Notes</div>
+          <div class="small text-muted" id="sd_notes">—</div>
+        </div>
+
+      </div>
+
+      <div class="modal-footer">
+        <button class="btn btn-tt-outline tt-btn" data-bs-dismiss="modal">Fermer</button>
+      </div>
+
+    </div>
+  </div>
+</div>
+
 
   <!-- Toast -->
   <div class="toast-container position-fixed bottom-0 end-0 p-3">
@@ -212,6 +500,55 @@ document.addEventListener("DOMContentLoaded", () => {
 <script src="../assets/js/app.js"></script>
 
   
+<script>
+  const setTxt = (id,v)=>document.getElementById(id).textContent=v??"—";
+  const setVal = (id,v)=>document.getElementById(id).value=v??"";
+
+  // FORM
+  document.addEventListener("click",e=>{
+    const btn=e.target.closest("[data-bs-target='#ttSaleFormModal']");
+    if(!btn) return;
+    const m=btn.getAttribute("data-mode");
+    const d=JSON.parse(btn.getAttribute("data-sale")||"{}");
+
+    document.getElementById("saleFormTitle").innerHTML=
+      m==="edit"?"<i class='bi bi-pencil me-1'></i> Modifier vente":"<i class='bi bi-plus-circle me-1'></i> Nouvelle vente";
+
+    setVal("sf_period",d.period);
+    setVal("sf_orders",d.orders);
+    setVal("sf_revenue",d.revenue);
+    setVal("sf_channel",d.channel);
+    setVal("sf_payment",d.payment);
+    setVal("sf_category",d.topCategory);
+    setVal("sf_notes",d.notes);
+  });
+
+  // DETAILS
+  document.addEventListener("click",e=>{
+    const btn=e.target.closest("[data-bs-target='#ttSaleDetailModal']");
+    if(!btn) return;
+    const d=JSON.parse(btn.getAttribute("data-sale"));
+
+    setTxt("sd_period",d.period);
+    setTxt("sd_orders",d.orders);
+    setTxt("sd_revenue",new Intl.NumberFormat("fr-FR").format(d.revenue));
+    setTxt("sd_category",d.topCategory);
+    setTxt("sd_notes",d.notes);
+
+    const c=document.getElementById("sd_channels");
+    c.innerHTML="";
+    Object.entries(d.channels||{}).forEach(([k,v])=>{
+      c.innerHTML+=`<li>${k} : ${v}</li>`;
+    });
+
+    const p=document.getElementById("sd_payments");
+    p.innerHTML="";
+    Object.entries(d.payments||{}).forEach(([k,v])=>{
+      p.innerHTML+=`<li>${k} : ${new Intl.NumberFormat("fr-FR").format(v)} XAF</li>`;
+    });
+  });
+</script>
+
   
 </body>
 </html>

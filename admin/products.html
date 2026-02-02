@@ -12,7 +12,26 @@
 <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" integrity="sha256-p4NxAoJBhIIN+hmNHrzRCf9tD/miZyoHS5obTRR9BMY=" crossorigin=""/>
 <link rel="stylesheet" href="../assets/css/style.css">
 
-  
+  <style>
+    /* ✅ Desktop sidebar uniquement (lg+) */
+    .tt-admin-sidebar-desktop { display: none; }
+    @media (min-width: 992px) {
+      .tt-admin-sidebar-desktop { display: block; }
+      .tt-admin-toggle { display:none; }
+    }
+
+    /* ✅ Petites améliorations charts */
+    .tt-chart-wrap {
+      width: 100%;
+      height: 280px;           /* fixe une hauteur clean */
+      position: relative;
+    }
+    .tt-chart-wrap canvas{
+      width: 100% !important;
+      height: 100% !important;
+    }
+  </style>
+
 </head>
 <body>
   <header class="tt-topbar">
@@ -58,39 +77,80 @@
     </div>
   </header>
 
+  <!-- ✅ OFFCANVAS SIDEBAR (mobile/tablette) -->
+<div class="offcanvas offcanvas-start" tabindex="-1" id="ttAdminOffcanvas" aria-labelledby="ttAdminOffcanvasLabel">
+  <div class="offcanvas-header">
+    <h5 class="offcanvas-title" id="ttAdminOffcanvasLabel">
+      <i class="bi bi-speedometer2 me-1"></i> Admin
+    </h5>
+    <button type="button" class="btn-close" data-bs-dismiss="offcanvas" aria-label="Fermer"></button>
+  </div>
+  <div class="offcanvas-body">
+    <div class="tt-card p-3 tt-admin-sidebar">
+      <div class="small text-muted mb-3">Gestion complète de la plateforme.</div>
+      <div class="tt-admin-nav d-grid gap-1">
+        <a href="index.html" data-admin-nav="index.html"><i class="bi bi-speedometer2"></i> Dashboard</a>
+        <a href="products.html" data-admin-nav="products.html"><i class="bi bi-basket2"></i> Produits</a>
+        <a href="categories.html" data-admin-nav="categories.html"><i class="bi bi-grid"></i> Catégories</a>
+        <a href="orders.html" data-admin-nav="orders.html"><i class="bi bi-receipt"></i> Commandes</a>
+        <a href="deliveries.html" data-admin-nav="deliveries.html"><i class="bi bi-truck"></i> Livraisons</a>
+        <a href="incidents.html" data-admin-nav="incidents.html"><i class="bi bi-exclamation-triangle"></i> Incidents</a>
+        <a href="suppliers.html" data-admin-nav="suppliers.html"><i class="bi bi-box"></i> Fournisseurs</a>
+        <a href="purchases.html" data-admin-nav="purchases.html"><i class="bi bi-cart-check"></i> Achats</a>
+        <a href="sales.html" data-admin-nav="sales.html"><i class="bi bi-graph-up"></i> Ventes</a>
+        <a href="customers.html" data-admin-nav="customers.html"><i class="bi bi-people"></i> Clients</a>
+        <a href="ads.html" data-admin-nav="ads.html"><i class="bi bi-megaphone"></i> Annonces</a>
+        <a href="geo.html" data-admin-nav="geo.html"><i class="bi bi-geo-alt"></i> Géolocalisation</a>
+        <a href="settings.html" data-admin-nav="settings.html"><i class="bi bi-gear"></i> Paramètres</a>
+      </div>
+    </div>
+  </div>
+</div>
+
   <main class="container my-4">
     
 <div class="row g-4">
-  <div class="col-lg-3">
-<div class="tt-card p-3 tt-admin-sidebar">
-  <div class="fw-bold mb-2"><i class="bi bi-speedometer2 me-1"></i>Admin</div>
-  <div class="small text-muted mb-3">Gestion complète de la plateforme.</div>
-  <div class="tt-admin-nav d-grid gap-1">
-    <a href="index.html" data-admin-nav="index.html"><i class="bi bi-speedometer2"></i> Dashboard</a>
-    <a href="products.html" data-admin-nav="products.html"><i class="bi bi-basket2"></i> Produits</a>
-    <a href="categories.html" data-admin-nav="categories.html"><i class="bi bi-grid"></i> Catégories</a>
-    <a href="orders.html" data-admin-nav="orders.html"><i class="bi bi-receipt"></i> Commandes</a>
-    <a href="deliveries.html" data-admin-nav="deliveries.html"><i class="bi bi-truck"></i> Livraisons</a>
-    <a href="incidents.html" data-admin-nav="incidents.html"><i class="bi bi-exclamation-triangle"></i> Incidents</a>
-    <a href="suppliers.html" data-admin-nav="suppliers.html"><i class="bi bi-box"></i> Fournisseurs</a>
-    <a href="purchases.html" data-admin-nav="purchases.html"><i class="bi bi-cart-check"></i> Achats</a>
-    <a href="sales.html" data-admin-nav="sales.html"><i class="bi bi-graph-up"></i> Ventes</a>
-    <a href="customers.html" data-admin-nav="customers.html"><i class="bi bi-people"></i> Clients</a>
-    <a href="ads.html" data-admin-nav="ads.html"><i class="bi bi-megaphone"></i> Annonces</a>
-    <a href="geo.html" data-admin-nav="geo.html"><i class="bi bi-geo-alt"></i> Géolocalisation</a>
-    <a href="settings.html" data-admin-nav="settings.html"><i class="bi bi-gear"></i> Paramètres</a>
-  </div>
-</div>
-<script>
-document.addEventListener("DOMContentLoaded", () => {
-  const path = location.pathname.split("/").pop() || "index.html";
-  document.querySelectorAll("[data-admin-nav]").forEach(a => {
-    a.classList.toggle("active", a.getAttribute("data-admin-nav") === path);
-  });
-});
-</script>
-</div>
+   <!-- ✅ SIDEBAR DESKTOP -->
+    <div class="col-lg-3 tt-admin-sidebar-desktop">
+      <div class="tt-card p-3 tt-admin-sidebar">
+        <div class="fw-bold mb-2"><i class="bi bi-speedometer2 me-1"></i>Admin</div>
+        <div class="small text-muted mb-3">Gestion complète de la plateforme.</div>
+        <div class="tt-admin-nav d-grid gap-1">
+          <a href="index.html" data-admin-nav="index.html"><i class="bi bi-speedometer2"></i> Dashboard</a>
+          <a href="products.html" data-admin-nav="products.html"><i class="bi bi-basket2"></i> Produits</a>
+          <a href="categories.html" data-admin-nav="categories.html"><i class="bi bi-grid"></i> Catégories</a>
+          <a href="orders.html" data-admin-nav="orders.html"><i class="bi bi-receipt"></i> Commandes</a>
+          <a href="deliveries.html" data-admin-nav="deliveries.html"><i class="bi bi-truck"></i> Livraisons</a>
+          <a href="incidents.html" data-admin-nav="incidents.html"><i class="bi bi-exclamation-triangle"></i> Incidents</a>
+          <a href="suppliers.html" data-admin-nav="suppliers.html"><i class="bi bi-box"></i> Fournisseurs</a>
+          <a href="purchases.html" data-admin-nav="purchases.html"><i class="bi bi-cart-check"></i> Achats</a>
+          <a href="sales.html" data-admin-nav="sales.html"><i class="bi bi-graph-up"></i> Ventes</a>
+          <a href="customers.html" data-admin-nav="customers.html"><i class="bi bi-people"></i> Clients</a>
+          <a href="ads.html" data-admin-nav="ads.html"><i class="bi bi-megaphone"></i> Annonces</a>
+          <a href="geo.html" data-admin-nav="geo.html"><i class="bi bi-geo-alt"></i> Géolocalisation</a>
+          <a href="settings.html" data-admin-nav="settings.html"><i class="bi bi-gear"></i> Paramètres</a>
+        </div>
+      </div>
+    </div>
+
+    <!-- ✅ CONTENT -->
+
   <div class="col-lg-9">
+
+    <!-- Titre + bouton mobile -->
+      <div class="d-flex align-items-start justify-content-between gap-2">
+        
+        <!-- Content -->
+        <!-- ✅ Bouton sidebar mobile -->
+        <button class="btn btn-sm btn-tt-outline tt-btn tt-admin-toggle"
+                type="button"
+                data-bs-toggle="offcanvas"
+                data-bs-target="#ttAdminOffcanvas"
+                aria-controls="ttAdminOffcanvas">
+          <i class="bi bi-list me-1"></i> Menu Admin
+        </button>
+      </div>
+      
 <h1 class="h4" style="font-weight:900">Produits</h1>
 <div class="small text-muted mb-3">Créer/éditer les menus (photos, prix, ingrédients, suggestions, catégories, options).</div>
 
@@ -101,7 +161,9 @@ document.addEventListener("DOMContentLoaded", () => {
       <input class="form-control" placeholder="Rechercher… (UI)">
     </div>
     <div class="d-flex gap-2 flex-wrap">
-      <button class="btn btn-tt tt-btn" onclick="TT.toast('Nouveau produit (UI)','bi-plus-circle')"><i class="bi bi-plus-circle me-1"></i>Nouveau</button>
+      <button class="btn btn-tt tt-btn" id="btnNewProduct">
+        <i class="bi bi-plus-circle me-1"></i>Nouveau
+      </button>
     </div>
   </div>
 </div>
@@ -112,8 +174,50 @@ document.addEventListener("DOMContentLoaded", () => {
       <thead><tr><th>Produit</th><th>Catégorie</th><th>Prix</th><th>Stock</th><th></th></tr></thead>
       <tbody>
         
-    <tr><td>Saka-Saka Premium</td><td>Déjeuner</td><td>4 500</td><td><span class="tt-badge">OK</span></td><td class="text-end"><button class="btn btn-sm btn-tt-outline tt-btn" onclick="TT.toast('Édition (UI)','bi-pencil')">Éditer</button></td></tr>
-    <tr><td>Grillades Mix</td><td>Grillades</td><td>6 500</td><td><span class="tt-badge">FAIBLE</span></td><td class="text-end"><button class="btn btn-sm btn-tt-outline tt-btn" onclick="TT.toast('Édition (UI)','bi-pencil')">Éditer</button></td></tr>
+    <tr><td>Saka-Saka Premium</td><td>Déjeuner</td><td>4 500</td><td><span class="tt-badge">OK</span></td><td class="text-end">
+<button class="btn btn-sm btn-tt-outline tt-btn btnEditProduct"
+  data-name="Saka-Saka Premium"
+  data-category="Déjeuner"
+  data-price="4500"
+  data-stock="OK"
+  data-images="saka_saka1.jpg"
+>
+  Éditer
+</button>
+<button class="btn btn-sm btn-tt tt-btn btnViewProduct"
+    data-name="Saka-Saka Premium"
+    data-category="Déjeuner"
+    data-price="4500"
+    data-stock="OK"
+    data-images="saka_saka1.jpg, saka_saka2.jpg"
+    data-desc="Feuilles de manioc, huile rouge, arachides"
+    data-extras="Piment doux, Piment fort">
+    Détails
+  </button>
+    </td></tr>
+    <tr><td>Grillades Mix</td><td>Grillades</td><td>6 500</td><td><span class="tt-badge">FAIBLE</span></td><td class="text-end">
+<button class="btn btn-sm btn-tt-outline tt-btn btnEditProduct"
+  data-name="Grillades Mix"
+  data-category="Grillades"
+  data-price="6500"
+  data-stock="FAIBLE"
+  data-images="grillade_mix1.jpg"
+>
+  Éditer
+</button>
+
+<button class="btn btn-sm btn-tt tt-btn btnViewProduct"
+    data-name="Saka-Saka Premium"
+    data-category="Déjeuner"
+    data-price="4500"
+    data-stock="OK"
+    data-images="saka_saka1.jpg, saka_saka2.jpg"
+    data-desc="Feuilles de manioc, huile rouge, arachides"
+    data-extras="Piment doux, Piment fort">
+    Détails
+  </button>
+
+    </td></tr>
     
       </tbody>
     </table>
@@ -197,7 +301,171 @@ document.addEventListener("DOMContentLoaded", () => {
     </div>
   </footer>
 
-  
+  <!-- ✅ MODAL Produit (Nouveau / Éditer) -->
+<div class="modal fade" id="ttProductModal" tabindex="-1" aria-hidden="true">
+  <div class="modal-dialog modal-dialog-centered modal-lg">
+    <div class="modal-content tt-card" style="border:1px solid var(--border); border-radius:18px;">
+      <div class="modal-header" style="border-bottom:1px solid var(--border);">
+        <div class="d-flex align-items-center gap-2">
+          <span class="tt-badge"><i class="bi bi-basket2 me-1"></i> Produit</span>
+          <h5 class="modal-title mb-0" id="ttProductModalTitle" style="font-weight:900">Nouveau produit</h5>
+        </div>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Fermer"></button>
+      </div>
+
+      <div class="modal-body">
+        <!-- Aperçu -->
+        <div class="tt-card p-3 mb-3" style="background:#fff;">
+          <div class="d-flex align-items-center gap-3">
+            <div class="tt-thumb" style="width:64px;height:64px;border-radius:16px;">
+              <img id="ttModalPreviewImg" src="../assets/img/default.png" alt="aperçu" style="width:100%;height:100%;object-fit:cover;">
+            </div>
+            <div class="flex-grow-1">
+              <div class="fw-bold" id="ttModalPreviewName">—</div>
+              <div class="small text-muted" id="ttModalPreviewMeta">—</div>
+            </div>
+            <span class="tt-badge" id="ttModalPreviewStock">—</span>
+          </div>
+        </div>
+
+        <!-- Form -->
+        <form id="ttProductForm" class="row g-3">
+          <div class="col-md-6">
+            <label class="form-label small text-muted">Nom du produit</label>
+            <input id="ttPName" class="form-control" placeholder="Ex: Saka-Saka Premium" required>
+          </div>
+
+          <div class="col-md-3">
+            <label class="form-label small text-muted">Catégorie</label>
+            <select id="ttPCat" class="form-select" required>
+              <option value="">Choisir…</option>
+              <option>Petit-déjeuner</option>
+              <option>Déjeuner</option>
+              <option>Desserts</option>
+              <option>Grillades</option>
+              <option>Boissons</option>
+            </select>
+          </div>
+
+          <div class="col-md-3">
+            <label class="form-label small text-muted">Prix (XAF)</label>
+            <input id="ttPPrice" type="number" min="0" class="form-control" placeholder="4500" required>
+          </div>
+
+          <div class="col-md-4">
+            <label class="form-label small text-muted">Stock</label>
+            <select id="ttPStock" class="form-select">
+              <option value="OK">OK</option>
+              <option value="FAIBLE">FAIBLE</option>
+              <option value="RUPTURE">RUPTURE</option>
+            </select>
+          </div>
+
+          <div class="col-md-8">
+            <label class="form-label small text-muted">Images (fichiers, séparés par virgules)</label>
+            <input id="ttPImages" class="form-control" placeholder="saka_saka1.jpg, saka_saka2.jpg">
+            <div class="form-text">Ex: assets/img/… (simulation UI)</div>
+          </div>
+
+          <div class="col-12">
+            <label class="form-label small text-muted">Description / ingrédients</label>
+            <textarea id="ttPDesc" class="form-control" rows="3" placeholder="Feuilles de manioc, huile rouge, arachides…"></textarea>
+          </div>
+
+          <div class="col-12">
+            <label class="form-label small text-muted">Options / extras (séparés par virgules)</label>
+            <input id="ttPExtras" class="form-control" placeholder="Piment doux, Piment fort, Portion extra…">
+          </div>
+        </form>
+      </div>
+
+      <div class="modal-footer" style="border-top:1px solid var(--border);">
+        <button type="button" class="btn btn-tt-outline tt-btn" data-bs-dismiss="modal">
+          Annuler
+        </button>
+        <button type="button" class="btn btn-tt tt-btn" id="ttSaveProductBtn">
+          <i class="bi bi-check2-circle me-1"></i> Enregistrer (UI)
+        </button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ✅ MODAL DÉTAILS PRODUIT -->
+<div class="modal fade" id="ttProductDetailsModal" tabindex="-1" aria-hidden="true">
+  <div class="modal-dialog modal-dialog-centered modal-lg">
+    <div class="modal-content tt-card" style="border-radius:20px; border:1px solid var(--border);">
+
+      <div class="modal-header" style="border-bottom:1px solid var(--border);">
+        <div class="d-flex align-items-center gap-2">
+          <span class="tt-badge"><i class="bi bi-eye me-1"></i>Détails</span>
+          <h5 class="modal-title mb-0 fw-black">Fiche produit</h5>
+        </div>
+        <button class="btn-close" data-bs-dismiss="modal"></button>
+      </div>
+
+      <div class="modal-body">
+
+        <!-- HERO -->
+        <div class="d-flex gap-3 align-items-center mb-3">
+          <div class="tt-thumb" style="width:96px;height:96px;">
+            <img id="ttDImg" src="../assets/img/default.png" style="width:100%;height:100%;object-fit:cover;">
+          </div>
+          <div class="flex-grow-1">
+            <h4 class="fw-black mb-1" id="ttDName">—</h4>
+            <div class="small text-muted" id="ttDMeta">—</div>
+            <span class="tt-badge mt-2 d-inline-block" id="ttDStock">—</span>
+          </div>
+        </div>
+
+        <!-- INFOS -->
+        <div class="row g-3">
+          <div class="col-md-6">
+            <div class="tt-card p-3 h-100">
+              <div class="small text-muted mb-1">Catégorie</div>
+              <div class="fw-bold" id="ttDCat">—</div>
+            </div>
+          </div>
+
+          <div class="col-md-6">
+            <div class="tt-card p-3 h-100">
+              <div class="small text-muted mb-1">Prix</div>
+              <div class="fw-bold" id="ttDPrice">—</div>
+            </div>
+          </div>
+
+          <div class="col-12">
+            <div class="tt-card p-3">
+              <div class="small text-muted mb-1">Description / Ingrédients</div>
+              <div id="ttDDesc">—</div>
+            </div>
+          </div>
+
+          <div class="col-12">
+            <div class="tt-card p-3">
+              <div class="small text-muted mb-2">Options / Extras</div>
+              <ul class="mb-0 small" id="ttDExtras"></ul>
+            </div>
+          </div>
+
+          <div class="col-12">
+            <div class="tt-card p-3">
+              <div class="small text-muted mb-2">Images</div>
+              <div class="d-flex gap-2 flex-wrap" id="ttDImages"></div>
+            </div>
+          </div>
+        </div>
+
+      </div>
+
+      <div class="modal-footer" style="border-top:1px solid var(--border);">
+        <button class="btn btn-tt-outline tt-btn" data-bs-dismiss="modal">Fermer</button>
+      </div>
+
+    </div>
+  </div>
+</div>
+
 
   <!-- Toast -->
   <div class="toast-container position-fixed bottom-0 end-0 p-3">
@@ -211,7 +479,146 @@ document.addEventListener("DOMContentLoaded", () => {
 <script src="../assets/js/mock-data.js"></script>
 <script src="../assets/js/app.js"></script>
 
-  
-  
+  <script>
+document.addEventListener("DOMContentLoaded", () => {
+  const modalEl = document.getElementById("ttProductModal");
+  const modal = new bootstrap.Modal(modalEl);
+
+  const IMG_BASE = "../assets/img/";
+
+  // Champs
+  const titleEl = document.getElementById("ttProductModalTitle");
+  const nameEl = document.getElementById("ttPName");
+  const catEl = document.getElementById("ttPCat");
+  const priceEl = document.getElementById("ttPPrice");
+  const stockEl = document.getElementById("ttPStock");
+  const imagesEl = document.getElementById("ttPImages");
+  const descEl = document.getElementById("ttPDesc");
+  const extrasEl = document.getElementById("ttPExtras");
+
+  // Preview
+  const prevImg = document.getElementById("ttModalPreviewImg");
+  const prevName = document.getElementById("ttModalPreviewName");
+  const prevMeta = document.getElementById("ttModalPreviewMeta");
+  const prevStock = document.getElementById("ttModalPreviewStock");
+
+  function setPreview() {
+    const n = nameEl.value || "—";
+    const c = catEl.value || "—";
+    const p = priceEl.value ? (new Intl.NumberFormat("fr-FR").format(priceEl.value) + " XAF") : "—";
+    const s = stockEl.value || "—";
+
+    prevName.textContent = n;
+    prevMeta.textContent = `${c} • ${p}`;
+    prevStock.textContent = s;
+
+    const firstImg = (imagesEl.value || "").split(",")[0]?.trim();
+    prevImg.src = firstImg ? (IMG_BASE + firstImg) : (IMG_BASE + "default.png");
+    prevImg.onerror = () => prevImg.src = IMG_BASE + "default.png";
+  }
+
+  // Live preview
+  [nameEl, catEl, priceEl, stockEl, imagesEl].forEach(el => {
+    el.addEventListener("input", setPreview);
+    el.addEventListener("change", setPreview);
+  });
+
+  // Nouveau
+  document.getElementById("btnNewProduct").addEventListener("click", () => {
+    titleEl.textContent = "Nouveau produit";
+
+    nameEl.value = "";
+    catEl.value = "";
+    priceEl.value = "";
+    stockEl.value = "OK";
+    imagesEl.value = "";
+    descEl.value = "";
+    extrasEl.value = "";
+
+    setPreview();
+    modal.show();
+  });
+
+  // Éditer
+  document.querySelectorAll(".btnEditProduct").forEach(btn => {
+    btn.addEventListener("click", () => {
+      titleEl.textContent = "Éditer produit";
+
+      nameEl.value = btn.dataset.name || "";
+      catEl.value = btn.dataset.category || "";
+      priceEl.value = btn.dataset.price || "";
+      stockEl.value = btn.dataset.stock || "OK";
+      imagesEl.value = btn.dataset.images || "";
+      descEl.value = btn.dataset.desc || "";
+      extrasEl.value = btn.dataset.extras || "";
+
+      setPreview();
+      modal.show();
+    });
+  });
+
+  // Save (UI)
+  document.getElementById("ttSaveProductBtn").addEventListener("click", () => {
+    // Simulation UI : tu brancheras ton backend après
+    TT.toast("Produit enregistré (simulation)", "bi-check2-circle");
+    modal.hide();
+  });
+});
+</script>
+
+  <script>
+document.addEventListener("DOMContentLoaded", () => {
+  const modal = new bootstrap.Modal(document.getElementById("ttProductDetailsModal"));
+  const IMG_BASE = "../assets/img/";
+
+  document.querySelectorAll(".btnViewProduct").forEach(btn => {
+    btn.addEventListener("click", () => {
+      const name = btn.dataset.name;
+      const cat = btn.dataset.category;
+      const price = btn.dataset.price;
+      const stock = btn.dataset.stock;
+      const desc = btn.dataset.desc;
+      const extras = (btn.dataset.extras || "").split(",");
+      const images = (btn.dataset.images || "").split(",");
+
+      document.getElementById("ttDName").textContent = name;
+      document.getElementById("ttDCat").textContent = cat;
+      document.getElementById("ttDPrice").textContent =
+        new Intl.NumberFormat("fr-FR").format(price) + " XAF";
+      document.getElementById("ttDStock").textContent = stock;
+      document.getElementById("ttDDesc").textContent = desc;
+
+      document.getElementById("ttDMeta").textContent =
+        `${cat} • ${new Intl.NumberFormat("fr-FR").format(price)} XAF`;
+
+      // Image principale
+      document.getElementById("ttDImg").src =
+        images[0] ? IMG_BASE + images[0].trim() : IMG_BASE + "default.png";
+
+      // Extras
+      const extrasEl = document.getElementById("ttDExtras");
+      extrasEl.innerHTML = extras
+        .filter(e => e.trim())
+        .map(e => `<li>• ${e.trim()}</li>`)
+        .join("") || "<li>Aucun</li>";
+
+      // Galerie images
+      const imgsEl = document.getElementById("ttDImages");
+      imgsEl.innerHTML = images
+        .filter(i => i.trim())
+        .map(i => `
+          <div class="tt-thumb" style="width:64px;height:64px;">
+            <img src="${IMG_BASE + i.trim()}" style="width:100%;height:100%;object-fit:cover;">
+          </div>
+        `)
+        .join("");
+
+      modal.show();
+    });
+  });
+});
+</script>
+
+
 </body>
 </html>

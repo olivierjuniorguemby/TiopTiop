@@ -12,6 +12,25 @@
 <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" integrity="sha256-p4NxAoJBhIIN+hmNHrzRCf9tD/miZyoHS5obTRR9BMY=" crossorigin=""/>
 <link rel="stylesheet" href="../assets/css/style.css">
 
+ <style>
+    /* ✅ Desktop sidebar uniquement (lg+) */
+    .tt-admin-sidebar-desktop { display: none; }
+    @media (min-width: 992px) {
+      .tt-admin-sidebar-desktop { display: block; }
+      .tt-admin-toggle { display:none; }
+    }
+
+    /* ✅ Petites améliorations charts */
+    .tt-chart-wrap {
+      width: 100%;
+      height: 280px;           /* fixe une hauteur clean */
+      position: relative;
+    }
+    .tt-chart-wrap canvas{
+      width: 100% !important;
+      height: 100% !important;
+    }
+  </style>
   
 </head>
 <body>
@@ -58,39 +77,79 @@
     </div>
   </header>
 
+  <!-- ✅ OFFCANVAS SIDEBAR (mobile/tablette) -->
+<div class="offcanvas offcanvas-start" tabindex="-1" id="ttAdminOffcanvas" aria-labelledby="ttAdminOffcanvasLabel">
+  <div class="offcanvas-header">
+    <h5 class="offcanvas-title" id="ttAdminOffcanvasLabel">
+      <i class="bi bi-speedometer2 me-1"></i> Admin
+    </h5>
+    <button type="button" class="btn-close" data-bs-dismiss="offcanvas" aria-label="Fermer"></button>
+  </div>
+  <div class="offcanvas-body">
+    <div class="tt-card p-3 tt-admin-sidebar">
+      <div class="small text-muted mb-3">Gestion complète de la plateforme.</div>
+      <div class="tt-admin-nav d-grid gap-1">
+        <a href="index.html" data-admin-nav="index.html"><i class="bi bi-speedometer2"></i> Dashboard</a>
+        <a href="products.html" data-admin-nav="products.html"><i class="bi bi-basket2"></i> Produits</a>
+        <a href="categories.html" data-admin-nav="categories.html"><i class="bi bi-grid"></i> Catégories</a>
+        <a href="orders.html" data-admin-nav="orders.html"><i class="bi bi-receipt"></i> Commandes</a>
+        <a href="deliveries.html" data-admin-nav="deliveries.html"><i class="bi bi-truck"></i> Livraisons</a>
+        <a href="incidents.html" data-admin-nav="incidents.html"><i class="bi bi-exclamation-triangle"></i> Incidents</a>
+        <a href="suppliers.html" data-admin-nav="suppliers.html"><i class="bi bi-box"></i> Fournisseurs</a>
+        <a href="purchases.html" data-admin-nav="purchases.html"><i class="bi bi-cart-check"></i> Achats</a>
+        <a href="sales.html" data-admin-nav="sales.html"><i class="bi bi-graph-up"></i> Ventes</a>
+        <a href="customers.html" data-admin-nav="customers.html"><i class="bi bi-people"></i> Clients</a>
+        <a href="ads.html" data-admin-nav="ads.html"><i class="bi bi-megaphone"></i> Annonces</a>
+        <a href="geo.html" data-admin-nav="geo.html"><i class="bi bi-geo-alt"></i> Géolocalisation</a>
+        <a href="settings.html" data-admin-nav="settings.html"><i class="bi bi-gear"></i> Paramètres</a>
+      </div>
+    </div>
+  </div>
+</div>
+
   <main class="container my-4">
     
 <div class="row g-4">
-  <div class="col-lg-3">
-<div class="tt-card p-3 tt-admin-sidebar">
-  <div class="fw-bold mb-2"><i class="bi bi-speedometer2 me-1"></i>Admin</div>
-  <div class="small text-muted mb-3">Gestion complète de la plateforme.</div>
-  <div class="tt-admin-nav d-grid gap-1">
-    <a href="index.html" data-admin-nav="index.html"><i class="bi bi-speedometer2"></i> Dashboard</a>
-    <a href="products.html" data-admin-nav="products.html"><i class="bi bi-basket2"></i> Produits</a>
-    <a href="categories.html" data-admin-nav="categories.html"><i class="bi bi-grid"></i> Catégories</a>
-    <a href="orders.html" data-admin-nav="orders.html"><i class="bi bi-receipt"></i> Commandes</a>
-    <a href="deliveries.html" data-admin-nav="deliveries.html"><i class="bi bi-truck"></i> Livraisons</a>
-    <a href="incidents.html" data-admin-nav="incidents.html"><i class="bi bi-exclamation-triangle"></i> Incidents</a>
-    <a href="suppliers.html" data-admin-nav="suppliers.html"><i class="bi bi-box"></i> Fournisseurs</a>
-    <a href="purchases.html" data-admin-nav="purchases.html"><i class="bi bi-cart-check"></i> Achats</a>
-    <a href="sales.html" data-admin-nav="sales.html"><i class="bi bi-graph-up"></i> Ventes</a>
-    <a href="customers.html" data-admin-nav="customers.html"><i class="bi bi-people"></i> Clients</a>
-    <a href="ads.html" data-admin-nav="ads.html"><i class="bi bi-megaphone"></i> Annonces</a>
-    <a href="geo.html" data-admin-nav="geo.html"><i class="bi bi-geo-alt"></i> Géolocalisation</a>
-    <a href="settings.html" data-admin-nav="settings.html"><i class="bi bi-gear"></i> Paramètres</a>
-  </div>
-</div>
-<script>
-document.addEventListener("DOMContentLoaded", () => {
-  const path = location.pathname.split("/").pop() || "index.html";
-  document.querySelectorAll("[data-admin-nav]").forEach(a => {
-    a.classList.toggle("active", a.getAttribute("data-admin-nav") === path);
-  });
-});
-</script>
-</div>
+  <!-- ✅ SIDEBAR DESKTOP -->
+    <div class="col-lg-3 tt-admin-sidebar-desktop">
+      <div class="tt-card p-3 tt-admin-sidebar">
+        <div class="fw-bold mb-2"><i class="bi bi-speedometer2 me-1"></i>Admin</div>
+        <div class="small text-muted mb-3">Gestion complète de la plateforme.</div>
+        <div class="tt-admin-nav d-grid gap-1">
+          <a href="index.html" data-admin-nav="index.html"><i class="bi bi-speedometer2"></i> Dashboard</a>
+          <a href="products.html" data-admin-nav="products.html"><i class="bi bi-basket2"></i> Produits</a>
+          <a href="categories.html" data-admin-nav="categories.html"><i class="bi bi-grid"></i> Catégories</a>
+          <a href="orders.html" data-admin-nav="orders.html"><i class="bi bi-receipt"></i> Commandes</a>
+          <a href="deliveries.html" data-admin-nav="deliveries.html"><i class="bi bi-truck"></i> Livraisons</a>
+          <a href="incidents.html" data-admin-nav="incidents.html"><i class="bi bi-exclamation-triangle"></i> Incidents</a>
+          <a href="suppliers.html" data-admin-nav="suppliers.html"><i class="bi bi-box"></i> Fournisseurs</a>
+          <a href="purchases.html" data-admin-nav="purchases.html"><i class="bi bi-cart-check"></i> Achats</a>
+          <a href="sales.html" data-admin-nav="sales.html"><i class="bi bi-graph-up"></i> Ventes</a>
+          <a href="customers.html" data-admin-nav="customers.html"><i class="bi bi-people"></i> Clients</a>
+          <a href="ads.html" data-admin-nav="ads.html"><i class="bi bi-megaphone"></i> Annonces</a>
+          <a href="geo.html" data-admin-nav="geo.html"><i class="bi bi-geo-alt"></i> Géolocalisation</a>
+          <a href="settings.html" data-admin-nav="settings.html"><i class="bi bi-gear"></i> Paramètres</a>
+        </div>
+      </div>
+    </div>
+
+    <!-- ✅ CONTENT -->
   <div class="col-lg-9">
+
+    <!-- Titre + bouton mobile -->
+      <div class="d-flex align-items-start justify-content-between gap-2">
+        <!-- Content -->
+
+        <!-- ✅ Bouton sidebar mobile -->
+        <button class="btn btn-sm btn-tt-outline tt-btn tt-admin-toggle"
+                type="button"
+                data-bs-toggle="offcanvas"
+                data-bs-target="#ttAdminOffcanvas"
+                aria-controls="ttAdminOffcanvas">
+          <i class="bi bi-list me-1"></i> Menu Admin
+        </button>
+      </div>
+
 <h1 class="h4" style="font-weight:900">Clients</h1>
 <div class="small text-muted mb-3">Liste clients, abonnements, réductions, historique.</div>
 
@@ -101,7 +160,26 @@ document.addEventListener("DOMContentLoaded", () => {
       <input class="form-control" placeholder="Rechercher… (UI)">
     </div>
     <div class="d-flex gap-2 flex-wrap">
-      <button class="btn btn-tt-outline tt-btn" onclick="TT.toast('Envoyer promo (UI)','bi-megaphone')"><i class="bi bi-megaphone me-1"></i>Promo</button>
+<div class="d-flex gap-2 flex-wrap">
+
+  <!-- NOUVEAU CLIENT -->
+  <button class="btn btn-tt tt-btn"
+          type="button"
+          data-bs-toggle="modal"
+          data-bs-target="#ttCustomerFormModal"
+          data-mode="create">
+    <i class="bi bi-plus-circle me-1"></i>Nouveau
+  </button>
+
+  <!-- CAMPAGNE PROMO -->
+  <button class="btn btn-tt-outline tt-btn"
+          type="button"
+          data-bs-toggle="modal"
+          data-bs-target="#ttPromoModal">
+    <i class="bi bi-megaphone me-1"></i>Promo
+  </button>
+
+</div>
     </div>
   </div>
 </div>
@@ -111,11 +189,113 @@ document.addEventListener("DOMContentLoaded", () => {
     <table class="table align-middle mb-0">
       <thead><tr><th>Client</th><th>Téléphone</th><th>Abonné</th><th>Points</th><th></th></tr></thead>
       <tbody>
-        
-    <tr><td>Client A</td><td>+242…</td><td><span class="tt-badge">Premium</span></td><td>120</td><td class="text-end"><button class="btn btn-sm btn-tt-outline tt-btn" onclick="TT.toast('Voir (UI)','bi-eye')">Voir</button></td></tr>
-    <tr><td>Client B</td><td>+242…</td><td><span class="tt-badge">Non</span></td><td>15</td><td class="text-end"><button class="btn btn-sm btn-tt-outline tt-btn" onclick="TT.toast('Voir (UI)','bi-eye')">Voir</button></td></tr>
-    
-      </tbody>
+
+<tr>
+  <td>Client A</td>
+  <td>+242…</td>
+  <td><span class="tt-badge">Premium</span></td>
+  <td>120</td>
+  <td class="text-end">
+    <div class="d-inline-flex gap-1 flex-wrap justify-content-end">
+
+      <!-- DETAILS -->
+      <button class="btn btn-sm btn-tt-outline tt-btn"
+              data-bs-toggle="modal"
+              data-bs-target="#ttCustomerDetailModal"
+              data-customer='{
+                "name":"Client A",
+                "phone":"+242…",
+                "email":"clienta@exemple.com",
+                "segment":"Premium",
+                "points":120,
+                "level":"Or",
+                "createdAt":"2025-11-02",
+                "lastOrder":"2026-01-23",
+                "totalOrders":34,
+                "totalSpent":285000,
+                "avgBasket":8400,
+                "favorite":"Grillades Mix",
+                "discount":"-10% vendredi",
+                "notes":"Client fidèle, préfère livraison le soir."
+              }'>
+        <i class="bi bi-eye me-1"></i>Détails
+      </button>
+
+      <!-- EDITER -->
+      <button class="btn btn-sm btn-tt tt-btn"
+              data-bs-toggle="modal"
+              data-bs-target="#ttCustomerFormModal"
+              data-mode="edit"
+              data-customer='{
+                "name":"Client A",
+                "phone":"+242…",
+                "email":"clienta@exemple.com",
+                "segment":"Premium",
+                "points":120,
+                "level":"Or",
+                "discount":"-10% vendredi",
+                "notes":"Client fidèle, préfère livraison le soir."
+              }'>
+        <i class="bi bi-pencil me-1"></i>Éditer
+      </button>
+
+    </div>
+  </td>
+</tr>
+
+<tr>
+  <td>Client B</td>
+  <td>+242…</td>
+  <td><span class="tt-badge">Non</span></td>
+  <td>15</td>
+  <td class="text-end">
+    <div class="d-inline-flex gap-1 flex-wrap justify-content-end">
+
+      <button class="btn btn-sm btn-tt-outline tt-btn"
+              data-bs-toggle="modal"
+              data-bs-target="#ttCustomerDetailModal"
+              data-customer='{
+                "name":"Client B",
+                "phone":"+242…",
+                "email":"",
+                "segment":"Standard",
+                "points":15,
+                "level":"Bronze",
+                "createdAt":"2026-01-05",
+                "lastOrder":"2026-01-20",
+                "totalOrders":3,
+                "totalSpent":18500,
+                "avgBasket":6166,
+                "favorite":"Saka-Saka Premium",
+                "discount":"Aucune",
+                "notes":"Nouveau client, commande souvent sur place."
+              }'>
+        <i class="bi bi-eye me-1"></i>Détails
+      </button>
+
+      <button class="btn btn-sm btn-tt tt-btn"
+              data-bs-toggle="modal"
+              data-bs-target="#ttCustomerFormModal"
+              data-mode="edit"
+              data-customer='{
+                "name":"Client B",
+                "phone":"+242…",
+                "email":"",
+                "segment":"Standard",
+                "points":15,
+                "level":"Bronze",
+                "discount":"Aucune",
+                "notes":"Nouveau client, commande souvent sur place."
+              }'>
+        <i class="bi bi-pencil me-1"></i>Éditer
+      </button>
+
+    </div>
+  </td>
+</tr>
+
+</tbody>
+
     </table>
   </div>
 </div>
@@ -197,7 +377,247 @@ document.addEventListener("DOMContentLoaded", () => {
     </div>
   </footer>
 
-  
+  <!-- MODAL : FORM CLIENT (Nouveau / Éditer) -->
+<div class="modal fade" id="ttCustomerFormModal" tabindex="-1">
+  <div class="modal-dialog modal-lg modal-dialog-centered">
+    <div class="modal-content tt-card" style="border-radius:20px">
+
+      <div class="modal-header">
+        <h5 class="fw-black mb-0" id="cfTitle"><i class="bi bi-people me-1"></i> Client</h5>
+        <button class="btn-close" data-bs-dismiss="modal"></button>
+      </div>
+
+      <div class="modal-body">
+
+        <div class="tt-card p-3 mb-3">
+          <div class="fw-bold mb-2">👤 Identité & contact</div>
+          <div class="row g-2">
+            <div class="col-md-6">
+              <label class="form-label">Nom complet</label>
+              <input id="cf_name" class="form-control" placeholder="Ex: Nzambe A.">
+            </div>
+            <div class="col-md-6">
+              <label class="form-label">Téléphone</label>
+              <input id="cf_phone" class="form-control" placeholder="+242 …">
+            </div>
+            <div class="col-md-6">
+              <label class="form-label">Email (optionnel)</label>
+              <input id="cf_email" class="form-control" placeholder="email@exemple.com">
+            </div>
+            <div class="col-md-6">
+              <label class="form-label">Segment / Abonnement</label>
+              <select id="cf_segment" class="form-select">
+                <option value="Standard">Standard</option>
+                <option value="Premium">Premium</option>
+                <option value="VIP">VIP</option>
+              </select>
+            </div>
+          </div>
+        </div>
+
+        <div class="tt-card p-3 mb-3">
+          <div class="fw-bold mb-2">⭐ Fidélité</div>
+          <div class="row g-2">
+            <div class="col-md-4">
+              <label class="form-label">Points</label>
+              <input id="cf_points" type="number" class="form-control" value="0">
+            </div>
+            <div class="col-md-4">
+              <label class="form-label">Niveau</label>
+              <select id="cf_level" class="form-select">
+                <option>Bronze</option>
+                <option>Argent</option>
+                <option>Or</option>
+                <option>Platine</option>
+              </select>
+            </div>
+            <div class="col-md-4">
+              <label class="form-label">Réduction personnalisée</label>
+              <input id="cf_discount" class="form-control" placeholder="Ex: -10% vendredi">
+            </div>
+          </div>
+          <div class="small text-muted mt-2">
+            Astuce : tu peux créer un client manuellement s’il n’a pas l’application (service sur place).
+          </div>
+        </div>
+
+        <div class="tt-card p-3">
+          <div class="fw-bold mb-2">📝 Notes internes</div>
+          <textarea id="cf_notes" class="form-control" rows="3" placeholder="Préférences, allergies, habitudes, etc."></textarea>
+        </div>
+
+      </div>
+
+      <div class="modal-footer">
+        <button class="btn btn-tt-outline tt-btn" data-bs-dismiss="modal">Annuler</button>
+        <button class="btn btn-tt tt-btn" onclick="TT.toast('Client enregistré (UI)','bi-check2-circle')">
+          <i class="bi bi-save me-1"></i>Enregistrer
+        </button>
+      </div>
+
+    </div>
+  </div>
+</div>
+
+<!-- MODAL : DETAILS CLIENT -->
+<div class="modal fade" id="ttCustomerDetailModal" tabindex="-1">
+  <div class="modal-dialog modal-lg modal-dialog-centered">
+    <div class="modal-content tt-card" style="border-radius:20px">
+
+      <div class="modal-header">
+        <h5 class="fw-black mb-0"><i class="bi bi-person-vcard me-1"></i>Détails client</h5>
+        <button class="btn-close" data-bs-dismiss="modal"></button>
+      </div>
+
+      <div class="modal-body">
+
+        <div class="tt-card p-3 mb-3">
+          <div class="d-flex justify-content-between align-items-start gap-2 flex-wrap">
+            <div>
+              <div class="fw-bold" id="cd_name">—</div>
+              <div class="small text-muted">
+                <span id="cd_phone">—</span> • <span id="cd_email">—</span>
+              </div>
+            </div>
+            <div class="text-end">
+              <span class="tt-badge" id="cd_segment">—</span>
+              <div class="small text-muted mt-1">Niveau : <span id="cd_level">—</span></div>
+            </div>
+          </div>
+        </div>
+
+        <div class="row g-3 mb-3">
+          <div class="col-md-4">
+            <div class="tt-card p-3 h-100">
+              <div class="small text-muted">Points fidélité</div>
+              <div class="h4 mb-0" style="font-weight:900" id="cd_points">—</div>
+            </div>
+          </div>
+          <div class="col-md-4">
+            <div class="tt-card p-3 h-100">
+              <div class="small text-muted">Commandes total</div>
+              <div class="h4 mb-0" style="font-weight:900" id="cd_totalOrders">—</div>
+            </div>
+          </div>
+          <div class="col-md-4">
+            <div class="tt-card p-3 h-100">
+              <div class="small text-muted">Dépenses (XAF)</div>
+              <div class="h4 mb-0" style="font-weight:900" id="cd_totalSpent">—</div>
+            </div>
+          </div>
+        </div>
+
+        <div class="tt-card p-3 mb-3">
+          <div class="fw-bold mb-2">📌 Informations utiles</div>
+          <div class="row g-2 small text-muted">
+            <div class="col-md-6">Créé le : <span class="text-dark" id="cd_createdAt">—</span></div>
+            <div class="col-md-6">Dernière commande : <span class="text-dark" id="cd_lastOrder">—</span></div>
+            <div class="col-md-6">Panier moyen : <span class="text-dark" id="cd_avgBasket">—</span> XAF</div>
+            <div class="col-md-6">Plat préféré : <span class="text-dark" id="cd_favorite">—</span></div>
+            <div class="col-md-12">Réduction : <span class="text-dark" id="cd_discount">—</span></div>
+          </div>
+        </div>
+
+        <div class="tt-card p-3">
+          <div class="fw-bold mb-2">📝 Notes internes</div>
+          <div class="small text-muted" id="cd_notes">—</div>
+        </div>
+
+      </div>
+
+      <div class="modal-footer">
+        <button class="btn btn-tt-outline tt-btn" data-bs-dismiss="modal">Fermer</button>
+      </div>
+
+    </div>
+  </div>
+</div>
+
+
+<!-- MODAL : PROMO CLIENTS -->
+<div class="modal fade" id="ttPromoModal" tabindex="-1">
+  <div class="modal-dialog modal-lg modal-dialog-centered">
+    <div class="modal-content tt-card" style="border-radius:20px">
+
+      <div class="modal-header">
+        <h5 class="fw-black mb-0"><i class="bi bi-megaphone me-1"></i>Campagne promo clients</h5>
+        <button class="btn-close" data-bs-dismiss="modal"></button>
+      </div>
+
+      <div class="modal-body">
+
+        <div class="tt-card p-3 mb-3">
+          <div class="fw-bold mb-2">🎯 Ciblage</div>
+          <div class="row g-2">
+            <div class="col-md-4">
+              <label class="form-label">Segment</label>
+              <select id="pm_segment" class="form-select">
+                <option value="Tous">Tous</option>
+                <option value="Standard">Standard</option>
+                <option value="Premium">Premium</option>
+                <option value="VIP">VIP</option>
+              </select>
+            </div>
+            <div class="col-md-4">
+              <label class="form-label">Seuil de points</label>
+              <input id="pm_points" type="number" class="form-control" value="0">
+            </div>
+            <div class="col-md-4">
+              <label class="form-label">Canal</label>
+              <select id="pm_channel" class="form-select">
+                <option>Notification</option>
+                <option>SMS</option>
+                <option>WhatsApp</option>
+              </select>
+            </div>
+          </div>
+        </div>
+
+        <div class="tt-card p-3 mb-3">
+          <div class="fw-bold mb-2">🏷️ Offre</div>
+          <div class="row g-2">
+            <div class="col-md-4">
+              <label class="form-label">Type promo</label>
+              <select id="pm_type" class="form-select">
+                <option value="percent">Réduction (%)</option>
+                <option value="amount">Réduction (XAF)</option>
+                <option value="delivery">Livraison offerte</option>
+                <option value="gift">Complément offert</option>
+              </select>
+            </div>
+            <div class="col-md-4">
+              <label class="form-label">Valeur</label>
+              <input id="pm_value" class="form-control" placeholder="Ex: 10 ou 2000">
+            </div>
+            <div class="col-md-4">
+              <label class="form-label">Validité</label>
+              <input id="pm_validity" class="form-control" placeholder="Ex: 48h / jusqu’à dimanche">
+            </div>
+          </div>
+        </div>
+
+        <div class="tt-card p-3">
+          <div class="fw-bold mb-2">✉️ Message</div>
+          <textarea id="pm_message" class="form-control" rows="3"
+            placeholder="Ex: Promo spéciale fidélité : -10% sur les grillades ce vendredi !"></textarea>
+          <div class="small text-muted mt-2">
+            Cela servira plus tard à envoyer une vraie campagne via backend (SMS/Push/WhatsApp).
+          </div>
+        </div>
+
+      </div>
+
+      <div class="modal-footer">
+        <button class="btn btn-tt-outline tt-btn" data-bs-dismiss="modal">Annuler</button>
+        <button class="btn btn-tt tt-btn" onclick="TT.toast('Campagne promo créée (UI)','bi-check2-circle')">
+          <i class="bi bi-send me-1"></i>Lancer
+        </button>
+      </div>
+
+    </div>
+  </div>
+</div>
+
 
   <!-- Toast -->
   <div class="toast-container position-fixed bottom-0 end-0 p-3">
@@ -211,7 +631,60 @@ document.addEventListener("DOMContentLoaded", () => {
 <script src="../assets/js/mock-data.js"></script>
 <script src="../assets/js/app.js"></script>
 
-  
+  <script>
+  const _txt = (id, v) => document.getElementById(id).textContent = (v ?? "—");
+  const _val = (id, v) => document.getElementById(id).value = (v ?? "");
+
+  // FORM (create/edit)
+  document.addEventListener("click", (e) => {
+    const btn = e.target.closest("[data-bs-target='#ttCustomerFormModal']");
+    if (!btn) return;
+
+    const mode = btn.getAttribute("data-mode") || "create";
+    const d = JSON.parse(btn.getAttribute("data-customer") || "{}");
+
+    document.getElementById("cfTitle").innerHTML =
+      mode === "edit"
+        ? "<i class='bi bi-pencil me-1'></i> Modifier client"
+        : "<i class='bi bi-plus-circle me-1'></i> Nouveau client";
+
+    _val("cf_name", d.name);
+    _val("cf_phone", d.phone);
+    _val("cf_email", d.email);
+    _val("cf_segment", d.segment || "Standard");
+    _val("cf_points", d.points ?? 0);
+    _val("cf_level", d.level || "Bronze");
+    _val("cf_discount", d.discount);
+    _val("cf_notes", d.notes);
+  });
+
+  // DETAILS
+  document.addEventListener("click", (e) => {
+    const btn = e.target.closest("[data-bs-target='#ttCustomerDetailModal']");
+    if (!btn) return;
+
+    const d = JSON.parse(btn.getAttribute("data-customer") || "{}");
+    const fmt = (n) => new Intl.NumberFormat("fr-FR").format(Number(n || 0));
+
+    _txt("cd_name", d.name);
+    _txt("cd_phone", d.phone);
+    _txt("cd_email", d.email || "—");
+    _txt("cd_segment", d.segment || "Standard");
+    _txt("cd_level", d.level || "—");
+
+    _txt("cd_points", d.points ?? 0);
+    _txt("cd_totalOrders", d.totalOrders ?? "—");
+    _txt("cd_totalSpent", fmt(d.totalSpent));
+
+    _txt("cd_createdAt", d.createdAt || "—");
+    _txt("cd_lastOrder", d.lastOrder || "—");
+    _txt("cd_avgBasket", fmt(d.avgBasket));
+    _txt("cd_favorite", d.favorite || "—");
+    _txt("cd_discount", d.discount || "Aucune");
+    _txt("cd_notes", d.notes || "—");
+  });
+</script>
+
   
 </body>
 </html>

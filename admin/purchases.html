@@ -12,7 +12,25 @@
 <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" integrity="sha256-p4NxAoJBhIIN+hmNHrzRCf9tD/miZyoHS5obTRR9BMY=" crossorigin=""/>
 <link rel="stylesheet" href="../assets/css/style.css">
 
-  
+  <style>
+    /* ✅ Desktop sidebar uniquement (lg+) */
+    .tt-admin-sidebar-desktop { display: none; }
+    @media (min-width: 992px) {
+      .tt-admin-sidebar-desktop { display: block; }
+      .tt-admin-toggle { display:none; }
+    }
+
+    /* ✅ Petites améliorations charts */
+    .tt-chart-wrap {
+      width: 100%;
+      height: 280px;           /* fixe une hauteur clean */
+      position: relative;
+    }
+    .tt-chart-wrap canvas{
+      width: 100% !important;
+      height: 100% !important;
+    }
+  </style>
 </head>
 <body>
   <header class="tt-topbar">
@@ -58,39 +76,80 @@
     </div>
   </header>
 
+  <!-- ✅ OFFCANVAS SIDEBAR (mobile/tablette) -->
+<div class="offcanvas offcanvas-start" tabindex="-1" id="ttAdminOffcanvas" aria-labelledby="ttAdminOffcanvasLabel">
+  <div class="offcanvas-header">
+    <h5 class="offcanvas-title" id="ttAdminOffcanvasLabel">
+      <i class="bi bi-speedometer2 me-1"></i> Admin
+    </h5>
+    <button type="button" class="btn-close" data-bs-dismiss="offcanvas" aria-label="Fermer"></button>
+  </div>
+  <div class="offcanvas-body">
+    <div class="tt-card p-3 tt-admin-sidebar">
+      <div class="small text-muted mb-3">Gestion complète de la plateforme.</div>
+      <div class="tt-admin-nav d-grid gap-1">
+        <a href="index.html" data-admin-nav="index.html"><i class="bi bi-speedometer2"></i> Dashboard</a>
+        <a href="products.html" data-admin-nav="products.html"><i class="bi bi-basket2"></i> Produits</a>
+        <a href="categories.html" data-admin-nav="categories.html"><i class="bi bi-grid"></i> Catégories</a>
+        <a href="orders.html" data-admin-nav="orders.html"><i class="bi bi-receipt"></i> Commandes</a>
+        <a href="deliveries.html" data-admin-nav="deliveries.html"><i class="bi bi-truck"></i> Livraisons</a>
+        <a href="incidents.html" data-admin-nav="incidents.html"><i class="bi bi-exclamation-triangle"></i> Incidents</a>
+        <a href="suppliers.html" data-admin-nav="suppliers.html"><i class="bi bi-box"></i> Fournisseurs</a>
+        <a href="purchases.html" data-admin-nav="purchases.html"><i class="bi bi-cart-check"></i> Achats</a>
+        <a href="sales.html" data-admin-nav="sales.html"><i class="bi bi-graph-up"></i> Ventes</a>
+        <a href="customers.html" data-admin-nav="customers.html"><i class="bi bi-people"></i> Clients</a>
+        <a href="ads.html" data-admin-nav="ads.html"><i class="bi bi-megaphone"></i> Annonces</a>
+        <a href="geo.html" data-admin-nav="geo.html"><i class="bi bi-geo-alt"></i> Géolocalisation</a>
+        <a href="settings.html" data-admin-nav="settings.html"><i class="bi bi-gear"></i> Paramètres</a>
+      </div>
+    </div>
+  </div>
+</div>
+
   <main class="container my-4">
     
 <div class="row g-4">
-  <div class="col-lg-3">
-<div class="tt-card p-3 tt-admin-sidebar">
-  <div class="fw-bold mb-2"><i class="bi bi-speedometer2 me-1"></i>Admin</div>
-  <div class="small text-muted mb-3">Gestion complète de la plateforme.</div>
-  <div class="tt-admin-nav d-grid gap-1">
-    <a href="index.html" data-admin-nav="index.html"><i class="bi bi-speedometer2"></i> Dashboard</a>
-    <a href="products.html" data-admin-nav="products.html"><i class="bi bi-basket2"></i> Produits</a>
-    <a href="categories.html" data-admin-nav="categories.html"><i class="bi bi-grid"></i> Catégories</a>
-    <a href="orders.html" data-admin-nav="orders.html"><i class="bi bi-receipt"></i> Commandes</a>
-    <a href="deliveries.html" data-admin-nav="deliveries.html"><i class="bi bi-truck"></i> Livraisons</a>
-    <a href="incidents.html" data-admin-nav="incidents.html"><i class="bi bi-exclamation-triangle"></i> Incidents</a>
-    <a href="suppliers.html" data-admin-nav="suppliers.html"><i class="bi bi-box"></i> Fournisseurs</a>
-    <a href="purchases.html" data-admin-nav="purchases.html"><i class="bi bi-cart-check"></i> Achats</a>
-    <a href="sales.html" data-admin-nav="sales.html"><i class="bi bi-graph-up"></i> Ventes</a>
-    <a href="customers.html" data-admin-nav="customers.html"><i class="bi bi-people"></i> Clients</a>
-    <a href="ads.html" data-admin-nav="ads.html"><i class="bi bi-megaphone"></i> Annonces</a>
-    <a href="geo.html" data-admin-nav="geo.html"><i class="bi bi-geo-alt"></i> Géolocalisation</a>
-    <a href="settings.html" data-admin-nav="settings.html"><i class="bi bi-gear"></i> Paramètres</a>
-  </div>
-</div>
-<script>
-document.addEventListener("DOMContentLoaded", () => {
-  const path = location.pathname.split("/").pop() || "index.html";
-  document.querySelectorAll("[data-admin-nav]").forEach(a => {
-    a.classList.toggle("active", a.getAttribute("data-admin-nav") === path);
-  });
-});
-</script>
-</div>
+  <!-- ✅ SIDEBAR DESKTOP -->
+    <div class="col-lg-3 tt-admin-sidebar-desktop">
+      <div class="tt-card p-3 tt-admin-sidebar">
+        <div class="fw-bold mb-2"><i class="bi bi-speedometer2 me-1"></i>Admin</div>
+        <div class="small text-muted mb-3">Gestion complète de la plateforme.</div>
+        <div class="tt-admin-nav d-grid gap-1">
+          <a href="index.html" data-admin-nav="index.html"><i class="bi bi-speedometer2"></i> Dashboard</a>
+          <a href="products.html" data-admin-nav="products.html"><i class="bi bi-basket2"></i> Produits</a>
+          <a href="categories.html" data-admin-nav="categories.html"><i class="bi bi-grid"></i> Catégories</a>
+          <a href="orders.html" data-admin-nav="orders.html"><i class="bi bi-receipt"></i> Commandes</a>
+          <a href="deliveries.html" data-admin-nav="deliveries.html"><i class="bi bi-truck"></i> Livraisons</a>
+          <a href="incidents.html" data-admin-nav="incidents.html"><i class="bi bi-exclamation-triangle"></i> Incidents</a>
+          <a href="suppliers.html" data-admin-nav="suppliers.html"><i class="bi bi-box"></i> Fournisseurs</a>
+          <a href="purchases.html" data-admin-nav="purchases.html"><i class="bi bi-cart-check"></i> Achats</a>
+          <a href="sales.html" data-admin-nav="sales.html"><i class="bi bi-graph-up"></i> Ventes</a>
+          <a href="customers.html" data-admin-nav="customers.html"><i class="bi bi-people"></i> Clients</a>
+          <a href="ads.html" data-admin-nav="ads.html"><i class="bi bi-megaphone"></i> Annonces</a>
+          <a href="geo.html" data-admin-nav="geo.html"><i class="bi bi-geo-alt"></i> Géolocalisation</a>
+          <a href="settings.html" data-admin-nav="settings.html"><i class="bi bi-gear"></i> Paramètres</a>
+        </div>
+      </div>
+    </div>
+
+    <!-- ✅ CONTENT -->
+
   <div class="col-lg-9">
+
+    <!-- Titre + bouton mobile -->
+      <div class="d-flex align-items-start justify-content-between gap-2">
+        <!-- Content -->
+
+        <!-- ✅ Bouton sidebar mobile -->
+        <button class="btn btn-sm btn-tt-outline tt-btn tt-admin-toggle"
+                type="button"
+                data-bs-toggle="offcanvas"
+                data-bs-target="#ttAdminOffcanvas"
+                aria-controls="ttAdminOffcanvas">
+          <i class="bi bi-list me-1"></i> Menu Admin
+        </button>
+      </div>
+      
 <h1 class="h4" style="font-weight:900">Achats</h1>
 <div class="small text-muted mb-3">Suivi achats (matières premières), coûts, stocks.</div>
 
@@ -101,7 +160,13 @@ document.addEventListener("DOMContentLoaded", () => {
       <input class="form-control" placeholder="Rechercher… (UI)">
     </div>
     <div class="d-flex gap-2 flex-wrap">
-      <button class="btn btn-tt tt-btn" onclick="TT.toast('Nouvel achat (UI)','bi-plus-circle')"><i class="bi bi-plus-circle me-1"></i>Nouvel achat</button>
+<button class="btn btn-tt tt-btn"
+        type="button"
+        data-bs-toggle="modal"
+        data-bs-target="#ttPurchaseFormModal"
+        data-mode="create">
+  <i class="bi bi-plus-circle me-1"></i>Nouvel achat
+</button>
     </div>
   </div>
 </div>
@@ -111,10 +176,66 @@ document.addEventListener("DOMContentLoaded", () => {
     <table class="table align-middle mb-0">
       <thead><tr><th>Date</th><th>Fournisseur</th><th>Montant</th><th>Statut</th><th></th></tr></thead>
       <tbody>
-        
-    <tr><td>2026-01-20</td><td>Marché Total</td><td>55 000</td><td><span class="tt-badge">Payé</span></td><td class="text-end"><button class="btn btn-sm btn-tt-outline tt-btn" onclick="TT.toast('Détails (UI)','bi-eye')">Détails</button></td></tr>
-    <tr><td>2026-01-22</td><td>Poisson & Co</td><td>85 000</td><td><span class="tt-badge">En attente</span></td><td class="text-end"><button class="btn btn-sm btn-tt tt-btn" onclick="TT.toast('Valider (UI)','bi-check2')">Valider</button></td></tr>
-    
+   <tr>
+  <td>2026-01-20</td>
+  <td>Marché Total</td>
+  <td>55 000</td>
+  <td><span class="tt-badge">Payé</span></td>
+  <td class="text-end">
+    <div class="d-inline-flex gap-1 flex-wrap justify-content-end">
+      <button class="btn btn-sm btn-tt-outline tt-btn"
+              type="button"
+              data-bs-toggle="modal"
+              data-bs-target="#ttPurchaseDetailModal"
+              data-purchase='{"date":"2026-01-20","supplier":"Marché Total","status":"Payé","payment":"Espèces","ref":"ACH-2026-0120","items":[{"name":"Feuilles de manioc","qty":5,"unit":"kg","price":5000},{"name":"Arachides","qty":2,"unit":"kg","price":6500},{"name":"Huile rouge","qty":3,"unit":"L","price":4500}],"total":55000,"notes":"Livré tôt, produits frais.","createdBy":"Admin","receivedBy":"Magasin"}'>
+        <i class="bi bi-eye me-1"></i>Détails
+      </button>
+
+      <button class="btn btn-sm btn-tt tt-btn"
+              type="button"
+              data-bs-toggle="modal"
+              data-bs-target="#ttPurchaseFormModal"
+              data-mode="edit"
+              data-purchase='{"date":"2026-01-20","supplier":"Marché Total","status":"Payé","payment":"Espèces","ref":"ACH-2026-0120","item1":"Feuilles de manioc","qty1":5,"unit1":"kg","price1":5000,"item2":"Arachides","qty2":2,"unit2":"kg","price2":6500,"item3":"Huile rouge","qty3":3,"unit3":"L","price3":4500,"notes":"Livré tôt, produits frais."}'>
+        <i class="bi bi-pencil me-1"></i>Modifier
+      </button>
+    </div>
+  </td>
+</tr>
+
+<tr>
+  <td>2026-01-22</td>
+  <td>Poisson & Co</td>
+  <td>85 000</td>
+  <td><span class="tt-badge">En attente</span></td>
+  <td class="text-end">
+    <div class="d-inline-flex gap-1 flex-wrap justify-content-end">
+      <button class="btn btn-sm btn-tt-outline tt-btn"
+              type="button"
+              data-bs-toggle="modal"
+              data-bs-target="#ttPurchaseDetailModal"
+              data-purchase='{"date":"2026-01-22","supplier":"Poisson & Co","status":"En attente","payment":"—","ref":"ACH-2026-0122","items":[{"name":"Poisson capitaine","qty":10,"unit":"kg","price":8500}],"total":85000,"notes":"À réception vérifier la glace.","createdBy":"Admin","receivedBy":"—"}'>
+        <i class="bi bi-eye me-1"></i>Détails
+      </button>
+
+      <button class="btn btn-sm btn-tt tt-btn"
+              type="button"
+              data-bs-toggle="modal"
+              data-bs-target="#ttPurchaseFormModal"
+              data-mode="edit"
+              data-purchase='{"date":"2026-01-22","supplier":"Poisson & Co","status":"En attente","payment":"Mobile Money","ref":"ACH-2026-0122","item1":"Poisson capitaine","qty1":10,"unit1":"kg","price1":8500,"notes":"À réception vérifier la glace."}'>
+        <i class="bi bi-pencil me-1"></i>Modifier
+      </button>
+
+      <button class="btn btn-sm btn-tt-outline tt-btn"
+              type="button"
+              onclick="TT.toast('Achat validé (UI)','bi-check2-circle')">
+        <i class="bi bi-check2 me-1"></i>Valider
+      </button>
+    </div>
+  </td>
+</tr>
+   
       </tbody>
     </table>
   </div>
@@ -197,7 +318,232 @@ document.addEventListener("DOMContentLoaded", () => {
     </div>
   </footer>
 
-  
+  <!-- ✅ MODAL : FORM ACHAT (Nouveau / Modifier) -->
+<div class="modal fade" id="ttPurchaseFormModal" tabindex="-1" aria-hidden="true">
+  <div class="modal-dialog modal-dialog-centered modal-lg">
+    <div class="modal-content tt-card" style="border-radius:20px">
+      <div class="modal-header">
+        <h5 class="fw-black mb-0" id="ttPurchaseFormTitle">
+          <i class="bi bi-cart-check me-1"></i> Achat
+        </h5>
+        <button class="btn-close" data-bs-dismiss="modal" aria-label="Fermer"></button>
+      </div>
+
+      <div class="modal-body">
+        <div class="tt-card p-3 mb-3">
+          <div class="fw-bold mb-2">🧾 Informations achat</div>
+          <div class="row g-2">
+            <div class="col-md-4">
+              <label class="form-label">Date</label>
+              <input id="pf_date" type="date" class="form-control">
+            </div>
+            <div class="col-md-4">
+              <label class="form-label">Référence</label>
+              <input id="pf_ref" class="form-control" placeholder="Ex: ACH-2026-0122">
+            </div>
+            <div class="col-md-4">
+              <label class="form-label">Statut</label>
+              <select id="pf_status" class="form-select">
+                <option>En attente</option>
+                <option>Payé</option>
+                <option>Annulé</option>
+              </select>
+            </div>
+
+            <div class="col-md-6">
+              <label class="form-label">Fournisseur</label>
+              <select id="pf_supplier" class="form-select">
+                <option>Marché Total</option>
+                <option>Poisson & Co</option>
+                <option>Autre</option>
+              </select>
+            </div>
+
+            <div class="col-md-6">
+              <label class="form-label">Mode de paiement</label>
+              <select id="pf_payment" class="form-select">
+                <option>—</option>
+                <option>Espèces</option>
+                <option>Mobile Money</option>
+                <option>Virement</option>
+              </select>
+            </div>
+          </div>
+        </div>
+
+        <div class="tt-card p-3 mb-3">
+          <div class="fw-bold mb-2">📦 Articles (aperçu)</div>
+          <div class="row g-2">
+            <div class="col-md-5">
+              <label class="form-label">Article #1</label>
+              <input id="pf_item1" class="form-control" placeholder="Ex: Feuilles de manioc">
+            </div>
+            <div class="col-md-2">
+              <label class="form-label">Qté</label>
+              <input id="pf_qty1" type="number" min="1" class="form-control" placeholder="1">
+            </div>
+            <div class="col-md-2">
+              <label class="form-label">Unité</label>
+              <select id="pf_unit1" class="form-select">
+                <option>kg</option>
+                <option>L</option>
+                <option>pièce</option>
+                <option>paquet</option>
+              </select>
+            </div>
+            <div class="col-md-3">
+              <label class="form-label">Prix unitaire</label>
+              <input id="pf_price1" type="number" min="0" class="form-control" placeholder="0">
+            </div>
+
+            <div class="col-md-5">
+              <label class="form-label">Article #2 (optionnel)</label>
+              <input id="pf_item2" class="form-control" placeholder="Ex: Arachides">
+            </div>
+            <div class="col-md-2">
+              <label class="form-label">Qté</label>
+              <input id="pf_qty2" type="number" min="0" class="form-control" placeholder="0">
+            </div>
+            <div class="col-md-2">
+              <label class="form-label">Unité</label>
+              <select id="pf_unit2" class="form-select">
+                <option>kg</option>
+                <option>L</option>
+                <option>pièce</option>
+                <option>paquet</option>
+              </select>
+            </div>
+            <div class="col-md-3">
+              <label class="form-label">Prix unitaire</label>
+              <input id="pf_price2" type="number" min="0" class="form-control" placeholder="0">
+            </div>
+
+            <div class="col-md-5">
+              <label class="form-label">Article #3 (optionnel)</label>
+              <input id="pf_item3" class="form-control" placeholder="Ex: Huile rouge">
+            </div>
+            <div class="col-md-2">
+              <label class="form-label">Qté</label>
+              <input id="pf_qty3" type="number" min="0" class="form-control" placeholder="0">
+            </div>
+            <div class="col-md-2">
+              <label class="form-label">Unité</label>
+              <select id="pf_unit3" class="form-select">
+                <option>kg</option>
+                <option>L</option>
+                <option>pièce</option>
+                <option>paquet</option>
+              </select>
+            </div>
+            <div class="col-md-3">
+              <label class="form-label">Prix unitaire</label>
+              <input id="pf_price3" type="number" min="0" class="form-control" placeholder="0">
+            </div>
+
+            <div class="col-12">
+              <div class="small text-muted mt-1">
+                (UI) Tu pourras remplacer ça plus tard par un système “Ajouter ligne” dynamique si tu veux.
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="tt-card p-3">
+          <div class="fw-bold mb-2">📝 Notes</div>
+          <textarea id="pf_notes" class="form-control" rows="3" placeholder="Ex: vérifier qualité, reçu, facture..."></textarea>
+
+          <div class="d-flex justify-content-between align-items-center mt-3">
+            <div class="small text-muted">
+              Total estimé (UI) : <span class="fw-bold" id="pf_total">—</span> XAF
+            </div>
+            <button class="btn btn-sm btn-tt-outline tt-btn" type="button" onclick="TT.toast('Total recalculé (UI)','bi-calculator')">
+              <i class="bi bi-calculator me-1"></i>Recalculer
+            </button>
+          </div>
+        </div>
+      </div>
+
+      <div class="modal-footer">
+        <button class="btn btn-tt-outline tt-btn" data-bs-dismiss="modal">Annuler</button>
+        <button class="btn btn-tt tt-btn" onclick="TT.toast('Achat enregistré (UI)','bi-check2-circle')">
+          <i class="bi bi-save me-1"></i> Enregistrer
+        </button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ✅ MODAL : DETAILS ACHAT -->
+<div class="modal fade" id="ttPurchaseDetailModal" tabindex="-1" aria-hidden="true">
+  <div class="modal-dialog modal-dialog-centered modal-lg">
+    <div class="modal-content tt-card" style="border-radius:20px">
+      <div class="modal-header">
+        <h5 class="fw-black mb-0">
+          <i class="bi bi-eye me-1"></i> Détails achat
+        </h5>
+        <button class="btn-close" data-bs-dismiss="modal" aria-label="Fermer"></button>
+      </div>
+
+      <div class="modal-body">
+        <div class="tt-card p-3 mb-3">
+          <div class="d-flex flex-column flex-md-row justify-content-between gap-2">
+            <div>
+              <div class="fw-bold" id="pd_ref">—</div>
+              <div class="small text-muted">
+                <span id="pd_date">—</span> • <span id="pd_supplier">—</span>
+              </div>
+            </div>
+            <div class="text-md-end">
+              <span class="tt-badge" id="pd_status">—</span>
+              <div class="small text-muted mt-1">Paiement : <span id="pd_payment">—</span></div>
+            </div>
+          </div>
+        </div>
+
+        <div class="tt-card p-3 mb-3">
+          <div class="fw-bold mb-2"><i class="bi bi-list-check me-1"></i>Articles</div>
+          <div class="tt-table">
+            <table class="table align-middle mb-0">
+              <thead>
+                <tr><th>Article</th><th class="text-end">Qté</th><th>Unité</th><th class="text-end">PU</th><th class="text-end">Sous-total</th></tr>
+              </thead>
+              <tbody id="pd_items"></tbody>
+              <tfoot>
+                <tr>
+                  <th colspan="4" class="text-end">Total</th>
+                  <th class="text-end" id="pd_total">—</th>
+                </tr>
+              </tfoot>
+            </table>
+          </div>
+        </div>
+
+        <div class="row g-3">
+          <div class="col-md-6">
+            <div class="tt-card p-3 h-100">
+              <div class="fw-bold mb-2"><i class="bi bi-person-check me-1"></i>Suivi interne</div>
+              <div class="small text-muted">Créé par</div>
+              <div class="fw-bold" id="pd_createdBy">—</div>
+              <div class="small text-muted mt-2">Réceptionné par</div>
+              <div class="fw-bold" id="pd_receivedBy">—</div>
+            </div>
+          </div>
+          <div class="col-md-6">
+            <div class="tt-card p-3 h-100">
+              <div class="fw-bold mb-2"><i class="bi bi-chat-left-text me-1"></i>Notes</div>
+              <div class="small text-muted" id="pd_notes">—</div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="modal-footer">
+        <button class="btn btn-tt-outline tt-btn" data-bs-dismiss="modal">Fermer</button>
+      </div>
+    </div>
+  </div>
+</div>
+
 
   <!-- Toast -->
   <div class="toast-container position-fixed bottom-0 end-0 p-3">
@@ -211,7 +557,136 @@ document.addEventListener("DOMContentLoaded", () => {
 <script src="../assets/js/mock-data.js"></script>
 <script src="../assets/js/app.js"></script>
 
-  
+  <script>
+  // ✅ Active nav admin (si pas déjà présent sur cette page)
+  document.addEventListener("DOMContentLoaded", () => {
+    const path = location.pathname.split("/").pop() || "index.html";
+    document.querySelectorAll("[data-admin-nav]").forEach(a => {
+      a.classList.toggle("active", a.getAttribute("data-admin-nav") === path);
+    });
+  });
+
+  // Helpers
+  const ttSetVal = (id, v) => { const el = document.getElementById(id); if (el) el.value = v ?? ""; };
+  const ttSetTxt = (id, v) => { const el = document.getElementById(id); if (el) el.textContent = (v ?? "—"); };
+
+  // ✅ MODAL FORM (create/edit)
+  document.addEventListener("click", (e) => {
+    const btn = e.target.closest("[data-bs-target='#ttPurchaseFormModal']");
+    if (!btn) return;
+
+    const mode = btn.getAttribute("data-mode") || "create";
+    const title = document.getElementById("ttPurchaseFormTitle");
+
+    // reset
+    ttSetVal("pf_date", "");
+    ttSetVal("pf_ref", "");
+    ttSetVal("pf_status", "En attente");
+    ttSetVal("pf_supplier", "Marché Total");
+    ttSetVal("pf_payment", "—");
+    ttSetVal("pf_item1", "");
+    ttSetVal("pf_qty1", "");
+    ttSetVal("pf_unit1", "kg");
+    ttSetVal("pf_price1", "");
+    ttSetVal("pf_item2", "");
+    ttSetVal("pf_qty2", "");
+    ttSetVal("pf_unit2", "kg");
+    ttSetVal("pf_price2", "");
+    ttSetVal("pf_item3", "");
+    ttSetVal("pf_qty3", "");
+    ttSetVal("pf_unit3", "kg");
+    ttSetVal("pf_price3", "");
+    ttSetVal("pf_notes", "");
+    ttSetTxt("pf_total", "—");
+
+    if (mode === "edit") {
+      title.innerHTML = `<i class="bi bi-pencil me-1"></i> Modifier achat`;
+      const data = btn.getAttribute("data-purchase");
+      if (data) {
+        try {
+          const p = JSON.parse(data);
+          ttSetVal("pf_date", p.date);
+          ttSetVal("pf_ref", p.ref);
+          ttSetVal("pf_status", p.status);
+          ttSetVal("pf_supplier", p.supplier);
+          ttSetVal("pf_payment", p.payment || "—");
+
+          ttSetVal("pf_item1", p.item1 || "");
+          ttSetVal("pf_qty1", p.qty1 || "");
+          ttSetVal("pf_unit1", p.unit1 || "kg");
+          ttSetVal("pf_price1", p.price1 || "");
+
+          ttSetVal("pf_item2", p.item2 || "");
+          ttSetVal("pf_qty2", p.qty2 || "");
+          ttSetVal("pf_unit2", p.unit2 || "kg");
+          ttSetVal("pf_price2", p.price2 || "");
+
+          ttSetVal("pf_item3", p.item3 || "");
+          ttSetVal("pf_qty3", p.qty3 || "");
+          ttSetVal("pf_unit3", p.unit3 || "kg");
+          ttSetVal("pf_price3", p.price3 || "");
+
+          ttSetVal("pf_notes", p.notes || "");
+        } catch {}
+      }
+    } else {
+      title.innerHTML = `<i class="bi bi-plus-circle me-1"></i> Nouvel achat`;
+      // optionnel : préremplir la date du jour
+      try {
+        const d = new Date();
+        const iso = d.toISOString().slice(0,10);
+        ttSetVal("pf_date", iso);
+      } catch {}
+    }
+  });
+
+  // ✅ MODAL DETAILS
+  document.addEventListener("click", (e) => {
+    const btn = e.target.closest("[data-bs-target='#ttPurchaseDetailModal']");
+    if (!btn) return;
+
+    const data = btn.getAttribute("data-purchase");
+    if (!data) return;
+
+    try {
+      const p = JSON.parse(data);
+
+      ttSetTxt("pd_ref", p.ref || "—");
+      ttSetTxt("pd_date", p.date || "—");
+      ttSetTxt("pd_supplier", p.supplier || "—");
+      ttSetTxt("pd_status", p.status || "—");
+      ttSetTxt("pd_payment", p.payment || "—");
+      ttSetTxt("pd_createdBy", p.createdBy || "—");
+      ttSetTxt("pd_receivedBy", p.receivedBy || "—");
+      ttSetTxt("pd_notes", p.notes || "—");
+
+      // items table
+      const tbody = document.getElementById("pd_items");
+      tbody.innerHTML = "";
+
+      let total = 0;
+      (p.items || []).forEach(it => {
+        const qty = Number(it.qty || 0);
+        const pu = Number(it.price || 0);
+        const sub = qty * pu;
+        total += sub;
+
+        const tr = document.createElement("tr");
+        tr.innerHTML = `
+          <td>${it.name || "—"}</td>
+          <td class="text-end">${qty || "—"}</td>
+          <td>${it.unit || "—"}</td>
+          <td class="text-end">${new Intl.NumberFormat('fr-FR').format(pu)}</td>
+          <td class="text-end">${new Intl.NumberFormat('fr-FR').format(sub)}</td>
+        `;
+        tbody.appendChild(tr);
+      });
+
+      ttSetTxt("pd_total", new Intl.NumberFormat('fr-FR').format(p.total ?? total));
+    } catch {}
+  });
+</script>
+
   
 </body>
 </html>

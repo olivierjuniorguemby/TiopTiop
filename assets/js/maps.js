@@ -1,62 +1,8 @@
 window.TT_MAPS = (function(){
-  function initClientTracking(mapId="map"){
-    const el = document.getElementById(mapId);
-    if(!el) return;
 
-    const map = L.map(mapId).setView([-4.2634, 15.2429], 12); // Brazzaville
-    L.tileLayer("https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png", {
-      maxZoom: 19,
-      attribution: "&copy; OpenStreetMap"
-    }).addTo(map);
+  const api = {}; // ✅ objet interne SAFE
 
-    const client = L.marker([-4.267, 15.246]).addTo(map).bindPopup("Client");
-    const rider = L.marker([-4.24, 15.20]).addTo(map).bindPopup("Livreur (simulation)");
-    const shop = L.marker([-4.263, 15.2429]).addTo(map).bindPopup("TchoTchop");
-
-    const path = L.polyline([shop.getLatLng(), rider.getLatLng(), client.getLatLng()], { }).addTo(map);
-
-    // simulation movement
-    let t = 0;
-    const route = [
-      [-4.24, 15.20],
-      [-4.245, 15.212],
-      [-4.252, 15.222],
-      [-4.258, 15.232],
-      [-4.263, 15.240],
-      [-4.266, 15.245],
-      [-4.267, 15.246]
-    ];
-
-    const etaEl = document.getElementById("ttEta");
-    const statusEl = document.getElementById("ttOrderStatus");
-
-    const statuses = ["Commande reçue", "En préparation", "Prête", "En livraison", "Livrée"];
-    let s = 0;
-
-    const timer = setInterval(() => {
-      t++;
-      const idx = Math.min(route.length-1, t);
-      rider.setLatLng(route[idx]);
-      path.setLatLngs([shop.getLatLng(), rider.getLatLng(), client.getLatLng()]);
-      map.panTo(rider.getLatLng(), { animate: true, duration: 0.5 });
-
-      if (etaEl) {
-        const remaining = Math.max(0, (route.length-1-idx)*4);
-        etaEl.textContent = remaining + " min";
-      }
-      if (statusEl && t % 2 === 0) {
-        s = Math.min(statuses.length-1, s+1);
-        statusEl.textContent = statuses[s];
-      }
-      if (idx === route.length-1) {
-        clearInterval(timer);
-      }
-    }, 1200);
-
-    return map;
-  }
-
-  function initAdminGeo(mapId="adminMap"){
+  api.initClientTracking = function(mapId="map"){
     const el = document.getElementById(mapId);
     if(!el) return;
 
@@ -66,32 +12,102 @@ window.TT_MAPS = (function(){
       attribution: "&copy; OpenStreetMap"
     }).addTo(map);
 
+    const client = L.marker([-4.267, 15.246]).addTo(map).bindPopup("Client");
+    const rider  = L.marker([-4.24, 15.20]).addTo(map).bindPopup("Livreur");
+    const shop   = L.marker([-4.2634, 15.2429]).addTo(map).bindPopup("TchoTchop");
+
+    L.polyline([shop.getLatLng(), rider.getLatLng(), client.getLatLng()]).addTo(map);
+
+    return map;
+  };
+
+  api.initAdminGeo = function(mapId="adminMap"){
+    const el = document.getElementById(mapId);
+    if(!el) return;
+
+    const map = L.map(mapId).setView([-4.2634, 15.2429], 12);
+    api._adminMap = map;            // ✅ CORRECT
+    api._adminMarkers = [];         // ✅ CORRECT
+
+    L.tileLayer("https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png", {
+      maxZoom: 19,
+      attribution: "&copy; OpenStreetMap"
+    }).addTo(map);
+
     const points = [
-      { name:"Boutique TchoTchop", lat:-4.2634, lng:15.2429, icon:"bi-shop" },
-      { name:"Client A", lat:-4.267, lng:15.246, icon:"bi-person" },
-      { name:"Client B", lat:-4.275, lng:15.22, icon:"bi-person" },
-      { name:"Livreur 1", lat:-4.24, lng:15.20, icon:"bi-bicycle" },
-      { name:"Livreur 2", lat:-4.29, lng:15.26, icon:"bi-bicycle" }
+      {
+        name:"Boutique TchoTchop",
+        lat:-4.2634,
+        lng:15.2429,
+        meta:{ type:"shop", sector:"centre" }
+      },
+      {
+        name:"Client A",
+        lat:-4.267,
+        lng:15.246,
+        meta:{ type:"customer", category:"dejeuner", menu:"saka", courier:"ldv1", sector:"centre" }
+      },
+      {
+        name:"Livreur 1",
+        lat:-4.24,
+        lng:15.20,
+        meta:{ type:"courier", courier:"ldv1", sector:"centre" }
+      }
     ];
 
     points.forEach(p => {
-      L.marker([p.lat, p.lng]).addTo(map).bindPopup(p.name);
+      const marker = L.marker([p.lat, p.lng])
+        .addTo(map)
+        .bindPopup(`<strong>${p.name}</strong><br>${p.meta.type}`);
+
+      api._adminMarkers.push({ marker, meta:p.meta });
     });
 
     const btn = document.getElementById("ttGeolocBtn");
     if (btn && navigator.geolocation) {
-      btn.addEventListener("click", () => {
-        navigator.geolocation.getCurrentPosition((pos) => {
-          const { latitude, longitude } = pos.coords;
-          L.marker([latitude, longitude]).addTo(map).bindPopup("Ma position (admin)").openPopup();
-          map.setView([latitude, longitude], 14);
-        }, () => {
-          alert("Impossible d'obtenir la géolocalisation.");
+      btn.onclick = () => {
+        navigator.geolocation.getCurrentPosition(pos => {
+          L.marker([pos.coords.latitude, pos.coords.longitude])
+            .addTo(map)
+            .bindPopup("Ma position")
+            .openPopup();
         });
-      });
+      };
     }
-    return map;
-  }
 
-  return { initClientTracking, initAdminGeo };
+    return map;
+  };
+
+  api.applyAdminGeoFilters = function(filters){
+    if (!api._adminMarkers || !api._adminMap) return 0;
+
+    let visible = 0;
+
+    api._adminMarkers.forEach(item => {
+      const { marker, meta } = item;
+
+      const typeOk =
+        (meta.type === "customer" && filters.show.customers) ||
+        (meta.type === "courier"  && filters.show.couriers)  ||
+        (meta.type === "shop"     && filters.show.shop);
+
+      const ok =
+        typeOk &&
+        (filters.category === "all" || meta.category === filters.category) &&
+        (filters.menu     === "all" || meta.menu === filters.menu) &&
+        (filters.courier  === "all" || meta.courier === filters.courier) &&
+        (filters.sector   === "all" || meta.sector === filters.sector);
+
+      if (ok) {
+        if (!marker._map) marker.addTo(api._adminMap);
+        visible++;
+      } else {
+        marker.remove();
+      }
+    });
+
+    return visible;
+  };
+
+  return api; // ✅ EXPOSITION PROPRE
 })();

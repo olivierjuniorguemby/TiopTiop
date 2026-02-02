@@ -12,6 +12,25 @@
 <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" integrity="sha256-p4NxAoJBhIIN+hmNHrzRCf9tD/miZyoHS5obTRR9BMY=" crossorigin=""/>
 <link rel="stylesheet" href="../assets/css/style.css">
 
+ <style>
+    /* ✅ Desktop sidebar uniquement (lg+) */
+    .tt-admin-sidebar-desktop { display: none; }
+    @media (min-width: 992px) {
+      .tt-admin-sidebar-desktop { display: block; }
+      .tt-admin-toggle { display:none; }
+    }
+
+    /* ✅ Petites améliorations charts */
+    .tt-chart-wrap {
+      width: 100%;
+      height: 280px;           /* fixe une hauteur clean */
+      position: relative;
+    }
+    .tt-chart-wrap canvas{
+      width: 100% !important;
+      height: 100% !important;
+    }
+  </style>
   
 </head>
 <body>
@@ -58,39 +77,81 @@
     </div>
   </header>
 
+  <!-- ✅ OFFCANVAS SIDEBAR (mobile/tablette) -->
+<div class="offcanvas offcanvas-start" tabindex="-1" id="ttAdminOffcanvas" aria-labelledby="ttAdminOffcanvasLabel">
+  <div class="offcanvas-header">
+    <h5 class="offcanvas-title" id="ttAdminOffcanvasLabel">
+      <i class="bi bi-speedometer2 me-1"></i> Admin
+    </h5>
+    <button type="button" class="btn-close" data-bs-dismiss="offcanvas" aria-label="Fermer"></button>
+  </div>
+  <div class="offcanvas-body">
+    <div class="tt-card p-3 tt-admin-sidebar">
+      <div class="small text-muted mb-3">Gestion complète de la plateforme.</div>
+      <div class="tt-admin-nav d-grid gap-1">
+        <a href="index.html" data-admin-nav="index.html"><i class="bi bi-speedometer2"></i> Dashboard</a>
+        <a href="products.html" data-admin-nav="products.html"><i class="bi bi-basket2"></i> Produits</a>
+        <a href="categories.html" data-admin-nav="categories.html"><i class="bi bi-grid"></i> Catégories</a>
+        <a href="orders.html" data-admin-nav="orders.html"><i class="bi bi-receipt"></i> Commandes</a>
+        <a href="deliveries.html" data-admin-nav="deliveries.html"><i class="bi bi-truck"></i> Livraisons</a>
+        <a href="incidents.html" data-admin-nav="incidents.html"><i class="bi bi-exclamation-triangle"></i> Incidents</a>
+        <a href="suppliers.html" data-admin-nav="suppliers.html"><i class="bi bi-box"></i> Fournisseurs</a>
+        <a href="purchases.html" data-admin-nav="purchases.html"><i class="bi bi-cart-check"></i> Achats</a>
+        <a href="sales.html" data-admin-nav="sales.html"><i class="bi bi-graph-up"></i> Ventes</a>
+        <a href="customers.html" data-admin-nav="customers.html"><i class="bi bi-people"></i> Clients</a>
+        <a href="ads.html" data-admin-nav="ads.html"><i class="bi bi-megaphone"></i> Annonces</a>
+        <a href="geo.html" data-admin-nav="geo.html"><i class="bi bi-geo-alt"></i> Géolocalisation</a>
+        <a href="settings.html" data-admin-nav="settings.html"><i class="bi bi-gear"></i> Paramètres</a>
+      </div>
+    </div>
+  </div>
+</div>
+
   <main class="container my-4">
     
 <div class="row g-4">
-  <div class="col-lg-3">
-<div class="tt-card p-3 tt-admin-sidebar">
-  <div class="fw-bold mb-2"><i class="bi bi-speedometer2 me-1"></i>Admin</div>
-  <div class="small text-muted mb-3">Gestion complète de la plateforme.</div>
-  <div class="tt-admin-nav d-grid gap-1">
-    <a href="index.html" data-admin-nav="index.html"><i class="bi bi-speedometer2"></i> Dashboard</a>
-    <a href="products.html" data-admin-nav="products.html"><i class="bi bi-basket2"></i> Produits</a>
-    <a href="categories.html" data-admin-nav="categories.html"><i class="bi bi-grid"></i> Catégories</a>
-    <a href="orders.html" data-admin-nav="orders.html"><i class="bi bi-receipt"></i> Commandes</a>
-    <a href="deliveries.html" data-admin-nav="deliveries.html"><i class="bi bi-truck"></i> Livraisons</a>
-    <a href="incidents.html" data-admin-nav="incidents.html"><i class="bi bi-exclamation-triangle"></i> Incidents</a>
-    <a href="suppliers.html" data-admin-nav="suppliers.html"><i class="bi bi-box"></i> Fournisseurs</a>
-    <a href="purchases.html" data-admin-nav="purchases.html"><i class="bi bi-cart-check"></i> Achats</a>
-    <a href="sales.html" data-admin-nav="sales.html"><i class="bi bi-graph-up"></i> Ventes</a>
-    <a href="customers.html" data-admin-nav="customers.html"><i class="bi bi-people"></i> Clients</a>
-    <a href="ads.html" data-admin-nav="ads.html"><i class="bi bi-megaphone"></i> Annonces</a>
-    <a href="geo.html" data-admin-nav="geo.html"><i class="bi bi-geo-alt"></i> Géolocalisation</a>
-    <a href="settings.html" data-admin-nav="settings.html"><i class="bi bi-gear"></i> Paramètres</a>
-  </div>
-</div>
-<script>
-document.addEventListener("DOMContentLoaded", () => {
-  const path = location.pathname.split("/").pop() || "index.html";
-  document.querySelectorAll("[data-admin-nav]").forEach(a => {
-    a.classList.toggle("active", a.getAttribute("data-admin-nav") === path);
-  });
-});
-</script>
-</div>
+  
+  <!-- ✅ SIDEBAR DESKTOP -->
+    <div class="col-lg-3 tt-admin-sidebar-desktop">
+      <div class="tt-card p-3 tt-admin-sidebar">
+        <div class="fw-bold mb-2"><i class="bi bi-speedometer2 me-1"></i>Admin</div>
+        <div class="small text-muted mb-3">Gestion complète de la plateforme.</div>
+        <div class="tt-admin-nav d-grid gap-1">
+          <a href="index.html" data-admin-nav="index.html"><i class="bi bi-speedometer2"></i> Dashboard</a>
+          <a href="products.html" data-admin-nav="products.html"><i class="bi bi-basket2"></i> Produits</a>
+          <a href="categories.html" data-admin-nav="categories.html"><i class="bi bi-grid"></i> Catégories</a>
+          <a href="orders.html" data-admin-nav="orders.html"><i class="bi bi-receipt"></i> Commandes</a>
+          <a href="deliveries.html" data-admin-nav="deliveries.html"><i class="bi bi-truck"></i> Livraisons</a>
+          <a href="incidents.html" data-admin-nav="incidents.html"><i class="bi bi-exclamation-triangle"></i> Incidents</a>
+          <a href="suppliers.html" data-admin-nav="suppliers.html"><i class="bi bi-box"></i> Fournisseurs</a>
+          <a href="purchases.html" data-admin-nav="purchases.html"><i class="bi bi-cart-check"></i> Achats</a>
+          <a href="sales.html" data-admin-nav="sales.html"><i class="bi bi-graph-up"></i> Ventes</a>
+          <a href="customers.html" data-admin-nav="customers.html"><i class="bi bi-people"></i> Clients</a>
+          <a href="ads.html" data-admin-nav="ads.html"><i class="bi bi-megaphone"></i> Annonces</a>
+          <a href="geo.html" data-admin-nav="geo.html"><i class="bi bi-geo-alt"></i> Géolocalisation</a>
+          <a href="settings.html" data-admin-nav="settings.html"><i class="bi bi-gear"></i> Paramètres</a>
+        </div>
+      </div>
+    </div>
+
+    <!-- ✅ CONTENT -->
+
   <div class="col-lg-9">
+    <!-- Titre + bouton mobile -->
+      <div class="d-flex align-items-start justify-content-between gap-2">
+        <!-- Content -->
+
+        <!-- ✅ Bouton sidebar mobile -->
+        <button class="btn btn-sm btn-tt-outline tt-btn tt-admin-toggle"
+                type="button"
+                data-bs-toggle="offcanvas"
+                data-bs-target="#ttAdminOffcanvas"
+                aria-controls="ttAdminOffcanvas">
+          <i class="bi bi-list me-1"></i> Menu Admin
+        </button>
+      </div>
+
+      
 <h1 class="h4" style="font-weight:900">Annonces</h1>
 <div class="small text-muted mb-3">Créer annonces/pubs visibles côté client + notifications.</div>
 
@@ -101,7 +162,9 @@ document.addEventListener("DOMContentLoaded", () => {
       <input class="form-control" placeholder="Rechercher… (UI)">
     </div>
     <div class="d-flex gap-2 flex-wrap">
-      <button class="btn btn-tt tt-btn" onclick="TT.toast('Nouvelle annonce (UI)','bi-plus-circle')"><i class="bi bi-plus-circle me-1"></i>Nouvelle</button>
+<button class="btn btn-tt tt-btn" type="button" id="btnAdNew">
+  <i class="bi bi-plus-circle me-1"></i>Nouvelle
+</button>
     </div>
   </div>
 </div>
@@ -112,9 +175,41 @@ document.addEventListener("DOMContentLoaded", () => {
       <thead><tr><th>Titre</th><th>Message</th><th>Statut</th><th></th></tr></thead>
       <tbody>
         
-    <tr><td>Promo Fidélité</td><td>-10% Premium</td><td><span class="tt-badge">Actif</span></td><td class="text-end"><button class="btn btn-sm btn-tt-outline tt-btn" onclick="TT.toast('Modifier (UI)','bi-pencil')">Modifier</button></td></tr>
-    <tr><td>Nouveau plat</td><td>Sauce piment maison</td><td><span class="tt-badge">Actif</span></td><td class="text-end"><button class="btn btn-sm btn-tt-outline tt-btn" onclick="TT.toast('Modifier (UI)','bi-pencil')">Modifier</button></td></tr>
-    
+   <tr>
+  <td>Promo Fidélité</td>
+  <td>-10% Premium</td>
+  <td><span class="tt-badge">Actif</span></td>
+  <td class="text-end">
+    <div class="d-inline-flex gap-2">
+      <button class="btn btn-sm btn-tt-outline tt-btn btn-ad-details"
+              type="button"
+              data-title="Promo Fidélité"
+              data-message="-10% Premium"
+              data-status="Actif"
+              data-channel="Accueil + Notifications"
+              data-start="2026-01-25"
+              data-end="2026-02-05"
+              data-priority="Haute"
+              data-image="">
+        <i class="bi bi-eye me-1"></i>Détails
+      </button>
+
+      <button class="btn btn-sm btn-tt tt-btn btn-ad-edit"
+              type="button"
+              data-title="Promo Fidélité"
+              data-message="-10% Premium"
+              data-status="Actif"
+              data-channel="Accueil + Notifications"
+              data-start="2026-01-25"
+              data-end="2026-02-05"
+              data-priority="Haute"
+              data-image="">
+        <i class="bi bi-pencil me-1"></i>Modifier
+      </button>
+    </div>
+  </td>
+</tr>
+
       </tbody>
     </table>
   </div>
@@ -197,7 +292,188 @@ document.addEventListener("DOMContentLoaded", () => {
     </div>
   </footer>
 
-  
+  <!-- ========================= -->
+<!-- MODAL: Create / Edit Ad -->
+<!-- ========================= -->
+<div class="modal fade" id="adFormModal" tabindex="-1" aria-hidden="true">
+  <div class="modal-dialog modal-dialog-centered modal-lg">
+    <div class="modal-content tt-card p-0" style="border-radius:18px;border:1px solid var(--border)">
+      <div class="modal-header" style="border-bottom:1px solid var(--border)">
+        <div>
+          <div class="fw-bold" id="adFormTitle" style="font-size:1.05rem">
+            <i class="bi bi-megaphone me-1"></i> Nouvelle annonce
+          </div>
+          <div class="small text-muted">Annonce visible côté client + option notifications.</div>
+        </div>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Fermer"></button>
+      </div>
+
+      <form id="adForm" class="modal-body">
+        <input type="hidden" id="adMode" value="create"><!-- create | edit -->
+
+        <div class="row g-3">
+          <div class="col-lg-7">
+            <label class="form-label fw-semibold">Titre</label>
+            <input class="form-control" id="adTitle" required placeholder="Ex: Nouveau plat / Promo week-end">
+
+            <label class="form-label fw-semibold mt-3">Message</label>
+            <textarea class="form-control" id="adMessage" rows="4" required placeholder="Texte de l'annonce…"></textarea>
+
+            <div class="row g-2 mt-3">
+              <div class="col-md-6">
+                <label class="form-label fw-semibold">Canal</label>
+                <select class="form-select" id="adChannel">
+                  <option>Accueil</option>
+                  <option>Notifications</option>
+                  <option>Accueil + Notifications</option>
+                  <option>Accueil + Push + SMS (plus tard)</option>
+                </select>
+              </div>
+              <div class="col-md-6">
+                <label class="form-label fw-semibold">Priorité</label>
+                <select class="form-select" id="adPriority">
+                  <option>Normale</option>
+                  <option>Haute</option>
+                  <option>Urgente</option>
+                </select>
+              </div>
+            </div>
+
+            <div class="row g-2 mt-2">
+              <div class="col-md-6">
+                <label class="form-label fw-semibold">Début</label>
+                <input class="form-control" id="adStart" type="date">
+              </div>
+              <div class="col-md-6">
+                <label class="form-label fw-semibold">Fin</label>
+                <input class="form-control" id="adEnd" type="date">
+              </div>
+            </div>
+
+            <div class="row g-2 mt-2">
+              <div class="col-md-6">
+                <label class="form-label fw-semibold">Statut</label>
+                <select class="form-select" id="adStatus">
+                  <option>Actif</option>
+                  <option>Brouillon</option>
+                  <option>Archivé</option>
+                </select>
+              </div>
+              <div class="col-md-6">
+                <label class="form-label fw-semibold">CTA (optionnel)</label>
+                <input class="form-control" id="adCta" placeholder="Ex: Commander / Voir menu">
+              </div>
+            </div>
+          </div>
+
+          <div class="col-lg-5">
+            <div class="tt-card p-3" style="border:1px solid var(--border)">
+              <div class="fw-bold mb-2"><i class="bi bi-image me-1"></i>Image de l’annonce</div>
+              <div class="small text-muted mb-2">Recommandé : 1080×1080 ou 1200×628 (réseaux).</div>
+
+              <input class="form-control" type="file" id="adImageFile" accept="image/*">
+              <input class="form-control mt-2" type="url" id="adImageUrl" placeholder="Ou coller une URL d'image (optionnel)">
+
+              <div class="mt-3">
+                <div class="small fw-semibold mb-2">Aperçu</div>
+                <div class="ratio ratio-1x1 tt-card overflow-hidden" style="border:1px dashed var(--border);border-radius:14px">
+                  <img id="adImagePreview" alt="Aperçu image" style="width:100%;height:100%;object-fit:cover;display:none">
+                  <div id="adImagePlaceholder" class="d-flex align-items-center justify-content-center text-muted small">
+                    Aucune image sélectionnée
+                  </div>
+                </div>
+              </div>
+
+              <hr class="my-3">
+
+              <div class="small fw-semibold mb-2">Aperçu annonce</div>
+              <div class="tt-card p-3" style="border:1px solid var(--border)">
+                <div class="fw-bold" id="adPreviewTitle">Titre…</div>
+                <div class="small text-muted mt-1" id="adPreviewMessage">Message…</div>
+                <div class="mt-2">
+                  <span class="tt-badge" id="adPreviewBadge">Actif</span>
+                </div>
+              </div>
+
+            </div>
+          </div>
+        </div>
+      </form>
+
+      <div class="modal-footer" style="border-top:1px solid var(--border)">
+        <button class="btn btn-tt-outline tt-btn" data-bs-dismiss="modal">Annuler</button>
+        <button class="btn btn-tt tt-btn" type="submit" form="adForm">
+          <i class="bi bi-check2-circle me-1"></i>Enregistrer
+        </button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ========================= -->
+<!-- MODAL: Ad Details -->
+<!-- ========================= -->
+<div class="modal fade" id="adDetailsModal" tabindex="-1" aria-hidden="true">
+  <div class="modal-dialog modal-dialog-centered modal-lg">
+    <div class="modal-content tt-card p-0" style="border-radius:18px;border:1px solid var(--border)">
+      <div class="modal-header" style="border-bottom:1px solid var(--border)">
+        <div>
+          <div class="fw-bold" style="font-size:1.05rem">
+            <i class="bi bi-eye me-1"></i>Détails annonce
+          </div>
+          <div class="small text-muted">Toutes les informations liées à cette annonce.</div>
+        </div>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Fermer"></button>
+      </div>
+
+      <div class="modal-body">
+        <div class="row g-3">
+          <div class="col-lg-5">
+            <div class="ratio ratio-1x1 tt-card overflow-hidden" style="border:1px solid var(--border);border-radius:14px">
+              <img id="adDetailsImage" alt="Image annonce" style="width:100%;height:100%;object-fit:cover;display:none">
+              <div id="adDetailsImagePlaceholder" class="d-flex align-items-center justify-content-center text-muted small">
+                Aucune image
+              </div>
+            </div>
+          </div>
+          <div class="col-lg-7">
+            <div class="fw-bold" id="adDetailsTitle">—</div>
+            <div class="text-muted small mt-1" id="adDetailsMessage">—</div>
+
+            <div class="mt-3 d-flex gap-2 flex-wrap">
+              <span class="tt-badge" id="adDetailsStatus">—</span>
+              <span class="tt-badge"><i class="bi bi-broadcast me-1"></i><span id="adDetailsChannel">—</span></span>
+              <span class="tt-badge"><i class="bi bi-flag me-1"></i><span id="adDetailsPriority">—</span></span>
+            </div>
+
+            <hr class="my-3">
+
+            <div class="row g-2">
+              <div class="col-md-6">
+                <div class="small text-muted">Début</div>
+                <div class="fw-semibold" id="adDetailsStart">—</div>
+              </div>
+              <div class="col-md-6">
+                <div class="small text-muted">Fin</div>
+                <div class="fw-semibold" id="adDetailsEnd">—</div>
+              </div>
+              <div class="col-md-12 mt-2">
+                <div class="small text-muted">CTA</div>
+                <div class="fw-semibold" id="adDetailsCta">—</div>
+              </div>
+            </div>
+
+          </div>
+        </div>
+      </div>
+
+      <div class="modal-footer" style="border-top:1px solid var(--border)">
+        <button class="btn btn-tt-outline tt-btn" data-bs-dismiss="modal">Fermer</button>
+      </div>
+    </div>
+  </div>
+</div>
+
 
   <!-- Toast -->
   <div class="toast-container position-fixed bottom-0 end-0 p-3">
@@ -212,6 +488,159 @@ document.addEventListener("DOMContentLoaded", () => {
 <script src="../assets/js/app.js"></script>
 
   
-  
+  <script>
+  document.addEventListener("DOMContentLoaded", () => {
+    const adFormModal = new bootstrap.Modal(document.getElementById("adFormModal"));
+    const adDetailsModal = new bootstrap.Modal(document.getElementById("adDetailsModal"));
+
+    // Champs form
+    const mode = document.getElementById("adMode");
+    const title = document.getElementById("adTitle");
+    const message = document.getElementById("adMessage");
+    const channel = document.getElementById("adChannel");
+    const priority = document.getElementById("adPriority");
+    const start = document.getElementById("adStart");
+    const end = document.getElementById("adEnd");
+    const status = document.getElementById("adStatus");
+    const cta = document.getElementById("adCta");
+
+    const imageFile = document.getElementById("adImageFile");
+    const imageUrl = document.getElementById("adImageUrl");
+    const previewImg = document.getElementById("adImagePreview");
+    const previewPlaceholder = document.getElementById("adImagePlaceholder");
+
+    // Preview annonce
+    const pTitle = document.getElementById("adPreviewTitle");
+    const pMsg = document.getElementById("adPreviewMessage");
+    const pBadge = document.getElementById("adPreviewBadge");
+
+    function resetImagePreview(){
+      previewImg.style.display = "none";
+      previewImg.src = "";
+      previewPlaceholder.style.display = "flex";
+      imageFile.value = "";
+      imageUrl.value = "";
+    }
+
+    function updatePreview(){
+      pTitle.textContent = title.value || "Titre…";
+      pMsg.textContent = message.value || "Message…";
+      pBadge.textContent = status.value || "Actif";
+    }
+
+    // Preview live
+    ["input","change"].forEach(evt => {
+      title.addEventListener(evt, updatePreview);
+      message.addEventListener(evt, updatePreview);
+      status.addEventListener(evt, updatePreview);
+    });
+
+    // Preview image depuis upload
+    imageFile.addEventListener("change", () => {
+      const file = imageFile.files && imageFile.files[0];
+      if(!file) return;
+      const url = URL.createObjectURL(file);
+      previewImg.src = url;
+      previewImg.style.display = "block";
+      previewPlaceholder.style.display = "none";
+      imageUrl.value = "";
+    });
+
+    // Preview image depuis URL
+    imageUrl.addEventListener("input", () => {
+      const u = imageUrl.value.trim();
+      if(!u) { resetImagePreview(); return; }
+      previewImg.src = u;
+      previewImg.style.display = "block";
+      previewPlaceholder.style.display = "none";
+      imageFile.value = "";
+    });
+
+    // --- OUVRIR : Nouvelle annonce
+    document.getElementById("btnAdNew").addEventListener("click", () => {
+      document.getElementById("adFormTitle").innerHTML = '<i class="bi bi-megaphone me-1"></i> Nouvelle annonce';
+      mode.value = "create";
+      title.value = "";
+      message.value = "";
+      channel.value = "Accueil + Notifications";
+      priority.value = "Normale";
+      start.value = "";
+      end.value = "";
+      status.value = "Actif";
+      cta.value = "";
+      resetImagePreview();
+      updatePreview();
+      adFormModal.show();
+    });
+
+    // --- OUVRIR : Modifier annonce (depuis tableau)
+    document.querySelectorAll(".btn-ad-edit").forEach(btn => {
+      btn.addEventListener("click", () => {
+        document.getElementById("adFormTitle").innerHTML = '<i class="bi bi-pencil me-1"></i> Modifier annonce';
+        mode.value = "edit";
+        title.value = btn.dataset.title || "";
+        message.value = btn.dataset.message || "";
+        channel.value = btn.dataset.channel || "Accueil";
+        priority.value = btn.dataset.priority || "Normale";
+        start.value = btn.dataset.start || "";
+        end.value = btn.dataset.end || "";
+        status.value = btn.dataset.status || "Actif";
+        cta.value = btn.dataset.cta || "";
+
+        resetImagePreview();
+        const img = (btn.dataset.image || "").trim();
+        if(img){
+          previewImg.src = img;
+          previewImg.style.display = "block";
+          previewPlaceholder.style.display = "none";
+          imageUrl.value = img;
+        }
+        updatePreview();
+        adFormModal.show();
+      });
+    });
+
+    // --- OUVRIR : Détails annonce
+    document.querySelectorAll(".btn-ad-details").forEach(btn => {
+      btn.addEventListener("click", () => {
+        document.getElementById("adDetailsTitle").textContent = btn.dataset.title || "—";
+        document.getElementById("adDetailsMessage").textContent = btn.dataset.message || "—";
+        document.getElementById("adDetailsStatus").textContent = btn.dataset.status || "—";
+        document.getElementById("adDetailsChannel").textContent = btn.dataset.channel || "—";
+        document.getElementById("adDetailsPriority").textContent = btn.dataset.priority || "—";
+        document.getElementById("adDetailsStart").textContent = btn.dataset.start || "—";
+        document.getElementById("adDetailsEnd").textContent = btn.dataset.end || "—";
+        document.getElementById("adDetailsCta").textContent = btn.dataset.cta || "—";
+
+        const img = (btn.dataset.image || "").trim();
+        const di = document.getElementById("adDetailsImage");
+        const dp = document.getElementById("adDetailsImagePlaceholder");
+        if(img){
+          di.src = img;
+          di.style.display = "block";
+          dp.style.display = "none";
+        } else {
+          di.style.display = "none";
+          di.src = "";
+          dp.style.display = "flex";
+        }
+
+        adDetailsModal.show();
+      });
+    });
+
+    // --- Submit (UI)
+    document.getElementById("adForm").addEventListener("submit", (e) => {
+      e.preventDefault();
+      // Ici tu brancheras ton backend plus tard (POST/PUT).
+      // Pour l’instant on fait juste une confirmation propre.
+      const action = mode.value === "edit" ? "Annonce modifiée (UI)" : "Annonce créée (UI)";
+      if (window.TT && typeof TT.toast === "function") TT.toast(action, "bi-check2-circle");
+      adFormModal.hide();
+    });
+  });
+</script>
+
+
 </body>
 </html>

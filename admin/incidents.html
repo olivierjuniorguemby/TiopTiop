@@ -12,7 +12,26 @@
 <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" integrity="sha256-p4NxAoJBhIIN+hmNHrzRCf9tD/miZyoHS5obTRR9BMY=" crossorigin=""/>
 <link rel="stylesheet" href="../assets/css/style.css">
 
-  
+  <style>
+    /* ✅ Desktop sidebar uniquement (lg+) */
+    .tt-admin-sidebar-desktop { display: none; }
+    @media (min-width: 992px) {
+      .tt-admin-sidebar-desktop { display: block; }
+      .tt-admin-toggle { display:none; }
+    }
+
+    /* ✅ Petites améliorations charts */
+    .tt-chart-wrap {
+      width: 100%;
+      height: 280px;           /* fixe une hauteur clean */
+      position: relative;
+    }
+    .tt-chart-wrap canvas{
+      width: 100% !important;
+      height: 100% !important;
+    }
+  </style>
+
 </head>
 <body>
   <header class="tt-topbar">
@@ -58,39 +77,80 @@
     </div>
   </header>
 
+  <!-- ✅ OFFCANVAS SIDEBAR (mobile/tablette) -->
+<div class="offcanvas offcanvas-start" tabindex="-1" id="ttAdminOffcanvas" aria-labelledby="ttAdminOffcanvasLabel">
+  <div class="offcanvas-header">
+    <h5 class="offcanvas-title" id="ttAdminOffcanvasLabel">
+      <i class="bi bi-speedometer2 me-1"></i> Admin
+    </h5>
+    <button type="button" class="btn-close" data-bs-dismiss="offcanvas" aria-label="Fermer"></button>
+  </div>
+  <div class="offcanvas-body">
+    <div class="tt-card p-3 tt-admin-sidebar">
+      <div class="small text-muted mb-3">Gestion complète de la plateforme.</div>
+      <div class="tt-admin-nav d-grid gap-1">
+        <a href="index.html" data-admin-nav="index.html"><i class="bi bi-speedometer2"></i> Dashboard</a>
+        <a href="products.html" data-admin-nav="products.html"><i class="bi bi-basket2"></i> Produits</a>
+        <a href="categories.html" data-admin-nav="categories.html"><i class="bi bi-grid"></i> Catégories</a>
+        <a href="orders.html" data-admin-nav="orders.html"><i class="bi bi-receipt"></i> Commandes</a>
+        <a href="deliveries.html" data-admin-nav="deliveries.html"><i class="bi bi-truck"></i> Livraisons</a>
+        <a href="incidents.html" data-admin-nav="incidents.html"><i class="bi bi-exclamation-triangle"></i> Incidents</a>
+        <a href="suppliers.html" data-admin-nav="suppliers.html"><i class="bi bi-box"></i> Fournisseurs</a>
+        <a href="purchases.html" data-admin-nav="purchases.html"><i class="bi bi-cart-check"></i> Achats</a>
+        <a href="sales.html" data-admin-nav="sales.html"><i class="bi bi-graph-up"></i> Ventes</a>
+        <a href="customers.html" data-admin-nav="customers.html"><i class="bi bi-people"></i> Clients</a>
+        <a href="ads.html" data-admin-nav="ads.html"><i class="bi bi-megaphone"></i> Annonces</a>
+        <a href="geo.html" data-admin-nav="geo.html"><i class="bi bi-geo-alt"></i> Géolocalisation</a>
+        <a href="settings.html" data-admin-nav="settings.html"><i class="bi bi-gear"></i> Paramètres</a>
+      </div>
+    </div>
+  </div>
+</div>
+
   <main class="container my-4">
     
 <div class="row g-4">
-  <div class="col-lg-3">
-<div class="tt-card p-3 tt-admin-sidebar">
-  <div class="fw-bold mb-2"><i class="bi bi-speedometer2 me-1"></i>Admin</div>
-  <div class="small text-muted mb-3">Gestion complète de la plateforme.</div>
-  <div class="tt-admin-nav d-grid gap-1">
-    <a href="index.html" data-admin-nav="index.html"><i class="bi bi-speedometer2"></i> Dashboard</a>
-    <a href="products.html" data-admin-nav="products.html"><i class="bi bi-basket2"></i> Produits</a>
-    <a href="categories.html" data-admin-nav="categories.html"><i class="bi bi-grid"></i> Catégories</a>
-    <a href="orders.html" data-admin-nav="orders.html"><i class="bi bi-receipt"></i> Commandes</a>
-    <a href="deliveries.html" data-admin-nav="deliveries.html"><i class="bi bi-truck"></i> Livraisons</a>
-    <a href="incidents.html" data-admin-nav="incidents.html"><i class="bi bi-exclamation-triangle"></i> Incidents</a>
-    <a href="suppliers.html" data-admin-nav="suppliers.html"><i class="bi bi-box"></i> Fournisseurs</a>
-    <a href="purchases.html" data-admin-nav="purchases.html"><i class="bi bi-cart-check"></i> Achats</a>
-    <a href="sales.html" data-admin-nav="sales.html"><i class="bi bi-graph-up"></i> Ventes</a>
-    <a href="customers.html" data-admin-nav="customers.html"><i class="bi bi-people"></i> Clients</a>
-    <a href="ads.html" data-admin-nav="ads.html"><i class="bi bi-megaphone"></i> Annonces</a>
-    <a href="geo.html" data-admin-nav="geo.html"><i class="bi bi-geo-alt"></i> Géolocalisation</a>
-    <a href="settings.html" data-admin-nav="settings.html"><i class="bi bi-gear"></i> Paramètres</a>
-  </div>
-</div>
-<script>
-document.addEventListener("DOMContentLoaded", () => {
-  const path = location.pathname.split("/").pop() || "index.html";
-  document.querySelectorAll("[data-admin-nav]").forEach(a => {
-    a.classList.toggle("active", a.getAttribute("data-admin-nav") === path);
-  });
-});
-</script>
-</div>
+ <!-- ✅ SIDEBAR DESKTOP -->
+    <div class="col-lg-3 tt-admin-sidebar-desktop">
+      <div class="tt-card p-3 tt-admin-sidebar">
+        <div class="fw-bold mb-2"><i class="bi bi-speedometer2 me-1"></i>Admin</div>
+        <div class="small text-muted mb-3">Gestion complète de la plateforme.</div>
+        <div class="tt-admin-nav d-grid gap-1">
+          <a href="index.html" data-admin-nav="index.html"><i class="bi bi-speedometer2"></i> Dashboard</a>
+          <a href="products.html" data-admin-nav="products.html"><i class="bi bi-basket2"></i> Produits</a>
+          <a href="categories.html" data-admin-nav="categories.html"><i class="bi bi-grid"></i> Catégories</a>
+          <a href="orders.html" data-admin-nav="orders.html"><i class="bi bi-receipt"></i> Commandes</a>
+          <a href="deliveries.html" data-admin-nav="deliveries.html"><i class="bi bi-truck"></i> Livraisons</a>
+          <a href="incidents.html" data-admin-nav="incidents.html"><i class="bi bi-exclamation-triangle"></i> Incidents</a>
+          <a href="suppliers.html" data-admin-nav="suppliers.html"><i class="bi bi-box"></i> Fournisseurs</a>
+          <a href="purchases.html" data-admin-nav="purchases.html"><i class="bi bi-cart-check"></i> Achats</a>
+          <a href="sales.html" data-admin-nav="sales.html"><i class="bi bi-graph-up"></i> Ventes</a>
+          <a href="customers.html" data-admin-nav="customers.html"><i class="bi bi-people"></i> Clients</a>
+          <a href="ads.html" data-admin-nav="ads.html"><i class="bi bi-megaphone"></i> Annonces</a>
+          <a href="geo.html" data-admin-nav="geo.html"><i class="bi bi-geo-alt"></i> Géolocalisation</a>
+          <a href="settings.html" data-admin-nav="settings.html"><i class="bi bi-gear"></i> Paramètres</a>
+        </div>
+      </div>
+    </div>
+
+    <!-- ✅ CONTENT -->
+
   <div class="col-lg-9">
+
+    <!-- Titre + bouton mobile -->
+      <div class="d-flex align-items-start justify-content-between gap-2">
+        <!-- Content -->
+
+        <!-- ✅ Bouton sidebar mobile -->
+        <button class="btn btn-sm btn-tt-outline tt-btn tt-admin-toggle"
+                type="button"
+                data-bs-toggle="offcanvas"
+                data-bs-target="#ttAdminOffcanvas"
+                aria-controls="ttAdminOffcanvas">
+          <i class="bi bi-list me-1"></i> Menu Admin
+        </button>
+      </div>
+      
 <h1 class="h4" style="font-weight:900">Incidents</h1>
 <div class="small text-muted mb-3">Litiges à traiter : remboursement, re-livraison, retour client.</div>
 
@@ -101,7 +161,17 @@ document.addEventListener("DOMContentLoaded", () => {
       <input class="form-control" placeholder="Rechercher… (UI)">
     </div>
     <div class="d-flex gap-2 flex-wrap">
-      <button class="btn btn-tt-outline tt-btn" onclick="TT.toast('Exporter (UI)','bi-download')"><i class="bi bi-download me-1"></i>Exporter</button>
+<div class="d-flex gap-2 flex-wrap">
+  <button class="btn btn-tt tt-btn"
+          data-bs-toggle="modal"
+          data-bs-target="#ttIncidentFormModal">
+    <i class="bi bi-plus-circle me-1"></i> Ajouter incident
+  </button>
+
+  <button class="btn btn-tt-outline tt-btn">
+    <i class="bi bi-download me-1"></i> Exporter
+  </button>
+</div>
     </div>
   </div>
 </div>
@@ -115,7 +185,23 @@ document.addEventListener("DOMContentLoaded", () => {
     <tr><td>INC-0021</td><td>TT-10021</td><td>Retard</td><td><span class="tt-badge">Haute</span></td><td><span class="tt-badge">En cours</span></td>
       <td class="text-end"><button class="btn btn-sm btn-tt tt-btn" onclick="TT.toast('Résolution (UI)','bi-check2-circle')">Résoudre</button></td></tr>
     <tr><td>INC-0018</td><td>TT-10020</td><td>Erreur menu</td><td><span class="tt-badge">Moyenne</span></td><td><span class="tt-badge">Résolu</span></td>
-      <td class="text-end"><button class="btn btn-sm btn-tt-outline tt-btn" onclick="TT.toast('Voir (UI)','bi-eye')">Voir</button></td></tr>
+      <td class="text-end">
+        <td class="text-end d-flex gap-1 justify-content-end">
+  <button class="btn btn-sm btn-tt-outline tt-btn"
+          data-bs-toggle="modal"
+          data-bs-target="#ttIncidentFormModal">
+    <i class="bi bi-pencil me-1"></i>Modifier
+  </button>
+
+  <button class="btn btn-sm btn-tt-outline tt-btn"
+          data-bs-toggle="modal"
+          data-bs-target="#ttIncidentModal">
+    <i class="bi bi-eye me-1"></i>Voir
+  </button>
+</td>
+
+
+      </td></tr>
     
       </tbody>
     </table>
@@ -199,7 +285,195 @@ document.addEventListener("DOMContentLoaded", () => {
     </div>
   </footer>
 
-  
+  <!-- ✅ MODAL : AJOUT / MODIFICATION INCIDENT -->
+<div class="modal fade" id="ttIncidentFormModal" tabindex="-1">
+  <div class="modal-dialog modal-dialog-centered modal-lg">
+    <div class="modal-content tt-card" style="border-radius:20px">
+
+      <!-- HEADER -->
+      <div class="modal-header">
+        <h5 class="fw-black mb-0">
+          <i class="bi bi-exclamation-circle me-1"></i>
+          Incident client (création / édition)
+        </h5>
+        <button class="btn-close" data-bs-dismiss="modal"></button>
+      </div>
+
+      <!-- BODY -->
+      <div class="modal-body">
+
+        <!-- CLIENT -->
+        <div class="tt-card p-3 mb-3">
+          <div class="fw-bold mb-2">👤 Client</div>
+          <div class="row g-2">
+            <div class="col-md-6">
+              <label class="form-label">Nom du client</label>
+              <input class="form-control" placeholder="Ex: Client sans app">
+            </div>
+            <div class="col-md-6">
+              <label class="form-label">Téléphone</label>
+              <input class="form-control" placeholder="+242 …">
+            </div>
+          </div>
+        </div>
+
+        <!-- COMMANDE -->
+        <div class="tt-card p-3 mb-3">
+          <div class="fw-bold mb-2">🧾 Commande associée (optionnel)</div>
+          <div class="row g-2">
+            <div class="col-md-6">
+              <label class="form-label">ID Commande</label>
+              <input class="form-control" placeholder="TT-10021 (si existe)">
+            </div>
+            <div class="col-md-6">
+              <label class="form-label">Canal</label>
+              <select class="form-select">
+                <option>Sur place</option>
+                <option>App mobile</option>
+                <option>Téléphone</option>
+                <option>WhatsApp</option>
+              </select>
+            </div>
+          </div>
+        </div>
+
+        <!-- INCIDENT -->
+        <div class="tt-card p-3 mb-3">
+          <div class="fw-bold mb-2">⚠️ Incident</div>
+          <div class="row g-2">
+            <div class="col-md-6">
+              <label class="form-label">Type</label>
+              <select class="form-select">
+                <option>Retard livraison</option>
+                <option>Erreur menu</option>
+                <option>Plat manquant</option>
+                <option>Qualité insuffisante</option>
+                <option>Paiement</option>
+                <option>Autre</option>
+              </select>
+            </div>
+            <div class="col-md-6">
+              <label class="form-label">Priorité</label>
+              <select class="form-select">
+                <option>Basse</option>
+                <option>Moyenne</option>
+                <option>Haute</option>
+              </select>
+            </div>
+
+            <div class="col-12">
+              <label class="form-label">Description</label>
+              <textarea class="form-control" rows="3"
+                        placeholder="Décrire le problème rencontré par le client"></textarea>
+            </div>
+          </div>
+        </div>
+
+        <!-- ACTIONS -->
+        <div class="tt-card p-3">
+          <div class="fw-bold mb-2">🛠️ Action envisagée</div>
+          <select class="form-select">
+            <option>Aucune</option>
+            <option>Remboursement</option>
+            <option>Bon de réduction</option>
+            <option>Nouvelle livraison</option>
+            <option>Excuses + geste commercial</option>
+          </select>
+        </div>
+
+      </div>
+
+      <!-- FOOTER -->
+      <div class="modal-footer">
+        <button class="btn btn-tt-outline tt-btn" data-bs-dismiss="modal">
+          Annuler
+        </button>
+        <button class="btn btn-tt tt-btn">
+          <i class="bi bi-save me-1"></i> Enregistrer l’incident
+        </button>
+      </div>
+
+    </div>
+  </div>
+</div>
+
+
+<!-- ✅ MODAL : DÉTAIL INCIDENT -->
+<div class="modal fade" id="ttIncidentModal" tabindex="-1">
+  <div class="modal-dialog modal-dialog-centered modal-lg">
+    <div class="modal-content tt-card" style="border-radius:20px">
+
+      <!-- HEADER -->
+      <div class="modal-header">
+        <h5 class="fw-black mb-0">
+          <i class="bi bi-exclamation-triangle me-1"></i> Détails de l’incident
+        </h5>
+        <button class="btn-close" data-bs-dismiss="modal"></button>
+      </div>
+
+      <!-- BODY -->
+      <div class="modal-body">
+
+        <!-- INFOS GÉNÉRALES -->
+        <div class="tt-card p-3 mb-3">
+          <div class="fw-bold mb-2">📌 Informations générales</div>
+          <div class="row g-2 small">
+            <div class="col-md-6"><strong>ID Incident :</strong> INC-0018</div>
+            <div class="col-md-6"><strong>Commande :</strong> TT-10020</div>
+            <div class="col-md-6"><strong>Type :</strong> Erreur menu</div>
+            <div class="col-md-6"><strong>Priorité :</strong> Moyenne</div>
+            <div class="col-md-6"><strong>Statut :</strong> Résolu</div>
+            <div class="col-md-6"><strong>Date :</strong> 22/01/2026 – 14:32</div>
+          </div>
+        </div>
+
+        <!-- CLIENT -->
+        <div class="tt-card p-3 mb-3">
+          <div class="fw-bold mb-2">👤 Client</div>
+          <div class="row g-2 small">
+            <div class="col-md-6"><strong>Nom :</strong> Client B</div>
+            <div class="col-md-6"><strong>Téléphone :</strong> +242 06 000 0000</div>
+            <div class="col-md-6"><strong>Canal :</strong> Application</div>
+            <div class="col-md-6"><strong>Mode paiement :</strong> Mobile Money</div>
+          </div>
+        </div>
+
+        <!-- DESCRIPTION -->
+        <div class="tt-card p-3 mb-3">
+          <div class="fw-bold mb-2">📝 Description de l’incident</div>
+          <p class="small text-muted mb-0">
+            Le client a reçu un menu incorrect (Grillades au lieu de Saka-Saka).
+            Réclamation effectuée après livraison.
+          </p>
+        </div>
+
+        <!-- ACTIONS -->
+        <div class="tt-card p-3">
+          <div class="fw-bold mb-2">🛠️ Actions prises</div>
+          <ul class="small text-muted mb-0">
+            <li>Client contacté par téléphone</li>
+            <li>Excuses présentées</li>
+            <li>Bon de réduction offert</li>
+            <li>Incident marqué comme résolu</li>
+          </ul>
+        </div>
+
+      </div>
+
+      <!-- FOOTER -->
+      <div class="modal-footer">
+        <button class="btn btn-tt-outline tt-btn" data-bs-dismiss="modal">
+          Fermer
+        </button>
+        <button class="btn btn-tt tt-btn">
+          <i class="bi bi-check2-circle me-1"></i> Marquer résolu
+        </button>
+      </div>
+
+    </div>
+  </div>
+</div>
+
 
   <!-- Toast -->
   <div class="toast-container position-fixed bottom-0 end-0 p-3">

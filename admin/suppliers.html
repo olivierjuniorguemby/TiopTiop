@@ -12,7 +12,26 @@
 <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" integrity="sha256-p4NxAoJBhIIN+hmNHrzRCf9tD/miZyoHS5obTRR9BMY=" crossorigin=""/>
 <link rel="stylesheet" href="../assets/css/style.css">
 
-  
+<style>
+    /* ✅ Desktop sidebar uniquement (lg+) */
+    .tt-admin-sidebar-desktop { display: none; }
+    @media (min-width: 992px) {
+      .tt-admin-sidebar-desktop { display: block; }
+      .tt-admin-toggle { display:none; }
+    }
+
+    /* ✅ Petites améliorations charts */
+    .tt-chart-wrap {
+      width: 100%;
+      height: 280px;           /* fixe une hauteur clean */
+      position: relative;
+    }
+    .tt-chart-wrap canvas{
+      width: 100% !important;
+      height: 100% !important;
+    }
+  </style>
+
 </head>
 <body>
   <header class="tt-topbar">
@@ -58,39 +77,80 @@
     </div>
   </header>
 
+  <!-- ✅ OFFCANVAS SIDEBAR (mobile/tablette) -->
+<div class="offcanvas offcanvas-start" tabindex="-1" id="ttAdminOffcanvas" aria-labelledby="ttAdminOffcanvasLabel">
+  <div class="offcanvas-header">
+    <h5 class="offcanvas-title" id="ttAdminOffcanvasLabel">
+      <i class="bi bi-speedometer2 me-1"></i> Admin
+    </h5>
+    <button type="button" class="btn-close" data-bs-dismiss="offcanvas" aria-label="Fermer"></button>
+  </div>
+  <div class="offcanvas-body">
+    <div class="tt-card p-3 tt-admin-sidebar">
+      <div class="small text-muted mb-3">Gestion complète de la plateforme.</div>
+      <div class="tt-admin-nav d-grid gap-1">
+        <a href="index.html" data-admin-nav="index.html"><i class="bi bi-speedometer2"></i> Dashboard</a>
+        <a href="products.html" data-admin-nav="products.html"><i class="bi bi-basket2"></i> Produits</a>
+        <a href="categories.html" data-admin-nav="categories.html"><i class="bi bi-grid"></i> Catégories</a>
+        <a href="orders.html" data-admin-nav="orders.html"><i class="bi bi-receipt"></i> Commandes</a>
+        <a href="deliveries.html" data-admin-nav="deliveries.html"><i class="bi bi-truck"></i> Livraisons</a>
+        <a href="incidents.html" data-admin-nav="incidents.html"><i class="bi bi-exclamation-triangle"></i> Incidents</a>
+        <a href="suppliers.html" data-admin-nav="suppliers.html"><i class="bi bi-box"></i> Fournisseurs</a>
+        <a href="purchases.html" data-admin-nav="purchases.html"><i class="bi bi-cart-check"></i> Achats</a>
+        <a href="sales.html" data-admin-nav="sales.html"><i class="bi bi-graph-up"></i> Ventes</a>
+        <a href="customers.html" data-admin-nav="customers.html"><i class="bi bi-people"></i> Clients</a>
+        <a href="ads.html" data-admin-nav="ads.html"><i class="bi bi-megaphone"></i> Annonces</a>
+        <a href="geo.html" data-admin-nav="geo.html"><i class="bi bi-geo-alt"></i> Géolocalisation</a>
+        <a href="settings.html" data-admin-nav="settings.html"><i class="bi bi-gear"></i> Paramètres</a>
+      </div>
+    </div>
+  </div>
+</div>
+
   <main class="container my-4">
     
 <div class="row g-4">
-  <div class="col-lg-3">
-<div class="tt-card p-3 tt-admin-sidebar">
-  <div class="fw-bold mb-2"><i class="bi bi-speedometer2 me-1"></i>Admin</div>
-  <div class="small text-muted mb-3">Gestion complète de la plateforme.</div>
-  <div class="tt-admin-nav d-grid gap-1">
-    <a href="index.html" data-admin-nav="index.html"><i class="bi bi-speedometer2"></i> Dashboard</a>
-    <a href="products.html" data-admin-nav="products.html"><i class="bi bi-basket2"></i> Produits</a>
-    <a href="categories.html" data-admin-nav="categories.html"><i class="bi bi-grid"></i> Catégories</a>
-    <a href="orders.html" data-admin-nav="orders.html"><i class="bi bi-receipt"></i> Commandes</a>
-    <a href="deliveries.html" data-admin-nav="deliveries.html"><i class="bi bi-truck"></i> Livraisons</a>
-    <a href="incidents.html" data-admin-nav="incidents.html"><i class="bi bi-exclamation-triangle"></i> Incidents</a>
-    <a href="suppliers.html" data-admin-nav="suppliers.html"><i class="bi bi-box"></i> Fournisseurs</a>
-    <a href="purchases.html" data-admin-nav="purchases.html"><i class="bi bi-cart-check"></i> Achats</a>
-    <a href="sales.html" data-admin-nav="sales.html"><i class="bi bi-graph-up"></i> Ventes</a>
-    <a href="customers.html" data-admin-nav="customers.html"><i class="bi bi-people"></i> Clients</a>
-    <a href="ads.html" data-admin-nav="ads.html"><i class="bi bi-megaphone"></i> Annonces</a>
-    <a href="geo.html" data-admin-nav="geo.html"><i class="bi bi-geo-alt"></i> Géolocalisation</a>
-    <a href="settings.html" data-admin-nav="settings.html"><i class="bi bi-gear"></i> Paramètres</a>
-  </div>
-</div>
-<script>
-document.addEventListener("DOMContentLoaded", () => {
-  const path = location.pathname.split("/").pop() || "index.html";
-  document.querySelectorAll("[data-admin-nav]").forEach(a => {
-    a.classList.toggle("active", a.getAttribute("data-admin-nav") === path);
-  });
-});
-</script>
-</div>
+  <!-- ✅ SIDEBAR DESKTOP -->
+    <div class="col-lg-3 tt-admin-sidebar-desktop">
+      <div class="tt-card p-3 tt-admin-sidebar">
+        <div class="fw-bold mb-2"><i class="bi bi-speedometer2 me-1"></i>Admin</div>
+        <div class="small text-muted mb-3">Gestion complète de la plateforme.</div>
+        <div class="tt-admin-nav d-grid gap-1">
+          <a href="index.html" data-admin-nav="index.html"><i class="bi bi-speedometer2"></i> Dashboard</a>
+          <a href="products.html" data-admin-nav="products.html"><i class="bi bi-basket2"></i> Produits</a>
+          <a href="categories.html" data-admin-nav="categories.html"><i class="bi bi-grid"></i> Catégories</a>
+          <a href="orders.html" data-admin-nav="orders.html"><i class="bi bi-receipt"></i> Commandes</a>
+          <a href="deliveries.html" data-admin-nav="deliveries.html"><i class="bi bi-truck"></i> Livraisons</a>
+          <a href="incidents.html" data-admin-nav="incidents.html"><i class="bi bi-exclamation-triangle"></i> Incidents</a>
+          <a href="suppliers.html" data-admin-nav="suppliers.html"><i class="bi bi-box"></i> Fournisseurs</a>
+          <a href="purchases.html" data-admin-nav="purchases.html"><i class="bi bi-cart-check"></i> Achats</a>
+          <a href="sales.html" data-admin-nav="sales.html"><i class="bi bi-graph-up"></i> Ventes</a>
+          <a href="customers.html" data-admin-nav="customers.html"><i class="bi bi-people"></i> Clients</a>
+          <a href="ads.html" data-admin-nav="ads.html"><i class="bi bi-megaphone"></i> Annonces</a>
+          <a href="geo.html" data-admin-nav="geo.html"><i class="bi bi-geo-alt"></i> Géolocalisation</a>
+          <a href="settings.html" data-admin-nav="settings.html"><i class="bi bi-gear"></i> Paramètres</a>
+        </div>
+      </div>
+    </div>
+
+    <!-- ✅ CONTENT -->
+
   <div class="col-lg-9">
+
+    <!-- Titre + bouton mobile -->
+      <div class="d-flex align-items-start justify-content-between gap-2">
+        <!-- Content -->
+
+        <!-- ✅ Bouton sidebar mobile -->
+        <button class="btn btn-sm btn-tt-outline tt-btn tt-admin-toggle"
+                type="button"
+                data-bs-toggle="offcanvas"
+                data-bs-target="#ttAdminOffcanvas"
+                aria-controls="ttAdminOffcanvas">
+          <i class="bi bi-list me-1"></i> Menu Admin
+        </button>
+      </div>
+      
 <h1 class="h4" style="font-weight:900">Fournisseurs</h1>
 <div class="small text-muted mb-3">Gestion des fournisseurs (produits, contacts, délais).</div>
 
@@ -101,7 +161,13 @@ document.addEventListener("DOMContentLoaded", () => {
       <input class="form-control" placeholder="Rechercher… (UI)">
     </div>
     <div class="d-flex gap-2 flex-wrap">
-      <button class="btn btn-tt tt-btn" onclick="TT.toast('Nouveau fournisseur (UI)','bi-plus-circle')"><i class="bi bi-plus-circle me-1"></i>Nouveau</button>
+<button class="btn btn-tt tt-btn"
+        type="button"
+        data-bs-toggle="modal"
+        data-bs-target="#ttSupplierFormModal"
+        data-mode="create">
+  <i class="bi bi-plus-circle me-1"></i>Nouveau
+</button>
     </div>
   </div>
 </div>
@@ -112,9 +178,60 @@ document.addEventListener("DOMContentLoaded", () => {
       <thead><tr><th>Fournisseur</th><th>Contact</th><th>Produits</th><th>Délai</th><th></th></tr></thead>
       <tbody>
         
-    <tr><td>Marché Total</td><td>+242 …</td><td>Légumes</td><td>24h</td><td class="text-end"><button class="btn btn-sm btn-tt-outline tt-btn" onclick="TT.toast('Modifier (UI)','bi-pencil')">Modifier</button></td></tr>
-    <tr><td>Poisson & Co</td><td>+242 …</td><td>Poisson</td><td>48h</td><td class="text-end"><button class="btn btn-sm btn-tt-outline tt-btn" onclick="TT.toast('Modifier (UI)','bi-pencil')">Modifier</button></td></tr>
-    
+   <tr>
+  <td>Marché Total</td>
+  <td>+242 …</td>
+  <td>Légumes</td>
+  <td>24h</td>
+  <td class="text-end">
+    <div class="d-inline-flex gap-1">
+      <button class="btn btn-sm btn-tt-outline tt-btn"
+              type="button"
+              data-bs-toggle="modal"
+              data-bs-target="#ttSupplierDetailModal"
+              data-supplier='{"name":"Marché Total","phone":"+242 …","email":"contact@marche-total.cg","category":"Légumes","delay":"24h","city":"Brazzaville","address":"Marché Total, stand 12","rating":"4.6","notes":"Livraison tôt le matin. Bon prix sur manioc.","payment":"Espèces / Mobile Money","status":"Actif"}'>
+        <i class="bi bi-eye me-1"></i>Détails
+      </button>
+
+      <button class="btn btn-sm btn-tt tt-btn"
+              type="button"
+              data-bs-toggle="modal"
+              data-bs-target="#ttSupplierFormModal"
+              data-mode="edit"
+              data-supplier='{"name":"Marché Total","phone":"+242 …","email":"contact@marche-total.cg","category":"Légumes","delay":"24h","city":"Brazzaville","address":"Marché Total, stand 12","payment":"Espèces / Mobile Money","status":"Actif","notes":"Livraison tôt le matin. Bon prix sur manioc."}'>
+        <i class="bi bi-pencil me-1"></i>Modifier
+      </button>
+    </div>
+  </td>
+</tr>
+
+<tr>
+  <td>Poisson & Co</td>
+  <td>+242 …</td>
+  <td>Poisson</td>
+  <td>48h</td>
+  <td class="text-end">
+    <div class="d-inline-flex gap-1">
+      <button class="btn btn-sm btn-tt-outline tt-btn"
+              type="button"
+              data-bs-toggle="modal"
+              data-bs-target="#ttSupplierDetailModal"
+              data-supplier='{"name":"Poisson & Co","phone":"+242 …","email":"poissonco@cg.local","category":"Poisson","delay":"48h","city":"Pointe-Noire","address":"Zone portuaire","rating":"4.2","notes":"Bonne qualité, vérifier stock avant commande.","payment":"Mobile Money","status":"Actif"}'>
+        <i class="bi bi-eye me-1"></i>Détails
+      </button>
+
+      <button class="btn btn-sm btn-tt tt-btn"
+              type="button"
+              data-bs-toggle="modal"
+              data-bs-target="#ttSupplierFormModal"
+              data-mode="edit"
+              data-supplier='{"name":"Poisson & Co","phone":"+242 …","email":"poissonco@cg.local","category":"Poisson","delay":"48h","city":"Pointe-Noire","address":"Zone portuaire","payment":"Mobile Money","status":"Actif","notes":"Bonne qualité, vérifier stock avant commande."}'>
+        <i class="bi bi-pencil me-1"></i>Modifier
+      </button>
+    </div>
+  </td>
+</tr>
+ 
       </tbody>
     </table>
   </div>
@@ -197,7 +314,184 @@ document.addEventListener("DOMContentLoaded", () => {
     </div>
   </footer>
 
-  
+  <!-- ✅ MODAL : FORM FOURNISSEUR (Nouveau / Modifier) -->
+<div class="modal fade" id="ttSupplierFormModal" tabindex="-1" aria-hidden="true">
+  <div class="modal-dialog modal-dialog-centered modal-lg">
+    <div class="modal-content tt-card" style="border-radius:20px">
+      <div class="modal-header">
+        <h5 class="fw-black mb-0" id="ttSupplierFormTitle">
+          <i class="bi bi-box me-1"></i> Fournisseur
+        </h5>
+        <button class="btn-close" data-bs-dismiss="modal" aria-label="Fermer"></button>
+      </div>
+
+      <div class="modal-body">
+        <div class="tt-card p-3 mb-3">
+          <div class="fw-bold mb-2">🏷️ Informations générales</div>
+          <div class="row g-2">
+            <div class="col-md-6">
+              <label class="form-label">Nom fournisseur</label>
+              <input id="sf_name" class="form-control" placeholder="Ex: Marché Total">
+            </div>
+            <div class="col-md-6">
+              <label class="form-label">Catégorie produits</label>
+              <select id="sf_category" class="form-select">
+                <option>Légumes</option>
+                <option>Poisson</option>
+                <option>Viande</option>
+                <option>Épices</option>
+                <option>Boissons</option>
+                <option>Autre</option>
+              </select>
+            </div>
+          </div>
+        </div>
+
+        <div class="tt-card p-3 mb-3">
+          <div class="fw-bold mb-2">📞 Contact</div>
+          <div class="row g-2">
+            <div class="col-md-6">
+              <label class="form-label">Téléphone</label>
+              <input id="sf_phone" class="form-control" placeholder="+242 …">
+            </div>
+            <div class="col-md-6">
+              <label class="form-label">Email (optionnel)</label>
+              <input id="sf_email" class="form-control" placeholder="ex: contact@...">
+            </div>
+          </div>
+        </div>
+
+        <div class="tt-card p-3 mb-3">
+          <div class="fw-bold mb-2">📍 Localisation & délais</div>
+          <div class="row g-2">
+            <div class="col-md-4">
+              <label class="form-label">Ville</label>
+              <input id="sf_city" class="form-control" placeholder="Brazzaville">
+            </div>
+            <div class="col-md-4">
+              <label class="form-label">Délai moyen</label>
+              <select id="sf_delay" class="form-select">
+                <option>12h</option>
+                <option>24h</option>
+                <option>48h</option>
+                <option>72h</option>
+              </select>
+            </div>
+            <div class="col-md-4">
+              <label class="form-label">Statut</label>
+              <select id="sf_status" class="form-select">
+                <option>Actif</option>
+                <option>Suspendu</option>
+              </select>
+            </div>
+
+            <div class="col-12">
+              <label class="form-label">Adresse / Point de livraison</label>
+              <input id="sf_address" class="form-control" placeholder="Ex: Marché Total, stand 12">
+            </div>
+          </div>
+        </div>
+
+        <div class="tt-card p-3">
+          <div class="fw-bold mb-2">💳 Paiement & notes</div>
+          <div class="row g-2">
+            <div class="col-md-6">
+              <label class="form-label">Modes de paiement</label>
+              <select id="sf_payment" class="form-select">
+                <option>Espèces</option>
+                <option>Mobile Money</option>
+                <option>Espèces / Mobile Money</option>
+                <option>Virement</option>
+              </select>
+            </div>
+            <div class="col-12">
+              <label class="form-label">Notes internes</label>
+              <textarea id="sf_notes" class="form-control" rows="3"
+                        placeholder="Ex: appeler avant livraison, préférer matin..."></textarea>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="modal-footer">
+        <button class="btn btn-tt-outline tt-btn" data-bs-dismiss="modal">Annuler</button>
+        <button class="btn btn-tt tt-btn" onclick="TT.toast('Fournisseur enregistré (UI)','bi-check2-circle')">
+          <i class="bi bi-save me-1"></i> Enregistrer
+        </button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ✅ MODAL : DETAILS FOURNISSEUR -->
+<div class="modal fade" id="ttSupplierDetailModal" tabindex="-1" aria-hidden="true">
+  <div class="modal-dialog modal-dialog-centered modal-lg">
+    <div class="modal-content tt-card" style="border-radius:20px">
+      <div class="modal-header">
+        <h5 class="fw-black mb-0">
+          <i class="bi bi-eye me-1"></i> Détails fournisseur
+        </h5>
+        <button class="btn-close" data-bs-dismiss="modal" aria-label="Fermer"></button>
+      </div>
+
+      <div class="modal-body">
+        <div class="tt-card p-3 mb-3">
+          <div class="d-flex flex-column flex-md-row justify-content-between gap-2">
+            <div>
+              <div class="fw-bold" id="sd_name">—</div>
+              <div class="small text-muted" id="sd_category">—</div>
+            </div>
+            <div class="text-md-end">
+              <span class="tt-badge" id="sd_status">—</span>
+              <div class="small text-muted mt-1">Délai : <span id="sd_delay">—</span></div>
+            </div>
+          </div>
+        </div>
+
+        <div class="row g-3">
+          <div class="col-md-6">
+            <div class="tt-card p-3 h-100">
+              <div class="fw-bold mb-2"><i class="bi bi-telephone me-1"></i>Contact</div>
+              <div class="small text-muted">Téléphone</div>
+              <div class="fw-bold" id="sd_phone">—</div>
+              <div class="small text-muted mt-2">Email</div>
+              <div class="fw-bold" id="sd_email">—</div>
+            </div>
+          </div>
+
+          <div class="col-md-6">
+            <div class="tt-card p-3 h-100">
+              <div class="fw-bold mb-2"><i class="bi bi-geo-alt me-1"></i>Localisation</div>
+              <div class="small text-muted">Ville</div>
+              <div class="fw-bold" id="sd_city">—</div>
+              <div class="small text-muted mt-2">Adresse</div>
+              <div class="fw-bold" id="sd_address">—</div>
+            </div>
+          </div>
+
+          <div class="col-12">
+            <div class="tt-card p-3">
+              <div class="fw-bold mb-2"><i class="bi bi-credit-card me-1"></i>Paiement</div>
+              <div class="fw-bold" id="sd_payment">—</div>
+            </div>
+          </div>
+
+          <div class="col-12">
+            <div class="tt-card p-3">
+              <div class="fw-bold mb-2"><i class="bi bi-chat-left-text me-1"></i>Notes internes</div>
+              <div class="small text-muted" id="sd_notes">—</div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="modal-footer">
+        <button class="btn btn-tt-outline tt-btn" data-bs-dismiss="modal">Fermer</button>
+      </div>
+    </div>
+  </div>
+</div>
+
 
   <!-- Toast -->
   <div class="toast-container position-fixed bottom-0 end-0 p-3">
@@ -211,7 +505,86 @@ document.addEventListener("DOMContentLoaded", () => {
 <script src="../assets/js/mock-data.js"></script>
 <script src="../assets/js/app.js"></script>
 
-  
+  <script>
+  // ✅ Active nav admin
+  document.addEventListener("DOMContentLoaded", () => {
+    const path = location.pathname.split("/").pop() || "index.html";
+    document.querySelectorAll("[data-admin-nav]").forEach(a => {
+      a.classList.toggle("active", a.getAttribute("data-admin-nav") === path);
+    });
+  });
+
+  // ✅ Ouvre MODAL FORM (create/edit) + pré-remplissage
+  document.addEventListener("click", (e) => {
+    const btn = e.target.closest("[data-bs-target='#ttSupplierFormModal']");
+    if (!btn) return;
+
+    const mode = btn.getAttribute("data-mode") || "create";
+    const title = document.getElementById("ttSupplierFormTitle");
+
+    // Reset
+    const setVal = (id, v) => { const el = document.getElementById(id); if (el) el.value = v || ""; };
+    setVal("sf_name", "");
+    setVal("sf_phone", "");
+    setVal("sf_email", "");
+    setVal("sf_category", "Légumes");
+    setVal("sf_delay", "24h");
+    setVal("sf_city", "");
+    setVal("sf_address", "");
+    setVal("sf_payment", "Espèces / Mobile Money");
+    setVal("sf_status", "Actif");
+    setVal("sf_notes", "");
+
+    if (mode === "edit") {
+      title.innerHTML = `<i class="bi bi-pencil me-1"></i> Modifier fournisseur`;
+      const data = btn.getAttribute("data-supplier");
+      if (data) {
+        try {
+          const s = JSON.parse(data);
+          setVal("sf_name", s.name);
+          setVal("sf_phone", s.phone);
+          setVal("sf_email", s.email);
+          setVal("sf_category", s.category);
+          setVal("sf_delay", s.delay);
+          setVal("sf_city", s.city);
+          setVal("sf_address", s.address);
+          setVal("sf_payment", s.payment);
+          setVal("sf_status", s.status);
+          setVal("sf_notes", s.notes);
+        } catch {}
+      }
+    } else {
+      title.innerHTML = `<i class="bi bi-plus-circle me-1"></i> Nouveau fournisseur`;
+    }
+  });
+
+  // ✅ Ouvre MODAL DETAILS + remplit contenu
+  document.addEventListener("click", (e) => {
+    const btn = e.target.closest("[data-bs-target='#ttSupplierDetailModal']");
+    if (!btn) return;
+
+    const data = btn.getAttribute("data-supplier");
+    if (!data) return;
+
+    try {
+      const s = JSON.parse(data);
+
+      const setTxt = (id, v) => { const el = document.getElementById(id); if (el) el.textContent = v || "—"; };
+
+      setTxt("sd_name", s.name);
+      setTxt("sd_category", s.category);
+      setTxt("sd_status", s.status || "—");
+      setTxt("sd_delay", s.delay || "—");
+      setTxt("sd_phone", s.phone || "—");
+      setTxt("sd_email", s.email || "—");
+      setTxt("sd_city", s.city || "—");
+      setTxt("sd_address", s.address || "—");
+      setTxt("sd_payment", s.payment || "—");
+      setTxt("sd_notes", s.notes || "—");
+    } catch {}
+  });
+</script>
+
   
 </body>
 </html>

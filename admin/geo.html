@@ -12,7 +12,26 @@
 <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" integrity="sha256-p4NxAoJBhIIN+hmNHrzRCf9tD/miZyoHS5obTRR9BMY=" crossorigin=""/>
 <link rel="stylesheet" href="../assets/css/style.css">
 
-  
+   <style>
+    /* ✅ Desktop sidebar uniquement (lg+) */
+    .tt-admin-sidebar-desktop { display: none; }
+    @media (min-width: 992px) {
+      .tt-admin-sidebar-desktop { display: block; }
+      .tt-admin-toggle { display:none; }
+    }
+
+    /* ✅ Petites améliorations charts */
+    .tt-chart-wrap {
+      width: 100%;
+      height: 280px;           /* fixe une hauteur clean */
+      position: relative;
+    }
+    .tt-chart-wrap canvas{
+      width: 100% !important;
+      height: 100% !important;
+    }
+  </style>
+
 </head>
 <body>
   <header class="tt-topbar">
@@ -58,39 +77,80 @@
     </div>
   </header>
 
+  <!-- ✅ OFFCANVAS SIDEBAR (mobile/tablette) -->
+<div class="offcanvas offcanvas-start" tabindex="-1" id="ttAdminOffcanvas" aria-labelledby="ttAdminOffcanvasLabel">
+  <div class="offcanvas-header">
+    <h5 class="offcanvas-title" id="ttAdminOffcanvasLabel">
+      <i class="bi bi-speedometer2 me-1"></i> Admin
+    </h5>
+    <button type="button" class="btn-close" data-bs-dismiss="offcanvas" aria-label="Fermer"></button>
+  </div>
+  <div class="offcanvas-body">
+    <div class="tt-card p-3 tt-admin-sidebar">
+      <div class="small text-muted mb-3">Gestion complète de la plateforme.</div>
+      <div class="tt-admin-nav d-grid gap-1">
+        <a href="index.html" data-admin-nav="index.html"><i class="bi bi-speedometer2"></i> Dashboard</a>
+        <a href="products.html" data-admin-nav="products.html"><i class="bi bi-basket2"></i> Produits</a>
+        <a href="categories.html" data-admin-nav="categories.html"><i class="bi bi-grid"></i> Catégories</a>
+        <a href="orders.html" data-admin-nav="orders.html"><i class="bi bi-receipt"></i> Commandes</a>
+        <a href="deliveries.html" data-admin-nav="deliveries.html"><i class="bi bi-truck"></i> Livraisons</a>
+        <a href="incidents.html" data-admin-nav="incidents.html"><i class="bi bi-exclamation-triangle"></i> Incidents</a>
+        <a href="suppliers.html" data-admin-nav="suppliers.html"><i class="bi bi-box"></i> Fournisseurs</a>
+        <a href="purchases.html" data-admin-nav="purchases.html"><i class="bi bi-cart-check"></i> Achats</a>
+        <a href="sales.html" data-admin-nav="sales.html"><i class="bi bi-graph-up"></i> Ventes</a>
+        <a href="customers.html" data-admin-nav="customers.html"><i class="bi bi-people"></i> Clients</a>
+        <a href="ads.html" data-admin-nav="ads.html"><i class="bi bi-megaphone"></i> Annonces</a>
+        <a href="geo.html" data-admin-nav="geo.html"><i class="bi bi-geo-alt"></i> Géolocalisation</a>
+        <a href="settings.html" data-admin-nav="settings.html"><i class="bi bi-gear"></i> Paramètres</a>
+      </div>
+    </div>
+  </div>
+</div>
+
   <main class="container my-4">
     
 <div class="row g-4">
-  <div class="col-lg-3">
-<div class="tt-card p-3 tt-admin-sidebar">
-  <div class="fw-bold mb-2"><i class="bi bi-speedometer2 me-1"></i>Admin</div>
-  <div class="small text-muted mb-3">Gestion complète de la plateforme.</div>
-  <div class="tt-admin-nav d-grid gap-1">
-    <a href="index.html" data-admin-nav="index.html"><i class="bi bi-speedometer2"></i> Dashboard</a>
-    <a href="products.html" data-admin-nav="products.html"><i class="bi bi-basket2"></i> Produits</a>
-    <a href="categories.html" data-admin-nav="categories.html"><i class="bi bi-grid"></i> Catégories</a>
-    <a href="orders.html" data-admin-nav="orders.html"><i class="bi bi-receipt"></i> Commandes</a>
-    <a href="deliveries.html" data-admin-nav="deliveries.html"><i class="bi bi-truck"></i> Livraisons</a>
-    <a href="incidents.html" data-admin-nav="incidents.html"><i class="bi bi-exclamation-triangle"></i> Incidents</a>
-    <a href="suppliers.html" data-admin-nav="suppliers.html"><i class="bi bi-box"></i> Fournisseurs</a>
-    <a href="purchases.html" data-admin-nav="purchases.html"><i class="bi bi-cart-check"></i> Achats</a>
-    <a href="sales.html" data-admin-nav="sales.html"><i class="bi bi-graph-up"></i> Ventes</a>
-    <a href="customers.html" data-admin-nav="customers.html"><i class="bi bi-people"></i> Clients</a>
-    <a href="ads.html" data-admin-nav="ads.html"><i class="bi bi-megaphone"></i> Annonces</a>
-    <a href="geo.html" data-admin-nav="geo.html"><i class="bi bi-geo-alt"></i> Géolocalisation</a>
-    <a href="settings.html" data-admin-nav="settings.html"><i class="bi bi-gear"></i> Paramètres</a>
-  </div>
-</div>
-<script>
-document.addEventListener("DOMContentLoaded", () => {
-  const path = location.pathname.split("/").pop() || "index.html";
-  document.querySelectorAll("[data-admin-nav]").forEach(a => {
-    a.classList.toggle("active", a.getAttribute("data-admin-nav") === path);
-  });
-});
-</script>
-</div>
+
+  <!-- ✅ SIDEBAR DESKTOP -->
+    <div class="col-lg-3 tt-admin-sidebar-desktop">
+      <div class="tt-card p-3 tt-admin-sidebar">
+        <div class="fw-bold mb-2"><i class="bi bi-speedometer2 me-1"></i>Admin</div>
+        <div class="small text-muted mb-3">Gestion complète de la plateforme.</div>
+        <div class="tt-admin-nav d-grid gap-1">
+          <a href="index.html" data-admin-nav="index.html"><i class="bi bi-speedometer2"></i> Dashboard</a>
+          <a href="products.html" data-admin-nav="products.html"><i class="bi bi-basket2"></i> Produits</a>
+          <a href="categories.html" data-admin-nav="categories.html"><i class="bi bi-grid"></i> Catégories</a>
+          <a href="orders.html" data-admin-nav="orders.html"><i class="bi bi-receipt"></i> Commandes</a>
+          <a href="deliveries.html" data-admin-nav="deliveries.html"><i class="bi bi-truck"></i> Livraisons</a>
+          <a href="incidents.html" data-admin-nav="incidents.html"><i class="bi bi-exclamation-triangle"></i> Incidents</a>
+          <a href="suppliers.html" data-admin-nav="suppliers.html"><i class="bi bi-box"></i> Fournisseurs</a>
+          <a href="purchases.html" data-admin-nav="purchases.html"><i class="bi bi-cart-check"></i> Achats</a>
+          <a href="sales.html" data-admin-nav="sales.html"><i class="bi bi-graph-up"></i> Ventes</a>
+          <a href="customers.html" data-admin-nav="customers.html"><i class="bi bi-people"></i> Clients</a>
+          <a href="ads.html" data-admin-nav="ads.html"><i class="bi bi-megaphone"></i> Annonces</a>
+          <a href="geo.html" data-admin-nav="geo.html"><i class="bi bi-geo-alt"></i> Géolocalisation</a>
+          <a href="settings.html" data-admin-nav="settings.html"><i class="bi bi-gear"></i> Paramètres</a>
+        </div>
+      </div>
+    </div>
+
+    <!-- ✅ CONTENT -->
+
   <div class="col-lg-9">
+
+     <!-- Titre + bouton mobile -->
+      <div class="d-flex align-items-start justify-content-between gap-2">
+       <!-- Content -->
+        <!-- ✅ Bouton sidebar mobile -->
+        <button class="btn btn-sm btn-tt-outline tt-btn tt-admin-toggle"
+                type="button"
+                data-bs-toggle="offcanvas"
+                data-bs-target="#ttAdminOffcanvas"
+                aria-controls="ttAdminOffcanvas">
+          <i class="bi bi-list me-1"></i> Menu Admin
+        </button>
+      </div>
+      
 <h1 class="h4" style="font-weight:900">Géolocalisation (Admin)</h1>
 <div class="small text-muted mb-3">Carte Leaflet + position admin + points (clients/livreurs/boutique).</div>
 
@@ -98,21 +158,193 @@ document.addEventListener("DOMContentLoaded", () => {
   <div class="d-flex flex-column flex-md-row justify-content-between align-items-start align-items-md-center gap-2">
     <div class="small text-muted">
       <i class="bi bi-info-circle me-1"></i>
-      Dans le produit final, tu affiches les positions réelles via API (livreurs) et tu gères les zones de livraison.
+      Filtre les positions (livraisons, livreurs, secteurs) pour une vue d’ensemble et spécifique.
     </div>
-    <button id="ttGeolocBtn" class="btn btn-tt tt-btn">
-      <i class="bi bi-crosshair me-1"></i> Ma position (navigateur)
-    </button>
+    <div class="d-flex gap-2 flex-wrap">
+      <button id="ttGeolocBtn" class="btn btn-tt tt-btn">
+        <i class="bi bi-crosshair me-1"></i> Ma position
+      </button>
+      <button id="ttGeoReset" class="btn btn-tt-outline tt-btn">
+        <i class="bi bi-arrow-counterclockwise me-1"></i> Réinitialiser
+      </button>
+    </div>
+  </div>
+
+  <hr class="my-3" style="border-color:var(--border)">
+
+  <!-- ✅ Filtres -->
+  <div class="row g-2 align-items-end">
+    <div class="col-12 col-md-6 col-lg-3">
+      <label class="form-label small fw-semibold mb-1">Catégorie</label>
+      <select class="form-select" id="geoFilterCategory">
+        <option value="all" selected>Toutes</option>
+        <option value="petitdej">Petit-déjeuner</option>
+        <option value="dejeuner">Déjeuner</option>
+        <option value="dessert">Desserts</option>
+        <option value="grillades">Grillades</option>
+        <option value="boissons">Boissons</option>
+      </select>
+    </div>
+
+    <div class="col-12 col-md-6 col-lg-3">
+      <label class="form-label small fw-semibold mb-1">Menu / Produit</label>
+      <select class="form-select" id="geoFilterMenu">
+        <option value="all" selected>Tous</option>
+        <option value="saka">Saka-Saka Premium</option>
+        <option value="mix">Grillades Mix</option>
+        <option value="piment">Sauce piment maison</option>
+        <option value="jus">Jus Gingembre</option>
+      </select>
+    </div>
+
+    <div class="col-12 col-md-6 col-lg-3">
+      <label class="form-label small fw-semibold mb-1">Livreur</label>
+      <select class="form-select" id="geoFilterCourier">
+        <option value="all" selected>Tous</option>
+        <option value="ldv1">Livreur 1</option>
+        <option value="ldv2">Livreur 2</option>
+        <option value="ldv3">Livreur 3</option>
+      </select>
+    </div>
+
+    <div class="col-12 col-md-6 col-lg-3">
+      <label class="form-label small fw-semibold mb-1">Secteur / Zone</label>
+      <select class="form-select" id="geoFilterSector">
+        <option value="all" selected>Tous</option>
+        <option value="centre">Centre-ville</option>
+        <option value="poto">Poto-Poto</option>
+        <option value="mfilou">Mfilou</option>
+        <option value="talangai">Talangaï</option>
+      </select>
+    </div>
+
+    <div class="col-12 col-lg-6 mt-2">
+      <label class="form-label small fw-semibold mb-1">Afficher</label>
+      <div class="d-flex gap-2 flex-wrap">
+        <div class="form-check">
+          <input class="form-check-input" type="checkbox" id="geoShowCustomers" checked>
+          <label class="form-check-label small" for="geoShowCustomers">
+            Points clients
+          </label>
+        </div>
+        <div class="form-check">
+          <input class="form-check-input" type="checkbox" id="geoShowCouriers" checked>
+          <label class="form-check-label small" for="geoShowCouriers">
+            Livreurs
+          </label>
+        </div>
+        <div class="form-check">
+          <input class="form-check-input" type="checkbox" id="geoShowShop" checked>
+          <label class="form-check-label small" for="geoShowShop">
+            Boutique
+          </label>
+        </div>
+        <div class="form-check">
+          <input class="form-check-input" type="checkbox" id="geoShowZones" checked>
+          <label class="form-check-label small" for="geoShowZones">
+            Zones
+          </label>
+        </div>
+      </div>
+    </div>
+
+    <div class="col-12 col-lg-6 mt-2">
+      <div class="tt-card p-2 d-flex align-items-center justify-content-between"
+           style="border:1px solid var(--border)">
+        <div class="small text-muted">
+          <i class="bi bi-funnel me-1"></i> Points visibles
+        </div>
+        <div class="fw-bold" id="geoVisibleCount">—</div>
+      </div>
+    </div>
   </div>
 </div>
+
 
 <div id="adminMap"></div>
 
 <script>
 document.addEventListener("DOMContentLoaded", () => {
   TT_MAPS.initAdminGeo("adminMap");
+
+  // ---- Helpers
+  const $ = (id) => document.getElementById(id);
+
+  const controls = {
+    category: $("geoFilterCategory"),
+    menu: $("geoFilterMenu"),
+    courier: $("geoFilterCourier"),
+    sector: $("geoFilterSector"),
+    showCustomers: $("geoShowCustomers"),
+    showCouriers: $("geoShowCouriers"),
+    showShop: $("geoShowShop"),
+    showZones: $("geoShowZones"),
+    reset: $("ttGeoReset"),
+    counter: $("geoVisibleCount")
+  };
+
+  function getFilters(){
+    return {
+      category: controls.category.value,
+      menu: controls.menu.value,
+      courier: controls.courier.value,
+      sector: controls.sector.value,
+      show: {
+        customers: controls.showCustomers.checked,
+        couriers: controls.showCouriers.checked,
+        shop: controls.showShop.checked,
+        zones: controls.showZones.checked
+      }
+    };
+  }
+
+  function emitFilters(){
+    const filters = getFilters();
+
+    // ✅ Option A: si tu ajoutes cette fonction dans maps.js, ça filtre directement
+    if (window.TT_MAPS && typeof TT_MAPS.applyAdminGeoFilters === "function") {
+      const visibleCount = TT_MAPS.applyAdminGeoFilters(filters);
+      if (typeof visibleCount === "number") controls.counter.textContent = visibleCount;
+      return;
+    }
+
+    // ✅ Option B: fallback UI -> envoie un event (tu peux l’écouter dans maps.js)
+    window.dispatchEvent(new CustomEvent("tt:geo:filters", { detail: filters }));
+
+    // UI placeholder
+    controls.counter.textContent = "…";
+  }
+
+  // listeners
+  ["change", "input"].forEach(evt => {
+    controls.category.addEventListener(evt, emitFilters);
+    controls.menu.addEventListener(evt, emitFilters);
+    controls.courier.addEventListener(evt, emitFilters);
+    controls.sector.addEventListener(evt, emitFilters);
+  });
+  controls.showCustomers.addEventListener("change", emitFilters);
+  controls.showCouriers.addEventListener("change", emitFilters);
+  controls.showShop.addEventListener("change", emitFilters);
+  controls.showZones.addEventListener("change", emitFilters);
+
+  controls.reset.addEventListener("click", () => {
+    controls.category.value = "all";
+    controls.menu.value = "all";
+    controls.courier.value = "all";
+    controls.sector.value = "all";
+    controls.showCustomers.checked = true;
+    controls.showCouriers.checked = true;
+    controls.showShop.checked = true;
+    controls.showZones.checked = true;
+    emitFilters();
+    if (window.TT && typeof TT.toast === "function") TT.toast("Filtres réinitialisés", "bi-arrow-counterclockwise");
+  });
+
+  // initial
+  emitFilters();
 });
 </script>
+
 </div>
 </div>
 
